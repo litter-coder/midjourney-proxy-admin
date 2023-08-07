@@ -1,7 +1,7 @@
 import ColumnBuilder from '@/pages/AccountList/components/ColumnBuilder';
 import AddContent from '@/pages/AccountList/components/contents/AddContent ';
 import MyModal from '@/pages/AccountList/components/Modal';
-import { createAccount, queryAccount, updateAccount } from '@/services/ant-design-pro/api';
+import { createAccount, queryAccount, updateAccount, updateAndReconnect } from '@/services/ant-design-pro/api';
 import { useIntl } from '@@/exports';
 import { ReloadOutlined, UserAddOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-components';
@@ -76,6 +76,12 @@ const AccountList: React.FC = () => {
     hideModal();
   };
 
+  const handleReconnect = async (values: Record<string, string>) => {
+    await updateAndReconnect(values.id, values);
+    triggerRefreshAccount();
+    hideModal();
+  };
+
   useEffect(() => {
     fetchData();
   }, [refresh]);
@@ -134,6 +140,7 @@ const AccountList: React.FC = () => {
             openModal,
             triggerRefreshAccount,
             handleEdit,
+            handleReconnect
           })}
           pagination={false}
         />

@@ -1,7 +1,8 @@
 import EditContent from '@/pages/AccountList/components/contents/EditContent ';
 import MoreContent from '@/pages/AccountList/components/contents/MoreContent ';
+import ReconnectContent from '@/pages/AccountList/components/contents/ReconnectContent';
 import { EditOutlined, ToolOutlined } from '@ant-design/icons';
-import { Button, FormInstance, Space, Tag } from 'antd';
+import { Button, FormInstance, Space, Tag, Tooltip } from 'antd';
 import { ColumnType } from 'antd/lib/table';
 import moment from 'moment';
 import DelButton from './button/DelButton';
@@ -13,12 +14,14 @@ const ColumnBuilder = ({
   openModal,
   triggerRefreshAccount,
   handleEdit,
+  handleReconnect,
 }: {
   form: FormInstance;
   modalFooter: any;
   openModal: (title: string, content: any, footer: any, modalWidth: number) => void;
   triggerRefreshAccount: () => void;
   handleEdit: (values: Record<string, string>) => void;
+  handleReconnect: (values: Record<string, string>) => void;
 }) => {
   const columns = [
     {
@@ -78,32 +81,38 @@ const ColumnBuilder = ({
       render: (value: any, record: Record<string, string>) => {
         return (
           <Space>
+
             <SyncButton record={record} onSuccess={triggerRefreshAccount} />
-            <Button
-              key="Edit"
-              type={'primary'}
-              icon={<EditOutlined />}
-              onClick={() =>
-                openModal(
-                  '修改账户',
-                  <EditContent form={form} record={record} onSubmit={handleEdit} />,
-                  modalFooter,
-                  500,
-                )
-              }
-            />
-            <Button
-              key="EditAndReconnect"
-              icon={<ToolOutlined />}
-              onClick={() =>
-                openModal(
-                  '更新账户并重连',
-                  <EditContent form={form} record={record} onSubmit={handleEdit} />,
-                  modalFooter,
-                  500,
-                )
-              }
-            />
+
+            <Tooltip title="修改账户">
+              <Button
+                key="Edit"
+                type={'primary'}
+                icon={<EditOutlined />}
+                onClick={() =>
+                  openModal(
+                    '修改账户',
+                    <EditContent form={form} record={record} onSubmit={handleEdit} />,
+                    modalFooter,
+                    500,
+                  )
+                }
+              />
+            </Tooltip>
+            <Tooltip title="更新账户并重连">
+              <Button
+                key="EditAndReconnect"
+                icon={<ToolOutlined />}
+                onClick={() =>
+                  openModal(
+                    '更新账户并重连',
+                    <ReconnectContent form={form} record={record} onSubmit={handleReconnect} />,
+                    modalFooter,
+                    500,
+                  )
+                }
+              />
+            </Tooltip>
             <DelButton record={record} onSuccess={triggerRefreshAccount} />
           </Space>
         );

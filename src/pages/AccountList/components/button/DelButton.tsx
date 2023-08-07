@@ -40,15 +40,14 @@ const DelButton: React.FC<DelButtonProps> = ({ record, onSuccess }) => {
 
   return (
     <Popconfirm
-      title="账户删除"
+      title="删除账户"
       description="确认删除该账户？"
       open={open}
       onConfirm={handleOk}
       okButtonProps={{ loading: confirmLoading }}
       onCancel={handleCancel}
-      okText={'删除'}
     >
-      <Button danger icon={<DeleteOutlined/>} onClick={showPopconfirm}>
+      <Button danger icon={<DeleteOutlined />} onClick={showPopconfirm}>
       </Button>
     </Popconfirm>
   );

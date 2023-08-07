@@ -121,6 +121,15 @@ export async function updateAccount(id: string, data: object, options?: { [key: 
   });
 }
 
+/**  PUT /mj/account/{id}/update-reconnect */
+export async function updateAndReconnect(id: string, data: object, options?: { [key: string]: any }) {
+  return request<Record<string, any>>(`/mj/account/${id}/update-reconnect`, {
+    method: 'PUT',
+    data: data,
+    ...(options || {}),
+  });
+}
+
 /**  DELETE /mj/account/{id}/delete */
 export async function deleteAccount(id: string, options?: { [key: string]: any }) {
   return request<Record<string, any>>(`/mj/account/${id}/delete`, {

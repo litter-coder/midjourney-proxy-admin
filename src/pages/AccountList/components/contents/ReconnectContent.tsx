@@ -1,7 +1,7 @@
-import { Card, Form, FormInstance, Input, InputNumber } from 'antd';
+import { Card, Form, FormInstance, Input, Switch } from 'antd';
 import { useEffect } from 'react';
 
-const EditorContent = ({
+const ReconnectContent = ({
   form,
   onSubmit,
   record,
@@ -24,22 +24,25 @@ const EditorContent = ({
       wrapperCol={{ span: 16 }}
       onFinish={onSubmit}
     >
+        <Card type="inner">
       <Form.Item label="id" name="id" hidden>
         <Input />
       </Form.Item>
-      <Card type="inner">
-        <Form.Item label="并发数" name="coreSize">
-          <InputNumber min={1} max={12} />
-        </Form.Item>
-        <Form.Item label="等待队列" name="queueSize">
-          <InputNumber min={1} />
-        </Form.Item>
-        <Form.Item label="任务超时时间(分钟)" name="timeoutMinutes">
-          <InputNumber min={1} />
-        </Form.Item>
+      <Form.Item label="用户Token" name="userToken">
+        <Input />
+      </Form.Item>
+      <Form.Item label="用户SessionId" name="sessionId">
+        <Input />
+      </Form.Item>
+      <Form.Item label="用户UserAgent" name="userAgent">
+        <Input />
+      </Form.Item>
+      <Form.Item label="是否可用" name="enable" valuePropName="checked">
+        <Switch />
+      </Form.Item>
       </Card>
     </Form>
   );
 };
 
-export default EditorContent;
+export default ReconnectContent;
