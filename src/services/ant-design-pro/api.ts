@@ -2,27 +2,26 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
-/** 获取当前的用户 GET /api/currentUser */
+/** 获取当前的用户 GET /mj/admin/current */
 export async function currentUser(options?: { [key: string]: any }) {
-  return request<{
-    data: API.CurrentUser;
-  }>('/api/currentUser', {
+  return request<API.CurrentUser>('/mj/admin/current', {
     method: 'GET',
     ...(options || {}),
   });
 }
 
-/** 退出登录接口 POST /api/login/outLogin */
+/** 退出登录接口 POST /mj/admin/logout */
 export async function outLogin(options?: { [key: string]: any }) {
-  return request<Record<string, any>>('/api/login/outLogin', {
+  return request<API.ReturnMessage>('/mj/admin/logout', {
     method: 'POST',
     ...(options || {}),
   });
 }
 
-/** 登录接口 POST /api/login/account */
+
+/** 登录接口 POST /mj/admin/login */
 export async function login(body: API.LoginParams, options?: { [key: string]: any }) {
-  return request<API.LoginResult>('/api/login/account', {
+  return request<API.LoginResult>('/mj/admin/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -31,64 +30,11 @@ export async function login(body: API.LoginParams, options?: { [key: string]: an
     ...(options || {}),
   });
 }
-
-/** 此处后端没有提供注释 GET /api/notices */
-export async function getNotices(options?: { [key: string]: any }) {
-  return request<API.NoticeIconList>('/api/notices', {
-    method: 'GET',
-    ...(options || {}),
-  });
-}
-
-/** 获取规则列表 GET /api/rule */
-export async function rule(
-  params: {
-    // query
-    /** 当前的页码 */
-    current?: number;
-    /** 页面的容量 */
-    pageSize?: number;
-  },
-  options?: { [key: string]: any },
-) {
-  return request<API.RuleList>('/api/rule', {
-    method: 'GET',
-    params: {
-      ...params,
-    },
-    ...(options || {}),
-  });
-}
-
-/** 新建规则 PUT /api/rule */
-export async function updateRule(options?: { [key: string]: any }) {
-  return request<API.RuleListItem>('/api/rule', {
-    method: 'PUT',
-    ...(options || {}),
-  });
-}
-
-/** 新建规则 POST /api/rule */
-export async function addRule(options?: { [key: string]: any }) {
-  return request<API.RuleListItem>('/api/rule', {
-    method: 'POST',
-    ...(options || {}),
-  });
-}
-
-/** 删除规则 DELETE /api/rule */
-export async function removeRule(options?: { [key: string]: any }) {
-  return request<Record<string, any>>('/api/rule', {
-    method: 'DELETE',
-    ...(options || {}),
-  });
-}
-
 /**  MJ 接口 */
 
 /**  POST /mj/account/create */
 export async function createAccount(data: object, options?: { [key: string]: any }) {
-  return request<Record<string, any>>('/mj/account/create', {
+  return request<API.ReturnMessage>('/mj/account/create', {
     method: 'POST',
     data: data,
     ...(options || {}),
@@ -106,7 +52,7 @@ export async function queryAccount(data: object, options?: { [key: string]: any 
 
 /**  POST /mj/account/{id}/sync-info */
 export async function refreshAccount(id: string, options?: { [key: string]: any }) {
-  return request<Record<string, any>>(`/mj/account/${id}/sync-info`, {
+  return request<API.ReturnMessage>(`/mj/account/${id}/sync-info`, {
     method: 'POST',
     ...(options || {}),
   });
@@ -114,7 +60,7 @@ export async function refreshAccount(id: string, options?: { [key: string]: any 
 
 /**  PUT /mj/account/{id}/update */
 export async function updateAccount(id: string, data: object, options?: { [key: string]: any }) {
-  return request<Record<string, any>>(`/mj/account/${id}/update`, {
+  return request<API.ReturnMessage>(`/mj/account/${id}/update`, {
     method: 'PUT',
     data: data,
     ...(options || {}),
@@ -123,7 +69,7 @@ export async function updateAccount(id: string, data: object, options?: { [key: 
 
 /**  PUT /mj/account/{id}/update-reconnect */
 export async function updateAndReconnect(id: string, data: object, options?: { [key: string]: any }) {
-  return request<Record<string, any>>(`/mj/account/${id}/update-reconnect`, {
+  return request<API.ReturnMessage>(`/mj/account/${id}/update-reconnect`, {
     method: 'PUT',
     data: data,
     ...(options || {}),
@@ -132,7 +78,7 @@ export async function updateAndReconnect(id: string, data: object, options?: { [
 
 /**  DELETE /mj/account/{id}/delete */
 export async function deleteAccount(id: string, options?: { [key: string]: any }) {
-  return request<Record<string, any>>(`/mj/account/${id}/delete`, {
+  return request<API.ReturnMessage>(`/mj/account/${id}/delete`, {
     method: 'DELETE',
     ...(options || {}),
   });
