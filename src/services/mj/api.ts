@@ -15,9 +15,11 @@ export async function outLogin(options?: { [key: string]: any }) {
   return request<API.ReturnMessage>('/mj/admin/logout', {
     method: 'POST',
     ...(options || {}),
+  }).then((response) => {
+    localStorage.removeItem('mj-api-secret'); // 删除保存的密码
+    return response;
   });
 }
-
 
 /** 登录接口 POST /mj/admin/login */
 export async function login(body: API.LoginParams, options?: { [key: string]: any }) {
@@ -28,6 +30,12 @@ export async function login(body: API.LoginParams, options?: { [key: string]: an
     },
     data: body,
     ...(options || {}),
+  }).then((response) => {
+    if (response.code === 1) {
+      // 这个判断根据你的真实返回结果来确定
+      localStorage.setItem('mj-api-secret', <string>body.password); // 存储密码
+    }
+    return response;
   });
 }
 /**  MJ 接口 */
@@ -68,7 +76,11 @@ export async function updateAccount(id: string, data: object, options?: { [key: 
 }
 
 /**  PUT /mj/account/{id}/update-reconnect */
-export async function updateAndReconnect(id: string, data: object, options?: { [key: string]: any }) {
+export async function updateAndReconnect(
+  id: string,
+  data: object,
+  options?: { [key: string]: any },
+) {
   return request<API.ReturnMessage>(`/mj/account/${id}/update-reconnect`, {
     method: 'PUT',
     data: data,

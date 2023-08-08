@@ -4,9 +4,21 @@ import defaultSettings from './defaultSettings';
 import proxy from './proxy';
 import routes from './routes';
 
-const { REACT_APP_ENV = 'dev' } = process.env;
+const { REACT_APP_ENV = 'dev', UMI_APP_MJ_PREFIX } = process.env;
 
 export default defineConfig({
+  /**
+   * @name 开启 base 前缀配置
+   * @description base 配置允许你为应用程序设置路由前缀
+   * @doc https://umijs.org/docs/api/config#base
+   */
+  base: UMI_APP_MJ_PREFIX,
+  /**
+   * @name  publicPath 静态资源配置
+   * @description publicPath 配置构建后的静态资源存放位置
+   * @doc https://umijs.org/docs/api/config#publicPath
+   */
+  publicPath: UMI_APP_MJ_PREFIX + '/',
   /**
    * @name 开启 hash 模式
    * @description 让 build 之后的产物包含 hash 后缀。通常用于增量发布和避免浏览器加载缓存。
@@ -124,7 +136,7 @@ export default defineConfig({
    */
   headScripts: [
     // 解决首次加载时白屏的问题
-    { src: '/scripts/loading.js', async: true },
+    { src: UMI_APP_MJ_PREFIX + '/scripts/loading.js', async: true },
   ],
   //================ pro 插件配置 =================
   presets: ['umi-presets-pro'],
