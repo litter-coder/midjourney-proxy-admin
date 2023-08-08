@@ -41,6 +41,11 @@ export default [
     component: './Task/List',
   },
   {
+    name: 'api-doc',
+    icon: 'crown',
+    redirect: '/doc.html',
+  },
+  {
     path: '/',
     redirect: '/welcome',
   },

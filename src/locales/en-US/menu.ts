@@ -24,6 +24,7 @@ export default {
   'menu.list': 'List',
   'menu.list.table-list': 'Search Table',
   'menu.list.account-list': 'Account Manager',
+  'menu.list.api-doc': 'API DOC',
   'menu.task-list': 'Task Search',
   'menu.list.basic-list': 'Basic List',
   'menu.list.card-list': 'Card List',

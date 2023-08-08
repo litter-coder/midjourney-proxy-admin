@@ -7,6 +7,11 @@ export async function currentUser(options?: { [key: string]: any }) {
   return request<API.CurrentUser>('/mj/admin/current', {
     method: 'GET',
     ...(options || {}),
+  }).then((response) => {
+    if (response && response.apiSecret) {
+      localStorage.setItem('mj-api-secret', response.apiSecret);
+    }
+    return response;
   });
 }
 

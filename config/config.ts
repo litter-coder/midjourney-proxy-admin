@@ -13,6 +13,7 @@ export default defineConfig({
    * @doc https://umijs.org/docs/api/config#base
    */
   base: UMI_APP_MJ_PREFIX,
+  esbuildMinifyIIFE: true,
   /**
    * @name  publicPath 静态资源配置
    * @description publicPath 配置构建后的静态资源存放位置
