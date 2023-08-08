@@ -1,6 +1,6 @@
 import ColumnBuilder from '@/pages/AccountList/components/ColumnBuilder';
-import AddContent from '@/pages/AccountList/components/contents/AddContent ';
-import MyModal from '@/pages/AccountList/components/Modal';
+import AddContent from '@/pages/AccountList/components/contents/AddContent';
+import MyModal from '@/pages/components/Modal';
 import { createAccount, queryAccount, updateAccount, updateAndReconnect } from '@/services/mj/api';
 import { useIntl } from '@@/exports';
 import { ReloadOutlined, UserAddOutlined } from '@ant-design/icons';

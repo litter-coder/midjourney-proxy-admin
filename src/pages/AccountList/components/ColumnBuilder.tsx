@@ -1,5 +1,5 @@
-import EditContent from '@/pages/AccountList/components/contents/EditContent ';
-import MoreContent from '@/pages/AccountList/components/contents/MoreContent ';
+import EditContent from '@/pages/AccountList/components/contents/EditContent';
+import MoreContent from '@/pages/AccountList/components/contents/MoreContent';
 import ReconnectContent from '@/pages/AccountList/components/contents/ReconnectContent';
 import { EditOutlined, ToolOutlined } from '@ant-design/icons';
 import { Button, FormInstance, Space, Tag, Tooltip } from 'antd';
