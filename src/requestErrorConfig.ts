@@ -1,6 +1,7 @@
 ﻿import type { RequestOptions } from '@@/plugin-request/request';
 import type { RequestConfig } from '@umijs/max';
 import { message, notification } from 'antd';
+import { useModel } from 'umi';
 
 const MJ_API_SECRET = process.env.UMI_APP_MJ_API_SECRET || '';
 
@@ -90,7 +91,6 @@ export const errorConfig: RequestConfig = {
   // 请求拦截器
   requestInterceptors: [
     (config: RequestOptions) => {
-      // 拦截请求配置，进行个性化处理。
       config.headers = {
         ...config.headers,
         'mj-api-secret': MJ_API_SECRET, // 你的自定义头部

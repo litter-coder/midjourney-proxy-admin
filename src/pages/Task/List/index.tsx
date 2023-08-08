@@ -1,4 +1,4 @@
-import { queryTask } from '@/services/ant-design-pro/api';
+import { queryTask } from '@/services/mj/api';
 import { useIntl } from '@@/exports';
 import { PageContainer } from '@ant-design/pro-components';
 import { Button, Card, Col, Pagination, Row, Space, Table, Tag, Progress } from 'antd';
