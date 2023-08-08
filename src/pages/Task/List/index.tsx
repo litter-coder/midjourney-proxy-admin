@@ -1,7 +1,7 @@
 import { queryTask } from '@/services/mj/api';
 import { useIntl } from '@@/exports';
 import { PageContainer } from '@ant-design/pro-components';
-import { Button, Card, Col, Pagination, Row, Space, Table, Tag, Progress, Form } from 'antd';
+import { Button, Card, Col, Pagination, Row, Space, Table, Tag, Progress, Form, Tooltip } from 'antd';
 import { ReloadOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import styles from './index.less';
@@ -125,7 +125,10 @@ const List: React.FC = () => {
     {
       title: '任务描述',
       dataIndex: 'description',
-      ellipsis: true
+      ellipsis: true, 
+      render: (text, record) => {
+        return <Tooltip title={text}>{text}</Tooltip>
+      }
     },
   ];
 

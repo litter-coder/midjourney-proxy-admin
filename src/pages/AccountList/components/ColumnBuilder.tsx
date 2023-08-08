@@ -28,7 +28,7 @@ const ColumnBuilder = ({
       title: '账号名',
       dataIndex: 'name',
       render: (text: string, record: Record<string, any>) => (
-        <a onClick={() => openModal('账户信息', <MoreContent record={record} />, null, 1000)}>
+        <a onClick={() => openModal('账户信息 - ' + record.name, <MoreContent record={record} />, null, 1000)}>
           {text}
         </a>
       ),

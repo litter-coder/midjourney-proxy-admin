@@ -16,9 +16,9 @@ const MoreContent = ({ record }: { record: Record<string, any> }) => {
     <>
       <Card type="inner" title="账户信息" style={{ margin: '10px' }}>
         <Descriptions column={3}>
-          <Descriptions.Item label="账号名">{record.name}</Descriptions.Item>
           <Descriptions.Item label="服务器ID">{record.guildId}</Descriptions.Item>
           <Descriptions.Item label="频道ID">{record.channelId}</Descriptions.Item>
+          <Descriptions.Item label="MJ私信ID">{record.mjBotChannelId}</Descriptions.Item>
           <Descriptions.Item label="用户Token">
             <Tooltip title={record.userToken}>
               {(record.userToken && record.userToken.substring(0, 12) + '...') || '未提供'}

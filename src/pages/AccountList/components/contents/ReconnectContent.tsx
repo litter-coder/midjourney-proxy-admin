@@ -24,22 +24,25 @@ const ReconnectContent = ({
       wrapperCol={{ span: 16 }}
       onFinish={onSubmit}
     >
-        <Card type="inner">
-      <Form.Item label="id" name="id" hidden>
-        <Input />
-      </Form.Item>
-      <Form.Item label="用户Token" name="userToken">
-        <Input />
-      </Form.Item>
-      <Form.Item label="用户SessionId" name="sessionId">
-        <Input />
-      </Form.Item>
-      <Form.Item label="用户UserAgent" name="userAgent">
-        <Input />
-      </Form.Item>
-      <Form.Item label="是否可用" name="enable" valuePropName="checked">
-        <Switch />
-      </Form.Item>
+      <Card type="inner">
+        <Form.Item label="id" name="id" hidden>
+          <Input />
+        </Form.Item>
+        <Form.Item label="用户Token" name="userToken">
+          <Input />
+        </Form.Item>
+        <Form.Item label="MJ私信ID" name="mjBotChannelId">
+          <Input />
+        </Form.Item>
+        <Form.Item label="用户SessionId" name="sessionId">
+          <Input />
+        </Form.Item>
+        <Form.Item label="用户UserAgent" name="userAgent">
+          <Input />
+        </Form.Item>
+        <Form.Item label="是否可用" name="enable" valuePropName="checked">
+          <Switch />
+        </Form.Item>
       </Card>
     </Form>
   );

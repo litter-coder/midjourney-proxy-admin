@@ -35,8 +35,8 @@ const TaskContent = ({ record }: { record: Record<string, any> }) => {
   };
 
   const getTooltip = (text: string) => {
-    if (!text || text.length < 20) return text;
-    return <Tooltip title={text}>{(text.substring(0, 30) + "...")}</Tooltip>
+    if (!text || text.length < 40) return text;
+    return <Tooltip title={text}>{(text.substring(0, 40) + "...")}</Tooltip>
   };
 
   const getImage = (url: string) => {
@@ -79,8 +79,8 @@ const TaskContent = ({ record }: { record: Record<string, any> }) => {
           <Descriptions.Item label="实例ID">{record['properties']['discordInstanceId']}</Descriptions.Item>
           <Descriptions.Item label="消息ID">{record['properties']['messageId']}</Descriptions.Item>
           <Descriptions.Item label="最终提示词">{getTooltip(record['properties']['finalPrompt'])}</Descriptions.Item>
-          <Descriptions.Item label="通知地址">{record['properties']['notifyHook']}</Descriptions.Item>
-          <Descriptions.Item label="动作ID">{record['properties']['customId']}</Descriptions.Item>
+          <Descriptions.Item label="通知地址">{getTooltip(record['properties']['notifyHook'])}</Descriptions.Item>
+          <Descriptions.Item label="动作ID">{getTooltip(record['properties']['customId'])}</Descriptions.Item>
           <Descriptions.Item label="Moadl确认">{getModalTag(record['properties']['needModel'])}</Descriptions.Item>
           <Descriptions.Item label="图片seed">{record['properties']['imageSeed']}</Descriptions.Item>
         </Descriptions>
