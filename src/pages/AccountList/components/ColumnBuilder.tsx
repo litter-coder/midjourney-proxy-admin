@@ -1,5 +1,5 @@
-import EditContent from '@/pages/AccountList/components/contents/EditContent ';
-import MoreContent from '@/pages/AccountList/components/contents/MoreContent ';
+import EditContent from '@/pages/AccountList/components/contents/EditContent';
+import MoreContent from '@/pages/AccountList/components/contents/MoreContent';
 import ReconnectContent from '@/pages/AccountList/components/contents/ReconnectContent';
 import { EditOutlined, ToolOutlined } from '@ant-design/icons';
 import { Button, FormInstance, Space, Tag, Tooltip } from 'antd';
@@ -28,7 +28,7 @@ const ColumnBuilder = ({
       title: '账号名',
       dataIndex: 'name',
       render: (text: string, record: Record<string, any>) => (
-        <a onClick={() => openModal('账户信息', <MoreContent record={record} />, null, 1000)}>
+        <a onClick={() => openModal('账户信息 - ' + record.name, <MoreContent record={record} />, null, 1000)}>
           {text}
         </a>
       ),

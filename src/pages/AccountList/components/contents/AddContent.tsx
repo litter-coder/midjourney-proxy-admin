@@ -42,14 +42,20 @@ const AddContent = ({
             <Form.Item
               label="频道ID"
               name="channelId"
-              rules={[{ required: true, message: '请输入服务器ID' }]}
+              rules={[{ required: true, message: '请输入频道ID' }]}
             >
               <Input />
             </Form.Item>
             <Form.Item
               label="用户Token"
               name="userToken"
-              rules={[{ required: true, message: '请输入服务器ID' }]}
+              rules={[{ required: true, message: '请输入用户Token' }]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              label="MJ私信ID"
+              name="mjBotChannelId"
             >
               <Input />
             </Form.Item>

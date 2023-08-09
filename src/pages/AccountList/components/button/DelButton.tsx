@@ -1,4 +1,4 @@
-import { deleteAccount } from '@/services/ant-design-pro/api';
+import { deleteAccount } from '@/services/mj/api';
 import { Button, Popconfirm } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';

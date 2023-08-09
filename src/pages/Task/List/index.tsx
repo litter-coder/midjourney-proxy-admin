@@ -1,36 +1,62 @@
-import { queryTask } from '@/services/ant-design-pro/api';
-import { useIntl } from '@@/exports';
+import { queryTask } from '@/services/mj/api';
 import { PageContainer } from '@ant-design/pro-components';
-import { Button, Card, Col, Pagination, Row, Space, Table, Tag, Progress } from 'antd';
+import { Button, Card, Col, Pagination, Row, Space, Table, Tag, Progress, Form, Tooltip } from 'antd';
+import { ReloadOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import styles from './index.less';
+import TaskContent from '@/pages/Task/components/TaskContent';
+import MyModal from '@/pages/components/Modal';
 
 const List: React.FC = () => {
   // 初始化 dataSource 状态为空数组
   const [dataSource, setDataSource] = useState([]);
-
-  const intl = useIntl();
-  const defaultHeader = intl.formatMessage({
-    id: 'menu.task-list',
-    defaultMessage: 'Task Table',
-  });
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalContent, setModalContent] = useState({});
+  const [title, setTitle] = useState<string>('');
+  const [footer, setFooter] = useState({});
+  const [modalWidth, setModalWidth] = useState(1000);
+  const [refresh, setRefresh] = useState(0);
+  const [form] = Form.useForm();
 
   useEffect(() => {
-    const fetchData = async () => {
-      const res = await queryTask({});
-      // 使用状态 setter 函数更新 dataSource
-      setDataSource(res.content);
-    };
-
     fetchData();
-  }, []);
+  }, [refresh]);
+
+  const triggerRefresh = () => {
+    setRefresh(refresh + 1);
+  };
+
+  const fetchData = async () => {
+    const res = await queryTask({});
+    setDataSource(res.content);
+  };
+
+  const hideModal = () => {
+    setModalContent({});
+    setFooter({});
+    setModalVisible(false);
+  };
+
+  const openModal = (title: string, content: any, footer: any, modalWidth: number) => {
+    form.resetFields();
+    setTitle(title);
+    setModalContent(content);
+    setFooter(footer);
+    setModalWidth(modalWidth);
+    setModalVisible(true);
+  };
 
   const columns = [
     {
       title: '任务ID',
       dataIndex: 'id',
       width: 200,
-      align: 'center'
+      align: 'center',
+      render: (text, record) => (
+        <a onClick={() => openModal('任务信息', <TaskContent record={record} />, null, 1100)}>
+          {text}
+        </a>
+      ),
     },
     {
       title: '类型',
@@ -92,16 +118,32 @@ const List: React.FC = () => {
     {
       title: '任务描述',
       dataIndex: 'description',
-      ellipsis: true
+      ellipsis: true,
+      render: (text, record) => {
+        return <Tooltip title={text}>{text}</Tooltip>
+      }
     },
   ];
 
-  const searchLayout = () => { };
-  const afterLayout = () => {
+  const beforeLayout = () => {
     return (
       <Row>
         <Col xs={24} sm={12}>
         </Col>
+        <Col xs={24} sm={12} className={styles.tableToolbar}>
+          <Space>
+            <Button onClick={triggerRefresh} icon={<ReloadOutlined />}>
+              刷新
+            </Button>
+          </Space>
+        </Col>
+      </Row>
+    );
+  };
+  const afterLayout = () => {
+    return (
+      <Row>
+        <Col xs={24} sm={12}></Col>
         <Col xs={24} sm={12} className={styles.tableToolbar}>
           <Pagination></Pagination>
         </Col>
@@ -111,11 +153,19 @@ const List: React.FC = () => {
 
   return (
     <PageContainer>
-      {searchLayout()}
       <Card>
+        {beforeLayout()}
         <Table dataSource={dataSource} columns={columns} pagination={false} rowKey="id" />
         {afterLayout()}
       </Card>
+      <MyModal
+        title={title}
+        modalVisible={modalVisible}
+        hideModal={hideModal}
+        modalContent={modalContent}
+        footer={footer}
+        modalWidth={modalWidth}
+      ></MyModal>
     </PageContainer>
   );
 };

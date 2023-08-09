@@ -1,4 +1,4 @@
-import { refreshAccount } from '@/services/ant-design-pro/api';
+import { refreshAccount } from '@/services/mj/api';
 import { Button, Popconfirm } from 'antd';
 import { SyncOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';

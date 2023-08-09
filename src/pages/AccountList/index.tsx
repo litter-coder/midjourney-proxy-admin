@@ -1,8 +1,7 @@
 import ColumnBuilder from '@/pages/AccountList/components/ColumnBuilder';
-import AddContent from '@/pages/AccountList/components/contents/AddContent ';
-import MyModal from '@/pages/AccountList/components/Modal';
-import { createAccount, queryAccount, updateAccount, updateAndReconnect } from '@/services/ant-design-pro/api';
-import { useIntl } from '@@/exports';
+import AddContent from '@/pages/AccountList/components/contents/AddContent';
+import MyModal from '@/pages/components/Modal';
+import { createAccount, queryAccount, updateAccount, updateAndReconnect } from '@/services/mj/api';
 import { ReloadOutlined, UserAddOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-components';
 import { Button, Card, Col, Form, Pagination, Row, Space, Table } from 'antd';
@@ -48,12 +47,6 @@ const AccountList: React.FC = () => {
     );
   };
 
-  const intl = useIntl();
-  const defaultHeader = intl.formatMessage({
-    id: 'menu.list.account-list',
-    defaultMessage: 'Account Table',
-  });
-
   // 定义一个 triggerRefresh 函数，使其增加 refresh 的值，从而触发重新渲染
   const triggerRefreshAccount = () => {
     setRefresh(refresh + 1);
@@ -90,7 +83,6 @@ const AccountList: React.FC = () => {
     return (
       <Row>
         <Col xs={24} sm={12}>
-          {defaultHeader}
         </Col>
         <Col xs={24} sm={12} className={styles.tableToolbar}>
           <Space>
