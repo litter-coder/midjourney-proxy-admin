@@ -1,5 +1,4 @@
 import { queryTask } from '@/services/mj/api';
-import { useIntl } from '@@/exports';
 import { PageContainer } from '@ant-design/pro-components';
 import { Button, Card, Col, Pagination, Row, Space, Table, Tag, Progress, Form, Tooltip } from 'antd';
 import { ReloadOutlined } from '@ant-design/icons';
@@ -18,12 +17,6 @@ const List: React.FC = () => {
   const [modalWidth, setModalWidth] = useState(1000);
   const [refresh, setRefresh] = useState(0);
   const [form] = Form.useForm();
-
-  const intl = useIntl();
-  const defaultHeader = intl.formatMessage({
-    id: 'menu.task-list',
-    defaultMessage: 'Task Table',
-  });
 
   useEffect(() => {
     fetchData();
@@ -60,7 +53,7 @@ const List: React.FC = () => {
       width: 200,
       align: 'center',
       render: (text, record) => (
-        <a onClick={() => openModal('任务信息', <TaskContent record={record} />, null, 1000)}>
+        <a onClick={() => openModal('任务信息', <TaskContent record={record} />, null, 1100)}>
           {text}
         </a>
       ),
@@ -125,7 +118,7 @@ const List: React.FC = () => {
     {
       title: '任务描述',
       dataIndex: 'description',
-      ellipsis: true, 
+      ellipsis: true,
       render: (text, record) => {
         return <Tooltip title={text}>{text}</Tooltip>
       }
@@ -136,7 +129,6 @@ const List: React.FC = () => {
     return (
       <Row>
         <Col xs={24} sm={12}>
-          {defaultHeader}
         </Col>
         <Col xs={24} sm={12} className={styles.tableToolbar}>
           <Space>
@@ -161,8 +153,8 @@ const List: React.FC = () => {
 
   return (
     <PageContainer>
-      {beforeLayout()}
       <Card>
+        {beforeLayout()}
         <Table dataSource={dataSource} columns={columns} pagination={false} rowKey="id" />
         {afterLayout()}
       </Card>

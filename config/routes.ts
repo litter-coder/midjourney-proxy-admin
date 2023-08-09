@@ -17,7 +17,7 @@ export default [
     routes: [
       {
         name: 'login',
-        path: '/user/login',
+        path: 'login',
         component: './User/Login',
       },
     ],
@@ -29,6 +29,10 @@ export default [
     component: './Welcome',
   },
   {
+    path: '/',
+    redirect: '/welcome',
+  },
+  {
     name: 'list.account-list',
     icon: 'crown',
     path: '/account',
@@ -37,17 +41,8 @@ export default [
   {
     name: 'task-list',
     icon: 'bars',
-    path: '/task/list',
+    path: '/task',
     component: './Task/List',
-  },
-  {
-    name: 'api-doc',
-    icon: 'crown',
-    redirect: '/doc.html',
-  },
-  {
-    path: '/',
-    redirect: '/welcome',
   },
   {
     path: '*',

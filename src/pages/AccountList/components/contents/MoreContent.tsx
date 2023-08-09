@@ -21,17 +21,17 @@ const MoreContent = ({ record }: { record: Record<string, any> }) => {
           <Descriptions.Item label="MJ私信ID">{record.mjBotChannelId}</Descriptions.Item>
           <Descriptions.Item label="用户Token">
             <Tooltip title={record.userToken}>
-              {(record.userToken && record.userToken.substring(0, 12) + '...') || '未提供'}
+              {(record.userToken && record.userToken.substring(0, 20) + '...') || '未提供'}
             </Tooltip>
           </Descriptions.Item>
           <Descriptions.Item label="用户SessionId">
             <Tooltip title={record.sessionId}>
-              {(record.sessionId && record.sessionId.substring(0, 12) + '...') || '未提供'}
+              {(record.sessionId && record.sessionId.substring(0, 20) + '...') || '未提供'}
             </Tooltip>
           </Descriptions.Item>
           <Descriptions.Item label="用户UserAgent">
             <Tooltip title={record.userAgent}>
-              {(record.userAgent && record.userAgent.substring(0, 12) + '...') || '未提供'}
+              {(record.userAgent && record.userAgent.substring(0, 20) + '...') || '未提供'}
             </Tooltip>
           </Descriptions.Item>
         </Descriptions>

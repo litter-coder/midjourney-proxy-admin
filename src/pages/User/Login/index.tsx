@@ -164,7 +164,7 @@ const Login: React.FC = () => {
             minWidth: 280,
             maxWidth: '75vw',
           }}
-          logo={<img alt="logo" src={process.env.UMI_APP_MJ_PREFIX + '/logo.svg'} />}
+          logo={<img alt="logo" src={'/logo.svg'} />}
           title="Midjourney Proxy Admin"
           subTitle={intl.formatMessage({ id: 'pages.layouts.userLayout.title' })}
           initialValues={{

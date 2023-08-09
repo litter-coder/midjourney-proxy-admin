@@ -35,8 +35,8 @@ const TaskContent = ({ record }: { record: Record<string, any> }) => {
   };
 
   const getTooltip = (text: string) => {
-    if (!text || text.length < 40) return text;
-    return <Tooltip title={text}>{(text.substring(0, 40) + "...")}</Tooltip>
+    if (!text || text.length < 35) return text;
+    return <Tooltip title={text}>{(text.substring(0, 35) + "...")}</Tooltip>
   };
 
   const getImage = (url: string) => {
