@@ -65,14 +65,8 @@ npm install
 配置文件在根目录的`.env`中：
 
 ```shell
-# 账户名
-ADMIN_NAME=admin
-# 密码
-PASS_WORD=123456
 # MJ-SERVER
 MJ_SERVER=http://127.0.0.1:8080
-# mj.api-secret
-UMI_APP_MJ_API_SECRET=123456
 ```
 
 ## 3.运行

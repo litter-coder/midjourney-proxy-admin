@@ -1,5 +1,6 @@
 import { Card, Col, Form, FormInstance, Input, InputNumber, Row } from 'antd';
 import { useEffect } from 'react';
+const { TextArea } = Input;
 
 const AddContent = ({
   form,
@@ -68,15 +69,18 @@ const AddContent = ({
           </Card>
         </Col>
         <Col span={12}>
-          <Card type="inner" title="并发信息">
+          <Card type="inner" title="其他信息">
             <Form.Item label="并发数" name="coreSize">
               <InputNumber min={1} max={12} />
             </Form.Item>
             <Form.Item label="等待队列" name="queueSize">
               <InputNumber min={1} />
             </Form.Item>
-            <Form.Item label="任务超时时间(分钟)" name="timeoutMinutes">
-              <InputNumber min={1} />
+            <Form.Item label="任务超时时间" name="timeoutMinutes">
+              <InputNumber min={1} suffix="分钟" />
+            </Form.Item>
+            <Form.Item label="备注说明" name="remark">
+              <TextArea rows={2}/>
             </Form.Item>
           </Card>
         </Col>

@@ -78,6 +78,7 @@ const MoreContent = ({ record }: { record: Record<string, any> }) => {
           </Descriptions.Item>
           <Descriptions.Item label="计费方式">{record['displays']['billedWay']}</Descriptions.Item>
           <Descriptions.Item label="续订时间">{changeDate(record.renewDate)}</Descriptions.Item>
+          <Descriptions.Item label="备注说明">{record.remark}</Descriptions.Item>
         </Descriptions>
       </Card>
     </>

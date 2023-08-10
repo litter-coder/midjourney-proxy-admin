@@ -94,7 +94,7 @@ const ColumnBuilder = ({
                     '修改账户',
                     <EditContent form={form} record={record} onSubmit={handleEdit} />,
                     modalFooter,
-                    500,
+                    550,
                   )
                 }
               />
@@ -108,7 +108,7 @@ const ColumnBuilder = ({
                     '更新账户并重连',
                     <ReconnectContent form={form} record={record} onSubmit={handleReconnect} />,
                     modalFooter,
-                    500,
+                    550,
                   )
                 }
               />
