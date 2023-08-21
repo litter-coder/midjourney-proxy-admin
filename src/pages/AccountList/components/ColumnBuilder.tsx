@@ -1,4 +1,3 @@
-import EditContent from '@/pages/AccountList/components/contents/EditContent';
 import MoreContent from '@/pages/AccountList/components/contents/MoreContent';
 import ReconnectContent from '@/pages/AccountList/components/contents/ReconnectContent';
 import { EditOutlined, ToolOutlined } from '@ant-design/icons';
@@ -81,34 +80,18 @@ const ColumnBuilder = ({
       render: (value: any, record: Record<string, string>) => {
         return (
           <Space>
-
             <SyncButton record={record} onSuccess={triggerRefreshAccount} />
-
-            <Tooltip title="修改账户">
-              <Button
-                key="Edit"
-                type={'primary'}
-                icon={<EditOutlined />}
-                onClick={() =>
-                  openModal(
-                    '修改账户',
-                    <EditContent form={form} record={record} onSubmit={handleEdit} />,
-                    modalFooter,
-                    550,
-                  )
-                }
-              />
-            </Tooltip>
             <Tooltip title="更新账户并重连">
               <Button
                 key="EditAndReconnect"
+                type={'primary'}
                 icon={<ToolOutlined />}
                 onClick={() =>
                   openModal(
                     '更新账户并重连',
                     <ReconnectContent form={form} record={record} onSubmit={handleReconnect} />,
                     modalFooter,
-                    550,
+                    1000,
                   )
                 }
               />

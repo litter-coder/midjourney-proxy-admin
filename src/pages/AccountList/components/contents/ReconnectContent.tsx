@@ -1,5 +1,6 @@
-import { Card, Form, FormInstance, Input, Switch } from 'antd';
+import { Card, Alert, Row, Col, Form, FormInstance, Input, Switch, InputNumber } from 'antd';
 import { useEffect } from 'react';
+const { TextArea } = Input;
 
 const ReconnectContent = ({
   form,
@@ -24,26 +25,47 @@ const ReconnectContent = ({
       wrapperCol={{ span: 16 }}
       onFinish={onSubmit}
     >
-      <Card type="inner">
-        <Form.Item label="id" name="id" hidden>
-          <Input />
-        </Form.Item>
-        <Form.Item label="用户Token" name="userToken">
-          <Input />
-        </Form.Item>
-        <Form.Item label="MJ私信ID" name="mjBotChannelId">
-          <Input />
-        </Form.Item>
-        <Form.Item label="用户SessionId" name="sessionId">
-          <Input />
-        </Form.Item>
-        <Form.Item label="用户UserAgent" name="userAgent">
-          <Input />
-        </Form.Item>
-        <Form.Item label="是否可用" name="enable" valuePropName="checked">
-          <Switch />
-        </Form.Item>
-      </Card>
+      <Row gutter={16}>
+        <Col span={12}>
+          <Card type="inner" title="账户信息">
+            <Form.Item label="id" name="id" hidden>
+              <Input />
+            </Form.Item>
+            <Form.Item label="用户Token" name="userToken" rules={[{ required: true, message: '请输入用户Token' }]}>
+              <Input />
+            </Form.Item>
+            <Form.Item label="MJ私信ID" name="mjBotChannelId">
+              <Input />
+            </Form.Item>
+            <Form.Item label="用户SessionId" name="sessionId">
+              <Input />
+            </Form.Item>
+            <Form.Item label="用户UserAgent" name="userAgent">
+              <Input />
+            </Form.Item>
+            <Form.Item label="是否可用" name="enable" valuePropName="checked">
+              <Switch />
+            </Form.Item>
+          </Card>
+        </Col>
+        <Col span={12}>
+          <Card type="inner" title="其他信息">
+            <Form.Item label="并发数" name="coreSize">
+              <InputNumber min={1} max={12} />
+            </Form.Item>
+            <Form.Item label="等待队列" name="queueSize">
+              <InputNumber min={1} />
+            </Form.Item>
+            <Form.Item label="任务超时时间" name="timeoutMinutes">
+              <InputNumber min={1} suffix="分钟" />
+            </Form.Item>
+            <Form.Item label="备注说明" name="remark">
+              <TextArea rows={2} />
+            </Form.Item>
+          </Card>
+        </Col>
+      </Row>
+      <Alert message="注意：更新账户并重连后，该账户相关未完成的任务（未启动、已提交、窗口等待、执行中）将会丢失！" type="warning" style={{ marginTop: '10px' }}/>
     </Form>
   );
 };
