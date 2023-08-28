@@ -12,7 +12,6 @@ const AddContent = ({
   // 使用 useEffect 来在组件挂载时设置表单的初始值
   useEffect(() => {
     form.setFieldsValue({
-      sessionId: '9c4055428e13bcbf2248a6b36084c5f3',
       userAgent:
         'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36',
       coreSize: 3,
@@ -58,9 +57,6 @@ const AddContent = ({
               label="MJ私信ID"
               name="mjBotChannelId"
             >
-              <Input />
-            </Form.Item>
-            <Form.Item label="用户SessionId" name="sessionId">
               <Input />
             </Form.Item>
             <Form.Item label="用户Agent" name="userAgent">

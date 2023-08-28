@@ -24,11 +24,6 @@ const MoreContent = ({ record }: { record: Record<string, any> }) => {
               {(record.userToken && record.userToken.substring(0, 20) + '...') || '未提供'}
             </Tooltip>
           </Descriptions.Item>
-          <Descriptions.Item label="用户SessionId">
-            <Tooltip title={record.sessionId}>
-              {(record.sessionId && record.sessionId.substring(0, 20) + '...') || '未提供'}
-            </Tooltip>
-          </Descriptions.Item>
           <Descriptions.Item label="用户UserAgent">
             <Tooltip title={record.userAgent}>
               {(record.userAgent && record.userAgent.substring(0, 20) + '...') || '未提供'}

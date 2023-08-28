@@ -37,9 +37,6 @@ const ReconnectContent = ({
             <Form.Item label="MJ私信ID" name="mjBotChannelId">
               <Input />
             </Form.Item>
-            <Form.Item label="用户SessionId" name="sessionId">
-              <Input />
-            </Form.Item>
             <Form.Item label="用户UserAgent" name="userAgent">
               <Input />
             </Form.Item>
