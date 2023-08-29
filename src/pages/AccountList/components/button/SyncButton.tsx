@@ -1,5 +1,5 @@
 import { refreshAccount } from '@/services/mj/api';
-import { Button, Popconfirm } from 'antd';
+import { Button, Popconfirm, notification } from 'antd';
 import { SyncOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
 
@@ -11,6 +11,7 @@ interface SyncButtonProps {
 const SyncButton: React.FC<SyncButtonProps> = ({ record, onSuccess }) => {
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
+  const [api, contextHolder] = notification.useNotification();
 
   const showPopconfirm = () => {
     setOpen(true);
@@ -18,12 +19,20 @@ const SyncButton: React.FC<SyncButtonProps> = ({ record, onSuccess }) => {
 
   const handleOk = async () => {
     setConfirmLoading(true);
-
     try {
-      await refreshAccount(record.id);
+      const res = await refreshAccount(record.id);
       setOpen(false);
-      if (onSuccess) {
+      if (res.code == 1) {
+        api.success({
+          message: 'success',
+          description: "同步信息成功"
+        });
         onSuccess();
+      } else {
+        api.error({
+          message: 'error',
+          description: res.description
+        });
       }
     } catch (error) {
       console.error(error);
@@ -45,6 +54,7 @@ const SyncButton: React.FC<SyncButtonProps> = ({ record, onSuccess }) => {
       okButtonProps={{ loading: confirmLoading }}
       onCancel={handleCancel}
     >
+      {contextHolder}
       <Button icon={<SyncOutlined />} onClick={showPopconfirm}>
         同步
       </Button>

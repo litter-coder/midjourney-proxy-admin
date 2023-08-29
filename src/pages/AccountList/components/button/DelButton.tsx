@@ -1,5 +1,5 @@
 import { deleteAccount } from '@/services/mj/api';
-import { Button, Popconfirm } from 'antd';
+import { Button, Popconfirm, notification } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
 
@@ -12,6 +12,7 @@ interface DelButtonProps {
 const DelButton: React.FC<DelButtonProps> = ({ record, onSuccess }) => {
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
+  const [api, contextHolder] = notification.useNotification();
 
   const showPopconfirm = () => {
     setOpen(true);
@@ -19,13 +20,20 @@ const DelButton: React.FC<DelButtonProps> = ({ record, onSuccess }) => {
 
   const handleOk = async () => {
     setConfirmLoading(true);
-
-    // 假设你有一个名为deleteRecord的函数来执行API删除操作
     try {
-      await deleteAccount(record.id);
+      const res = await deleteAccount(record.id);
       setOpen(false);
-      if (onSuccess) {
+      if (res.code == 1) {
+        api.success({
+          message: 'success',
+          description: "账户删除成功"
+        });
         onSuccess();
+      } else {
+        api.error({
+          message: 'error',
+          description: res.description
+        });
       }
     } catch (error) {
       console.error(error);
@@ -47,6 +55,7 @@ const DelButton: React.FC<DelButtonProps> = ({ record, onSuccess }) => {
       okButtonProps={{ loading: confirmLoading }}
       onCancel={handleCancel}
     >
+      {contextHolder}
       <Button danger icon={<DeleteOutlined />} onClick={showPopconfirm}>
       </Button>
     </Popconfirm>

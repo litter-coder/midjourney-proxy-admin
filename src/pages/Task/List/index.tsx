@@ -10,6 +10,7 @@ import MyModal from '@/pages/components/Modal';
 const List: React.FC = () => {
   // 初始化 dataSource 状态为空数组
   const [dataSource, setDataSource] = useState([]);
+  const [pagination, setPagination] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
   const [modalContent, setModalContent] = useState({});
   const [title, setTitle] = useState<string>('');
@@ -18,17 +19,23 @@ const List: React.FC = () => {
   const [refresh, setRefresh] = useState(0);
   const [form] = Form.useForm();
 
+
   useEffect(() => {
-    fetchData();
+    fetchData({});
   }, [refresh]);
 
   const triggerRefresh = () => {
     setRefresh(refresh + 1);
   };
 
-  const fetchData = async () => {
-    const res = await queryTask({});
+  const fetchData = async (params: any) => {
+    const res = await queryTask(params);
+    setPagination({ total: res.totalElements, size: res.size, current: res.number + 1 });
     setDataSource(res.content);
+  };
+
+  const pageChange = async (page: number, pageSize: number) => {
+    fetchData({ pageNumber: page - 1, pageSize: pageSize });
   };
 
   const hideModal = () => {
@@ -145,7 +152,7 @@ const List: React.FC = () => {
       <Row>
         <Col xs={24} sm={12}></Col>
         <Col xs={24} sm={12} className={styles.tableToolbar}>
-          <Pagination></Pagination>
+          <Pagination onChange={pageChange} total={pagination.total} current={pagination.current} size={pagination.size} />
         </Col>
       </Row>
     );

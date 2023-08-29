@@ -29,6 +29,9 @@ const MoreContent = ({ record }: { record: Record<string, any> }) => {
               {(record.userAgent && record.userAgent.substring(0, 20) + '...') || '未提供'}
             </Tooltip>
           </Descriptions.Item>
+          <Descriptions.Item label="remix自动提交">
+            {getStatusTag(record.remixAutoSubmit, '是', '否')}
+          </Descriptions.Item>
         </Descriptions>
       </Card>
 

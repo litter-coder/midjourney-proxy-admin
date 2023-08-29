@@ -43,6 +43,9 @@ const ReconnectContent = ({
             <Form.Item label="是否可用" name="enable" valuePropName="checked">
               <Switch />
             </Form.Item>
+            <Form.Item label="remix自动提交" name="remixAutoSubmit" valuePropName="checked">
+              <Switch />
+            </Form.Item>
           </Card>
         </Col>
         <Col span={12}>

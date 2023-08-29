@@ -65,15 +65,6 @@ export async function refreshAccount(id: string, options?: { [key: string]: any 
   });
 }
 
-/**  PUT /mj/account/{id}/update */
-export async function updateAccount(id: string, data: object, options?: { [key: string]: any }) {
-  return request<API.ReturnMessage>(`/mj/account/${id}/update`, {
-    method: 'PUT',
-    data: data,
-    ...(options || {}),
-  });
-}
-
 /**  PUT /mj/account/{id}/update-reconnect */
 export async function updateAndReconnect(
   id: string,
