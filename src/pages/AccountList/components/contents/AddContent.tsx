@@ -31,7 +31,7 @@ const AddContent = ({
     >
       <Row gutter={16}>
         <Col span={12}>
-          <Card type="inner" title="账户信息">
+          <Card type="inner" title="账号信息">
             <Form.Item
               label="服务器ID"
               name="guildId"

@@ -86,6 +86,20 @@ export async function deleteAccount(id: string, options?: { [key: string]: any }
   });
 }
 
+export async function accountChangeVersion(id: string, version: string, options?: { [key: string]: any }) {
+  return request<API.ReturnMessage>(`/mj/account/${id}/change-version?version=${version}`, {
+    method: 'POST',
+    ...(options || {}),
+  });
+}
+
+export async function accountAction(id: string, customId: string, options?: { [key: string]: any }) {
+  return request<API.ReturnMessage>(`/mj/account/${id}/action?customId=${customId}`, {
+    method: 'POST',
+    ...(options || {}),
+  });
+}
+
 export async function queryTask(data: object, options?: { [key: string]: any }) {
   return request<Record<string, any>>('/mj/task-admin/query', {
     method: 'POST',

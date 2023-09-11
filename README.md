@@ -3,17 +3,16 @@
 
 # 主要功能
 
-- [x] 支持MJ账户的增删改查功能
-- [x] 支持MJ账户的详细信息查询和账户同步操作
-- [x] 支持MJ账户的并发队列设置
+- [x] 支持MJ账号的增删改查功能
+- [x] 支持MJ账号的详细信息查询和账号同步操作
+- [x] 支持MJ账号的并发队列设置
+- [x] 支持MJ的账号settings设置
 - [x] 支持MJ的任务查询
 
 # 后续计划
 
 - [ ] 任务查询功能优化
-- [ ] 支持MJ的账户settings修改
 - [ ] 支持MJ的队列内容查询
-- [ ] ...
 
 # 使用示例
 
@@ -25,21 +24,25 @@
 
 <img src="https://raw.githubusercontent.com/litter-coder/midjourney-proxy-admin/main/docs/welcome.png" alt="欢迎页"/>
 
-③账户管理
+③账号管理
 
-<img src="https://raw.githubusercontent.com/litter-coder/midjourney-proxy-admin/main/docs/account.png" alt="账户管理"/>
+<img src="https://raw.githubusercontent.com/litter-coder/midjourney-proxy-admin/main/docs/account.png" alt="账号管理"/>
 
-④添加账户
+④添加账号
 
-<img src="https://raw.githubusercontent.com/litter-coder/midjourney-proxy-admin/main/docs/account_add.png" alt="添加账户"/>
+<img src="https://raw.githubusercontent.com/litter-coder/midjourney-proxy-admin/main/docs/account_add.png" alt="添加账号"/>
 
-⑤账户详情
+⑤账号详情
 
-<img src="https://raw.githubusercontent.com/litter-coder/midjourney-proxy-admin/main/docs/account_info.png" alt="账户详情"/>
+<img src="https://raw.githubusercontent.com/litter-coder/midjourney-proxy-admin/main/docs/account_info.png" alt="账号详情"/>
 
 ⑥任务列表
 
 <img src="https://raw.githubusercontent.com/litter-coder/midjourney-proxy-admin/main/docs/task.png" alt="任务列表"/>
+
+7 任务详情
+
+<img src="https://raw.githubusercontent.com/litter-coder/midjourney-proxy-admin/main/docs/task_info.png" alt="任务列表"/>
 
 # 部署方式
 

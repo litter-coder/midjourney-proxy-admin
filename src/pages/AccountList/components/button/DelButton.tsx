@@ -26,7 +26,7 @@ const DelButton: React.FC<DelButtonProps> = ({ record, onSuccess }) => {
       if (res.code == 1) {
         api.success({
           message: 'success',
-          description: "账户删除成功"
+          description: "账号删除成功"
         });
         onSuccess();
       } else {
@@ -48,8 +48,8 @@ const DelButton: React.FC<DelButtonProps> = ({ record, onSuccess }) => {
 
   return (
     <Popconfirm
-      title="删除账户"
-      description="确认删除该账户？"
+      title="删除账号"
+      description="确认删除该账号？"
       open={open}
       onConfirm={handleOk}
       okButtonProps={{ loading: confirmLoading }}

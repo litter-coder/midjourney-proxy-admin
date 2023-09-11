@@ -27,7 +27,7 @@ const ReconnectContent = ({
     >
       <Row gutter={16}>
         <Col span={12}>
-          <Card type="inner" title="账户信息">
+          <Card type="inner" title="账号信息">
             <Form.Item label="id" name="id" hidden>
               <Input />
             </Form.Item>
@@ -65,7 +65,7 @@ const ReconnectContent = ({
           </Card>
         </Col>
       </Row>
-      <Alert message="注意：更新账户并重连后，该账户相关未完成的任务（未启动、已提交、窗口等待、执行中）将会丢失！" type="warning" style={{ marginTop: '10px' }}/>
+      <Alert message="注意：更新账号并重连后，该账号相关未完成的任务（未启动、已提交、窗口等待、执行中）将会丢失！" type="warning" style={{ marginTop: '10px' }}/>
     </Form>
   );
 };

@@ -23,7 +23,7 @@ export default {
   'menu.form.advanced-form': '高级表单',
   'menu.list': '列表页',
   'menu.list.table-list': '查询表格',
-  'menu.list.account-list': '账户管理',
+  'menu.list.account-list': '账号管理',
   'menu.task-list': '任务查询',
   'menu.api-doc': 'API文档',
   'menu.list.basic-list': '标准列表',

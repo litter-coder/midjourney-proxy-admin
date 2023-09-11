@@ -16,6 +16,7 @@ const AccountList: React.FC = () => {
   const [dataSource, setDataSource] = useState([]);
   const [pagination, setPagination] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalReadonly, setModalReadonly] = useState(false);
   const [modalContent, setModalContent] = useState(<></>);
   const [title, setTitle] = useState<string>('');
   const [modalWidth, setModalWidth] = useState(1000);
@@ -35,6 +36,7 @@ const AccountList: React.FC = () => {
   const hideModal = () => {
     setModalContent(<></>);
     setModalVisible(false);
+    setModalReadonly(false);
   };
 
   const modalFooter = <>
@@ -108,7 +110,7 @@ const AccountList: React.FC = () => {
       title: '账号名',
       dataIndex: 'name',
       render: (text: string, record: Record<string, any>) => (
-        <a onClick={() => openModal('账户信息 - ' + record.name, <MoreContent record={record} />, 1000)}>
+        <a onClick={() => { setModalReadonly(true); openModal('账号信息 - ' + record.name, <MoreContent record={record} />, 1000) }}>
           {text}
         </a>
       ),
@@ -160,14 +162,14 @@ const AccountList: React.FC = () => {
         return (
           <Space>
             <SyncButton record={record} onSuccess={triggerRefreshAccount} />
-            <Tooltip title="更新账户并重连">
+            <Tooltip title="更新账号并重连">
               <Button
                 key="EditAndReconnect"
                 type={'primary'}
                 icon={<ToolOutlined />}
                 onClick={() =>
                   openModal(
-                    '更新账户并重连',
+                    '更新账号并重连',
                     <ReconnectContent form={form} record={record} onSubmit={handleReconnect} />,
                     1000,
                   )
@@ -194,7 +196,7 @@ const AccountList: React.FC = () => {
               icon={<UserAddOutlined />}
               onClick={() => {
                 openModal(
-                  '新增账户',
+                  '新增账号',
                   <AddContent form={form} onSubmit={handleAdd} />,
                   1000,
                 );
@@ -237,7 +239,7 @@ const AccountList: React.FC = () => {
         title={title}
         open={modalVisible}
         onCancel={hideModal}
-        footer={modalFooter}
+        footer={modalReadonly ? null : modalFooter}
         width={modalWidth}
       >
         {modalContent}

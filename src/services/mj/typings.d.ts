@@ -32,6 +32,7 @@ declare namespace API {
   type ReturnMessage = {
     code?: number;
     description?: string;
+    result?: any;
   };
 
   type PageParams = {

@@ -48,7 +48,7 @@ const SyncButton: React.FC<SyncButtonProps> = ({ record, onSuccess }) => {
   return (
     <Popconfirm
       title="同步信息"
-      description="将主动执行/info、/settings获取并更新账户信息？"
+      description="将主动执行/info、/settings获取并更新账号信息？"
       open={open}
       onConfirm={handleOk}
       okButtonProps={{ loading: confirmLoading }}
