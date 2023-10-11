@@ -138,20 +138,20 @@ const Welcome: React.FC = () => {
           >
             <InfoCard
               index={1}
-              href="https://github.com/novicezk/midjourney-proxy"
+              href="#"
               title="了解 midjourney-proxy"
               desc="midjourney-proxy 是一个代理 MidJourney 的 discord 频道的开源项目，实现api形式调用AI绘图。"
             />
             <InfoCard
               index={2}
               title="了解 wechat-ai"
-              href="https://github.com/litter-coder/wechat-ai"
+              href="#"
               desc="wechat-ai 是基于 chatgpt-on-wechat 和 midjourney-proxy 实现的一个微信机器人项目。"
             />
             <InfoCard
               index={3}
               title="了解 midjourney-proxy-plus"
-              href="https://github.com/litter-coder/midjourney-proxy-plus"
+              href="#"
               desc="midjourney-proxy 的先行版，采用了全新模式。支持mj所有的指令和相关操作，精准匹配所有提交的任务。"
             />
           </div>

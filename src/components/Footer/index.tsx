@@ -18,26 +18,7 @@ const Footer: React.FC = () => {
         background: 'none',
       }}
       copyright={`${currentYear} ${defaultMessage}`}
-      links={[
-        {
-          key: 'Wechat Ai',
-          title: 'Wechat Ai',
-          href: 'https://github.com/litter-coder/wechat-ai',
-          blankTarget: true,
-        },
-        {
-          key: 'github',
-          title: <GithubOutlined />,
-          href: 'https://github.com/novicezk/midjourney-proxy',
-          blankTarget: true,
-        },
-        {
-          key: 'Midjourney Proxy Plus',
-          title: 'Midjourney Proxy Plus',
-          href: 'https://github.com/litter-coder/midjourney-proxy-plus',
-          blankTarget: true,
-        },
-      ]}
+      links={[]}
     />
   );
 };
