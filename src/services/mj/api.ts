@@ -93,8 +93,8 @@ export async function accountChangeVersion(id: string, version: string, options?
   });
 }
 
-export async function accountAction(id: string, customId: string, options?: { [key: string]: any }) {
-  return request<API.ReturnMessage>(`/mj/account/${id}/action?customId=${customId}`, {
+export async function accountAction(id: string, botType: string, customId: string, options?: { [key: string]: any }) {
+  return request<API.ReturnMessage>(`/mj/account/${id}/action?customId=${customId}&botType=${botType}`, {
     method: 'POST',
     ...(options || {}),
   });

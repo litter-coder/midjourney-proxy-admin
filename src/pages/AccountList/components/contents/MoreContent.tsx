@@ -1,6 +1,6 @@
 import { Card, Descriptions, Tag, Tooltip, Select, Space, Button, notification } from 'antd';
 import moment from 'moment';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { accountChangeVersion, accountAction } from '@/services/mj/api';
 
 const { Option } = Select;
@@ -12,10 +12,16 @@ interface MoreContentProps {
 
 const MoreContent: React.FC<MoreContentProps> = ({ record, onSuccess }) => {
   const [api, contextHolder] = notification.useNotification();
-  const [version, setVersion] = useState<string>(record.version);
-  const [buttons, setButtons] = useState<Array<any>>(record.buttons);
+  const [version, setVersion] = useState<string>('');
+  const [buttons, setButtons] = useState<Array<any>>([]);
+  const [nijiButtons, setNijiButtons] = useState<Array<any>>([]);
   const [loading, setLoading] = useState(false);
   const [loadingButton, setLoadingButton] = useState('');
+  useEffect(() => {
+    setVersion(record.version);
+    setButtons(record.buttons);
+    setNijiButtons(record.nijiButtons);
+  }, [record])
 
   const getStatusTag = (enable: boolean, enableText: string, disableText: string) => {
     let color = enable ? 'green' : 'volcano';
@@ -35,10 +41,20 @@ const MoreContent: React.FC<MoreContentProps> = ({ record, onSuccess }) => {
 
   const accountButtons = () => {
     return buttons.map((button: any) => {
-      return <Button ghost key={button.customId}
+      return <Button ghost key={'MID_JOURNEY:' + button.customId}
         style={{ backgroundColor: button.style == 3 ? '#258146' : 'rgb(131 133 142)' }}
-        onClick={() => { action(button.customId) }}
-        loading={loadingButton == button.customId}
+        onClick={() => { action("MID_JOURNEY", button.customId) }}
+        loading={loadingButton == 'MID_JOURNEY:' + button.customId}
+      >{button.emoji} {button.label}</Button>;
+    });
+  };
+
+  const accountNijiButtons = () => {
+    return nijiButtons.map((button: any) => {
+      return <Button ghost key={'NIJI_JOURNEY:' + button.customId}
+        style={{ backgroundColor: button.style == 3 ? '#258146' : 'rgb(131 133 142)' }}
+        onClick={() => { action("NIJI_JOURNEY", button.customId) }}
+        loading={loadingButton == 'NIJI_JOURNEY:' + button.customId}
       >{button.emoji} {button.label}</Button>;
     });
   };
@@ -53,6 +69,7 @@ const MoreContent: React.FC<MoreContentProps> = ({ record, onSuccess }) => {
         message: 'success',
         description: "mj版本切换成功"
       });
+      onSuccess();
     } else {
       setVersion(record.version);
       setLoading(false);
@@ -63,12 +80,15 @@ const MoreContent: React.FC<MoreContentProps> = ({ record, onSuccess }) => {
     }
   };
 
-  const action = async (customId: string) => {
-    setLoadingButton(customId);
-    const res = await accountAction(record.id, customId);
+  const action = async (botType: string, customId: string) => {
+    if (loadingButton !== '') return;
+    setLoadingButton(botType + ":" + customId);
+    const res = await accountAction(record.id, botType, customId);
     setLoadingButton('');
     if (res.code == 1) {
       setButtons(res.result.buttons);
+      setNijiButtons(res.result.nijiButtons);
+      onSuccess();
     } else {
       api.error({
         message: 'error',
@@ -80,34 +100,36 @@ const MoreContent: React.FC<MoreContentProps> = ({ record, onSuccess }) => {
   return (
     <>
       {contextHolder}
-      <Card type="inner" title="账号信息" style={{ margin: '10px' }}>
+      <Card type="inner" title="账号信息" style={{ margin: '5px' }}>
         <Descriptions column={3}>
           <Descriptions.Item label="服务器ID">{record.guildId}</Descriptions.Item>
           <Descriptions.Item label="频道ID">{record.channelId}</Descriptions.Item>
-          <Descriptions.Item label="MJ私信ID">{record.mjBotChannelId}</Descriptions.Item>
+          <Descriptions.Item label="账号名">{record.name}</Descriptions.Item>
           <Descriptions.Item label="用户Token">
             <Tooltip title={record.userToken}>
-              {(record.userToken && record.userToken.substring(0, 20) + '...') || '未提供'}
+              {(record.userToken && record.userToken.substring(0, 25) + '...') || '未提供'}
             </Tooltip>
           </Descriptions.Item>
           <Descriptions.Item label="用户UserAgent">
             <Tooltip title={record.userAgent}>
-              {(record.userAgent && record.userAgent.substring(0, 20) + '...') || '未提供'}
+              {(record.userAgent && record.userAgent.substring(0, 25) + '...') || '未提供'}
             </Tooltip>
           </Descriptions.Item>
           <Descriptions.Item label="remix自动提交">
             {getStatusTag(record.remixAutoSubmit, '是', '否')}
           </Descriptions.Item>
+          <Descriptions.Item label="MJ私信ID">{record.mjBotChannelId}</Descriptions.Item>
+          <Descriptions.Item label="niji私信ID">{record.nijiBotChannelId}</Descriptions.Item>
         </Descriptions>
       </Card>
 
-      <Card type="inner" title="基本信息" style={{ margin: '10px' }}>
+      <Card type="inner" title="基本信息" style={{ margin: '5px' }}>
         <Descriptions column={3}>
           <Descriptions.Item label="状态">
             {getStatusTag(record.enable, '启用', '未启用')}
           </Descriptions.Item>
-          <Descriptions.Item label="mj版本">{version}</Descriptions.Item>
           <Descriptions.Item label="账号模式">{record['displays']['mode']}</Descriptions.Item>
+          <Descriptions.Item label="niji模式">{record['displays']['nijiMode']}</Descriptions.Item>
           <Descriptions.Item label="订阅计划">
             {record['displays']['subscribePlan']}
           </Descriptions.Item>
@@ -119,7 +141,7 @@ const MoreContent: React.FC<MoreContentProps> = ({ record, onSuccess }) => {
         </Descriptions>
       </Card>
 
-      <Card type="inner" title="其他信息" style={{ margin: '10px' }}>
+      <Card type="inner" title="其他信息" style={{ margin: '5px' }}>
         <Descriptions column={3}>
           <Descriptions.Item label="并发数">{record.coreSize}</Descriptions.Item>
           <Descriptions.Item label="等待队列">{record.queueSize}</Descriptions.Item>
@@ -129,7 +151,7 @@ const MoreContent: React.FC<MoreContentProps> = ({ record, onSuccess }) => {
         </Descriptions>
       </Card>
 
-      <Card type="inner" title="账号设置" style={{ margin: '10px' }}>
+      <Card type="inner" title="mj设置" style={{ margin: '5px' }}>
         <Select
           style={{ width: '35%' }}
           placeholder={record.versionSelector?.placeholder}
@@ -139,8 +161,13 @@ const MoreContent: React.FC<MoreContentProps> = ({ record, onSuccess }) => {
         >
           {versionSelectorOptions()}
         </Select>
-        <Space wrap style={{ marginTop: '10px' }}>
+        <Space wrap style={{ marginTop: '5px' }}>
           {accountButtons()}
+        </Space>
+      </Card>
+      <Card type="inner" title="niji设置" style={{ margin: '5px' }}>
+        <Space wrap style={{ marginTop: '5px' }}>
+          {accountNijiButtons()}
         </Space>
       </Card>
     </>

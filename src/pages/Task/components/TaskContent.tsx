@@ -35,8 +35,8 @@ const TaskContent = ({ record }: { record: Record<string, any> }) => {
   };
 
   const getTooltip = (text: string) => {
-    if (!text || text.length < 35) return text;
-    return <Tooltip title={text}>{(text.substring(0, 35) + "...")}</Tooltip>
+    if (!text || text.length < 30) return text;
+    return <Tooltip title={text}>{(text.substring(0, 30) + "...")}</Tooltip>
   };
 
   const getImage = (url: string) => {
@@ -48,6 +48,14 @@ const TaskContent = ({ record }: { record: Record<string, any> }) => {
         <Spin tip="Loading" size="large"></Spin>
       }
     />
+  };
+
+  const getBotTypeTag = (botType: string) => {
+    if (botType == 'NIJI_JOURNEY') {
+      return <Tag color="green">niji・journey</Tag>;
+    } else {
+      return <Tag color="blue">Midjourney</Tag>;
+    }
   };
 
   const getModalTag = (enable: boolean) => {
@@ -76,13 +84,15 @@ const TaskContent = ({ record }: { record: Record<string, any> }) => {
       </Card>
       <Card type="inner" title="扩展信息" style={{ margin: '10px' }}>
         <Descriptions column={2}>
+          <Descriptions.Item label="bot类型">{getBotTypeTag(record['properties']['botType'])}</Descriptions.Item>
           <Descriptions.Item label="实例ID">{record['properties']['discordInstanceId']}</Descriptions.Item>
           <Descriptions.Item label="消息ID">{record['properties']['messageId']}</Descriptions.Item>
-          <Descriptions.Item label="最终提示词">{getTooltip(record['properties']['finalPrompt'])}</Descriptions.Item>
-          <Descriptions.Item label="通知地址">{getTooltip(record['properties']['notifyHook'])}</Descriptions.Item>
           <Descriptions.Item label="动作ID">{getTooltip(record['properties']['customId'])}</Descriptions.Item>
+          <Descriptions.Item label="最终提示词">{getTooltip(record['properties']['finalPrompt'])}</Descriptions.Item>
+          <Descriptions.Item label="最终提示词-中文">{getTooltip(record['properties']['finalZhPrompt'])}</Descriptions.Item>
           <Descriptions.Item label="Modal确认">{getModalTag(record['properties']['needModel'])}</Descriptions.Item>
           <Descriptions.Item label="图片seed">{record['properties']['imageSeed']}</Descriptions.Item>
+          <Descriptions.Item label="通知地址">{getTooltip(record['properties']['notifyHook'])}</Descriptions.Item>
         </Descriptions>
       </Card>
     </>

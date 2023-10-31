@@ -96,8 +96,8 @@ const AccountList: React.FC = () => {
         description: res.description
       });
     }
-    triggerRefreshAccount();
     hideModal();
+    triggerRefreshAccount();
     setModalSubmitLoading(false);
   };
 
@@ -107,13 +107,18 @@ const AccountList: React.FC = () => {
 
   const columns = [
     {
-      title: '账号名',
-      dataIndex: 'name',
+      title: '频道ID',
+      dataIndex: 'channelId',
+      width: 200,
       render: (text: string, record: Record<string, any>) => (
-        <a onClick={() => { setModalReadonly(true); openModal('账号信息 - ' + record.name, <MoreContent record={record} />, 1000) }}>
+        <a onClick={() => { setModalReadonly(true); openModal('账号信息 - ' + record.name, <MoreContent record={record} onSuccess={triggerRefreshAccount} />, 1100) }}>
           {text}
         </a>
       ),
+    } as ColumnType<Record<string, any>>,
+    {
+      title: '账号名',
+      dataIndex: 'name',
     } as ColumnType<Record<string, any>>,
     {
       title: '状态',
@@ -153,6 +158,14 @@ const AccountList: React.FC = () => {
       dataIndex: 'renewDate',
       align: 'center',
       render: (text, record) => record['displays']['renewDate'],
+    } as ColumnType<Record<string, any>>,
+    {
+      title: '备注',
+      dataIndex: 'remark',
+      ellipsis: true,
+      render: (text, record) => {
+        return <Tooltip title={text}>{text}</Tooltip>
+      }
     } as ColumnType<Record<string, any>>,
     {
       title: '操作',

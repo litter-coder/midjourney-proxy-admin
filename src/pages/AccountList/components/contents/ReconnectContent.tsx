@@ -37,6 +37,9 @@ const ReconnectContent = ({
             <Form.Item label="MJ私信ID" name="mjBotChannelId">
               <Input />
             </Form.Item>
+            <Form.Item label="niji私信ID" name="nijiBotChannelId">
+              <Input />
+            </Form.Item>
             <Form.Item label="用户UserAgent" name="userAgent">
               <Input />
             </Form.Item>
@@ -60,12 +63,12 @@ const ReconnectContent = ({
               <InputNumber min={1} suffix="分钟" />
             </Form.Item>
             <Form.Item label="备注说明" name="remark">
-              <TextArea rows={2} />
+              <TextArea rows={3} />
             </Form.Item>
           </Card>
         </Col>
       </Row>
-      <Alert message="注意：更新账号并重连后，该账号相关未完成的任务（未启动、已提交、窗口等待、执行中）将会丢失！" type="warning" style={{ marginTop: '10px' }}/>
+      <Alert message="注意：更新账号并重连后，该账号相关未完成的任务（未启动、已提交、窗口等待、执行中）将会丢失！" type="warning" style={{ marginTop: '10px' }} />
     </Form>
   );
 };

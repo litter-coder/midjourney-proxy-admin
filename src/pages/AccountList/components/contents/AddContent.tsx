@@ -59,6 +59,12 @@ const AddContent = ({
             >
               <Input />
             </Form.Item>
+            <Form.Item
+              label="niji私信ID"
+              name="nijiBotChannelId"
+            >
+              <Input />
+            </Form.Item>
             <Form.Item label="用户Agent" name="userAgent">
               <Input />
             </Form.Item>
@@ -79,7 +85,7 @@ const AddContent = ({
               <InputNumber min={1} suffix="分钟" />
             </Form.Item>
             <Form.Item label="备注说明" name="remark">
-              <TextArea rows={2} />
+              <TextArea rows={3} />
             </Form.Item>
           </Card>
         </Col>
