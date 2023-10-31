@@ -132,32 +132,36 @@ const AccountList: React.FC = () => {
       },
     } as ColumnType<Record<string, any>>,
     {
-      title: 'Remix',
-      dataIndex: 'remix',
-      width: 100,
-      align: 'center',
-      render: (remix: boolean) => {
-        let color = remix ? 'green' : 'volcano';
-        let text = remix ? '开启' : '关闭';
-        return <Tag color={color}>{text}</Tag>;
-      },
+      title: '快速时间剩余',
+      dataIndex: 'fastTimeRemaining',
     } as ColumnType<Record<string, any>>,
     {
-      title: '模式',
+      title: '订阅计划',
+      dataIndex: 'subscribePlan',
+      width: 120,
+      align: 'center',
+      render: (text: string, record: Record<string, any>) => record['displays']['subscribePlan'],
+    } as ColumnType<Record<string, any>>,
+    {
+      title: '续订时间',
+      dataIndex: 'renewDate',
+      align: 'center',
+      width: 150,
+      render: (text, record) => record['displays']['renewDate'],
+    } as ColumnType<Record<string, any>>,
+    {
+      title: 'mj模式',
       dataIndex: 'mode',
       width: 120,
       align: 'center',
       render: (text: string, record: Record<string, any>) => record['displays']['mode'],
     } as ColumnType<Record<string, any>>,
     {
-      title: '快速时间剩余',
-      dataIndex: 'fastTimeRemaining',
-    } as ColumnType<Record<string, any>>,
-    {
-      title: '续订时间',
-      dataIndex: 'renewDate',
+      title: 'niji模式',
+      dataIndex: 'nijiMode',
+      width: 120,
       align: 'center',
-      render: (text, record) => record['displays']['renewDate'],
+      render: (text: string, record: Record<string, any>) => record['displays']['nijiMode'],
     } as ColumnType<Record<string, any>>,
     {
       title: '备注',
