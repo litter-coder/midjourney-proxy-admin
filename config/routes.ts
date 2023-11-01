@@ -45,6 +45,12 @@ export default [
     component: './Task/List',
   },
   {
+    name: 'ai-draw',
+    icon: 'comment',
+    path: '/ai-draw',
+    component: './Draw',
+  },
+  {
     path: '*',
     layout: false,
     component: './404',

@@ -107,3 +107,26 @@ export async function queryTask(data: object, options?: { [key: string]: any }) 
     ...(options || {}),
   });
 }
+
+export async function queryTaskByIds(ids: string[], options?: { [key: string]: any }) {
+  return request<any>('/mj/task-admin/query', {
+    method: 'POST',
+    data: { ids: ids, pageSize: 9999 },
+    ...(options || {}),
+  });
+}
+
+export async function getTask(id: string, options?: { [key: string]: any }) {
+  return request<any>(`/mj/task-admin/${id}/fetch`, {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
+export async function submitTask(action: string, data: object, options?: { [key: string]: any }) {
+  return request<API.ReturnMessage>(`/mj/submit/${action}`, {
+    method: 'POST',
+    data: data,
+    ...(options || {}),
+  });
+}
