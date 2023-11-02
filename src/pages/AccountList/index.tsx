@@ -24,6 +24,7 @@ const AccountList: React.FC = () => {
   const [form] = Form.useForm();
   const [api, contextHolder] = notification.useNotification();
   const [modalSubmitLoading, setModalSubmitLoading] = useState(false);
+  const [dataLoading, setDataLoading] = useState(false);
 
   const openModal = (title: string, content: any, modalWidth: number) => {
     form.resetFields();
@@ -54,9 +55,11 @@ const AccountList: React.FC = () => {
   };
 
   const fetchData = async (params: any) => {
+    setDataLoading(true);
     const res = await queryAccount(params);
     setPagination({ total: res.totalElements, size: res.size, current: res.number + 1 });
     setDataSource(res.content);
+    setDataLoading(false);
   };
 
   const pageChange = async (page: number, pageSize: number) => {
@@ -249,6 +252,7 @@ const AccountList: React.FC = () => {
           dataSource={dataSource}
           columns={columns}
           pagination={false}
+          loading={dataLoading}
         />
         {afterLayout()}
       </Card>

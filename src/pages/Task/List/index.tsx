@@ -10,6 +10,7 @@ import MyModal from '@/pages/components/Modal';
 const List: React.FC = () => {
   // 初始化 dataSource 状态为空数组
   const [dataSource, setDataSource] = useState([]);
+  const [dataLoading, setDataLoading] = useState(false);
   const [pagination, setPagination] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
   const [modalContent, setModalContent] = useState({});
@@ -29,9 +30,11 @@ const List: React.FC = () => {
   };
 
   const fetchData = async (params: any) => {
+    setDataLoading(true);
     const res = await queryTask(params);
     setPagination({ total: res.totalElements, size: res.size, current: res.number + 1 });
     setDataSource(res.content);
+    setDataLoading(false);
   };
 
   const pageChange = async (page: number, pageSize: number) => {
@@ -162,7 +165,7 @@ const List: React.FC = () => {
     <PageContainer>
       <Card>
         {beforeLayout()}
-        <Table dataSource={dataSource} columns={columns} pagination={false} rowKey="id" />
+        <Table dataSource={dataSource} columns={columns} pagination={false} rowKey="id" loading={dataLoading} />
         {afterLayout()}
       </Card>
       <MyModal

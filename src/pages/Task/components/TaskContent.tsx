@@ -1,6 +1,7 @@
 import { Card, Descriptions, Tag, Tooltip, Progress, Image, Spin } from 'antd';
 
 const TaskContent = ({ record }: { record: Record<string, any> }) => {
+  const imagePrefix = sessionStorage.getItem('mj-image-prefix') || '';
 
   const getStatusTag = (text: string) => {
     let color = 'default';
@@ -43,7 +44,7 @@ const TaskContent = ({ record }: { record: Record<string, any> }) => {
     if (!url) return url;
     return <Image
       width={200}
-      src={url}
+      src={imagePrefix + url}
       placeholder={
         <Spin tip="Loading" size="large"></Spin>
       }

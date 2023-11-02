@@ -88,7 +88,7 @@ export const errorConfig: RequestConfig = {
   // 请求拦截器
   requestInterceptors: [
     (config: RequestOptions) => {
-      const MJ_API_SECRET = localStorage.getItem('mj-api-secret') || ''; // 获取保存的密码
+      const MJ_API_SECRET = sessionStorage.getItem('mj-api-secret') || ''; // 获取保存的密码
       config.headers = {
         ...config.headers,
         'mj-api-secret': MJ_API_SECRET, // 将密码作为自定义头部

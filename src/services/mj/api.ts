@@ -9,7 +9,12 @@ export async function currentUser(options?: { [key: string]: any }) {
     ...(options || {}),
   }).then((response) => {
     if (response && response.apiSecret) {
-      localStorage.setItem('mj-api-secret', response.apiSecret);
+      sessionStorage.setItem('mj-api-secret', response.apiSecret);
+    }
+    if (response.imagePrefix) {
+      sessionStorage.setItem('mj-image-prefix', response.imagePrefix);
+    } else {
+      sessionStorage.removeItem('mj-image-prefix');
     }
     return response;
   });
@@ -21,7 +26,8 @@ export async function outLogin(options?: { [key: string]: any }) {
     method: 'POST',
     ...(options || {}),
   }).then((response) => {
-    localStorage.removeItem('mj-api-secret');
+    sessionStorage.removeItem('mj-api-secret');
+    sessionStorage.removeItem('mj-image-prefix');
     return response;
   });
 }
@@ -124,7 +130,7 @@ export async function getTask(id: string, options?: { [key: string]: any }) {
 }
 
 export async function submitTask(action: string, data: object, options?: { [key: string]: any }) {
-  return request<API.ReturnMessage>(`/mj/submit/${action}`, {
+  return request<any>(`/mj/submit/${action}`, {
     method: 'POST',
     data: data,
     ...(options || {}),
