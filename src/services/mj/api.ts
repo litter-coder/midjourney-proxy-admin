@@ -16,6 +16,7 @@ export async function currentUser(options?: { [key: string]: any }) {
     } else {
       sessionStorage.removeItem('mj-image-prefix');
     }
+    sessionStorage.setItem('mj-active', response.active?.toString() || 'false');
     return response;
   });
 }
@@ -133,6 +134,21 @@ export async function submitTask(action: string, data: object, options?: { [key:
   return request<any>(`/mj/submit/${action}`, {
     method: 'POST',
     data: data,
+    ...(options || {}),
+  });
+}
+
+export async function getMachineCode(options?: { [key: string]: any }) {
+  return request<string>('/mj/act/machine', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
+export async function activateByCode(code: string, options?: { [key: string]: any }) {
+  return request<string>('/mj/act/activate', {
+    method: 'POST',
+    data: { code: code },
     ...(options || {}),
   });
 }

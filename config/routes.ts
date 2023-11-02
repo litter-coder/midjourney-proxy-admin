@@ -45,10 +45,16 @@ export default [
     component: './Task/List',
   },
   {
-    name: 'ai-draw',
-    icon: 'comment',
-    path: '/ai-draw',
+    name: 'draw-test',
+    icon: 'experiment',
+    path: '/draw-test',
     component: './Draw',
+  },
+  {
+    name: 'activate',
+    icon: 'key',
+    path: '/activate',
+    component: './Activate',
   },
   {
     path: '*',
