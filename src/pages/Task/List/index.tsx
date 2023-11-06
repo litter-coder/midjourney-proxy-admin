@@ -101,6 +101,8 @@ const List: React.FC = () => {
           color = 'error';
         } else if (text == 'SUCCESS') {
           color = 'success';
+        } else if (text == 'CANCEL') {
+          color = 'magenta';
         }
         return <Tag color={color}>{record['displays']['status']}</Tag>
       }

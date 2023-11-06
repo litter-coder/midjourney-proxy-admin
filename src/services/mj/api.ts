@@ -138,6 +138,13 @@ export async function submitTask(action: string, data: object, options?: { [key:
   });
 }
 
+export async function cancelTask(id: string, options?: { [key: string]: any }) {
+  return request<API.ReturnMessage>(`/mj/task/${id}/cancel`, {
+    method: 'POST',
+    ...(options || {}),
+  });
+}
+
 export async function getMachineCode(options?: { [key: string]: any }) {
   return request<string>('/mj/act/machine', {
     method: 'GET',
