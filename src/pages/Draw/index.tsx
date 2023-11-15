@@ -6,7 +6,7 @@ import {
 import { Image as AntdImage } from 'antd';
 import type { RadioChangeEvent } from 'antd';
 import React, { useEffect, useState, useRef } from 'react';
-import { UploadOutlined, ClearOutlined } from '@ant-design/icons';
+import { UploadOutlined, ClearOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import type { RcFile, UploadProps, UploadFile } from 'antd/es/upload/interface';
 import Markdown from 'react-markdown';
 import styles from './index.less';
@@ -396,16 +396,35 @@ const Draw: React.FC = () => {
     });
   };
 
+  const taskCardTitle = (task: any) => {
+    const botName = task.properties['botType'] == 'NIJI_JOURNEY' ? 'niji・journey' : 'Midjourney';
+    if (task.status !== 'SUCCESS' && task.status !== 'FAILURE' && task.status !== 'CANCEL') {
+      return <><span>{botName}</span><span className={styles.cardTitleTime}>{task.displays['submitTime']}</span>
+        <Button style={{ marginLeft: '10px' }} type="link" shape="circle" icon={<CloseCircleOutlined />} onClick={() => cancelTask(task.id)}></Button>
+      </>;
+    }
+    return <><span>{botName}</span><span className={styles.cardTitleTime}>{task.displays['submitTime']}</span></>;
+  };
+
+  const taskCardSubTitle = (task: any) => {
+    const messageContent = task.properties['messageContent'];
+    if (messageContent) {
+      return <Markdown>{messageContent.replace(/<@[^>]+>/g, '')}</Markdown>;
+    } else {
+      return task.description;
+    }
+  };
+
   const taskCardList = () => {
     return tasks.map((task: any) => {
       return <Card bordered={false} key={task.id}
         bodyStyle={{ backgroundColor: '#eaeaea', marginBottom: '10px' }}>
         <Meta
           avatar={<Avatar src={task.properties['botType'] == 'NIJI_JOURNEY' ? './niji.webp' : './midjourney.webp'} />}
-          title={<><span>{task.properties['botType'] == 'NIJI_JOURNEY' ? 'niji・journey' : 'Midjourney'}</span><span className={styles.cardTitleTime}>{task.displays['submitTime']}</span></>}
-          description={task.description}
+          title={taskCardTitle(task)}
+          description={taskCardSubTitle(task)}
         />
-        <Flex vertical style={{ 'marginTop': '10px', paddingLeft: '48px' }}>
+        <Flex vertical style={{ 'marginTop': '2px', paddingLeft: '48px' }}>
           {getTaskCard(task)}
           <Space wrap style={{ marginTop: '7px' }}>
             {actionButtons(task)}
@@ -439,9 +458,16 @@ const Draw: React.FC = () => {
     } else if (task.status == 'SUCCESS') {
       return <></>;
     } else if (task.status == 'IN_PROGRESS') {
-      return getProgress(task.progress);
+      return <>{getProgress(task)}</>;
     } else {
-      let color = task.status == 'SUBMITTED' ? 'lime' : (task.status == 'MODAL' ? 'warning' : 'purple');
+      let color = 'purple';
+      if (task.status == 'SUBMITTED') {
+        color = 'lime';
+      } else if (task.status == 'CANCEL') {
+        color = 'magenta';
+      } else if (task.status == 'MODAL') {
+        color = 'warning';
+      }
       return <span><Tag color={color}>{task.displays['status']}</Tag></span>
     }
   };
@@ -457,12 +483,13 @@ const Draw: React.FC = () => {
     />
   };
 
-  const getProgress = (text: string) => {
+  const getProgress = (task: any) => {
+    const text = task.progress;
     let percent = 0;
     if (text && text.indexOf('%') > 0) {
       percent = parseInt(text.substring(0, text.indexOf('%')));
     }
-    return <div style={{ width: 250 }}><Progress percent={percent} status='normal' /></div>
+    return <span style={{ width: 250 }}><Progress percent={percent} status='normal' /></span>
   };
 
   const actionButtons = (task: any) => {
@@ -562,11 +589,11 @@ const Draw: React.FC = () => {
     if (!isJpgOrPng) {
       message.error('只能上传JPG或PNG文件!');
     }
-    const isLt2M = file.size / 1024 / 1024 < 2;
-    if (!isLt2M) {
-      message.error('图片大小需小于2MB!');
+    const isLt10M = file.size / 1024 / 1024 < 10;
+    if (!isLt10M) {
+      message.error('图片不能大于10MB!');
     }
-    return isJpgOrPng && isLt2M;
+    return (isJpgOrPng && isLt10M) || Upload.LIST_IGNORE;
   };
 
   const props: UploadProps = {
