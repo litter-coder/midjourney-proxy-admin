@@ -6,11 +6,11 @@ import {
 import { Image as AntdImage } from 'antd';
 import type { RadioChangeEvent } from 'antd';
 import React, { useEffect, useState, useRef } from 'react';
-import { UploadOutlined, ClearOutlined, CloseCircleOutlined } from '@ant-design/icons';
+import { UploadOutlined, ClearOutlined, CloseCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import type { RcFile, UploadProps, UploadFile } from 'antd/es/upload/interface';
 import Markdown from 'react-markdown';
 import styles from './index.less';
-import { submitTask, cancelTask, queryTask, queryTaskByIds } from '@/services/mj/api';
+import { submitTask, cancelTask, swapFace, queryTask, queryTaskByIds } from '@/services/mj/api';
 
 const { TextArea } = Input;
 const { Meta } = Card;
@@ -126,6 +126,8 @@ const Draw: React.FC = () => {
 
   const handleBotTypeChange = ({ target: { value } }: RadioChangeEvent) => {
     setBotType(value);
+    setPrompt('');
+    setImages([]);
   };
 
   const handleDimensionsChange = ({ target: { value } }: RadioChangeEvent) => {
@@ -149,7 +151,28 @@ const Draw: React.FC = () => {
   };
 
   const submit = async () => {
-    if (action === 'show') {
+    if (botType === 'INSIGHT_FACE') {
+      if (images.length < 2) {
+        message.error('swap至少需要两张图片!');
+        return;
+      }
+      setsubmitLoading(true);
+      const sourceBase64 = await readFileAsBase64(images[0].originFileObj);
+      const targetBase64 = await readFileAsBase64(images[1].originFileObj);
+      swapFace({ sourceBase64: sourceBase64, targetBase64: targetBase64, state: customState }).then((res) => {
+        setsubmitLoading(false);
+        if (res.code == 1) {
+          message.success('提交任务成功，请稍等...');
+          waitTaskIds.add(res.result);
+          setImages([]);
+        } else {
+          api.error({
+            message: 'error',
+            description: res.description
+          });
+        }
+      });
+    } else if (action === 'show') {
       if (!prompt) {
         message.error('任务ID不能为空!');
         return;
@@ -397,8 +420,13 @@ const Draw: React.FC = () => {
   };
 
   const taskCardTitle = (task: any) => {
-    const botName = task.properties['botType'] == 'NIJI_JOURNEY' ? 'niji・journey' : 'Midjourney';
-    if (task.status !== 'SUCCESS' && task.status !== 'FAILURE' && task.status !== 'CANCEL') {
+    let botName = 'Midjourney Bot';
+    if (task.properties['botType'] === 'NIJI_JOURNEY') {
+      botName = 'niji・journey Bot';
+    } else if (task.properties['botType'] == 'INSIGHT_FACE') {
+      botName = 'InsightFaceSwap';
+    }
+    if (task.status !== 'SUCCESS' && task.status !== 'FAILURE' && task.status !== 'CANCEL' && task.action !== 'SWAP_FACE') {
       return <><span>{botName}</span><span className={styles.cardTitleTime}>{task.displays['submitTime']}</span>
         <Button style={{ marginLeft: '10px' }} type="link" shape="circle" icon={<CloseCircleOutlined />} onClick={() => cancelTask(task.id)}></Button>
       </>;
@@ -407,24 +435,30 @@ const Draw: React.FC = () => {
   };
 
   const taskCardSubTitle = (task: any) => {
+    let title = task.description;
     const messageContent = task.properties['messageContent'];
     if (messageContent) {
-      return <Markdown>{messageContent.replace(/<@[^>]+>/g, '')}</Markdown>;
-    } else {
-      return task.description;
+      title = messageContent.replace(/<@[^>]+>/g, '');
     }
+    return <Markdown>{title}</Markdown>;
   };
 
   const taskCardList = () => {
     return tasks.map((task: any) => {
+      let avatar = "./midjourney.webp";
+      if (task.properties['botType'] === 'NIJI_JOURNEY') {
+        avatar = "./niji.webp";
+      } else if (task.properties['botType'] === 'INSIGHT_FACE') {
+        avatar = "./insightface.webp";
+      }
       return <Card bordered={false} key={task.id}
         bodyStyle={{ backgroundColor: '#eaeaea', marginBottom: '10px' }}>
         <Meta
-          avatar={<Avatar src={task.properties['botType'] == 'NIJI_JOURNEY' ? './niji.webp' : './midjourney.webp'} />}
+          avatar={<Avatar src={avatar} />}
           title={taskCardTitle(task)}
           description={taskCardSubTitle(task)}
         />
-        <Flex vertical style={{ 'marginTop': '2px', paddingLeft: '48px' }}>
+        <Flex vertical style={{ paddingLeft: '48px' }}>
           {getTaskCard(task)}
           <Space wrap style={{ marginTop: '7px' }}>
             {actionButtons(task)}
@@ -502,16 +536,30 @@ const Draw: React.FC = () => {
     });
   };
 
+  const uploadButton = (
+    <div>
+      <PlusOutlined />
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </div>
+  );
+
   const actionArea = () => {
-    if (action == 'show') {
+    if (botType === 'INSIGHT_FACE') {
+      return <Flex vertical>
+        <Upload {...props} listType="picture-card">
+          {images.length >= 2 ? null : uploadButton}
+        </Upload>
+        <Button style={{ marginTop: '10px' }} type="primary" onClick={submit} loading={submitLoading}>人脸替换（第一张图作为人脸源）</Button>
+      </Flex>
+    } else if (action == 'show') {
       return <Space.Compact style={{ width: '100%' }}>
         <Input placeholder='输入任务ID, 调出未展示的任务' value={prompt} onChange={handlePromptChange} onPressEnter={submit} />
         <Button type="primary" onClick={submit} loading={submitLoading}>提交任务</Button>
       </Space.Compact>
     } else if (action == 'imagine') {
       return <Flex vertical>
-        <Upload {...props}>
-          <Button icon={<UploadOutlined />}>上传垫图</Button>
+        <Upload {...props} listType="picture-card">
+          {images.length >= 5 ? null : uploadButton}
         </Upload>
         <Space.Compact style={{ width: '100%', marginTop: '10px' }}>
           <Input placeholder='Prompt' value={prompt} onChange={handlePromptChange} onPressEnter={submit} />
@@ -520,8 +568,8 @@ const Draw: React.FC = () => {
       </Flex>
     } else if (action == 'blend') {
       return <Flex vertical>
-        <Upload {...props}>
-          <Button icon={<UploadOutlined />}>上传图片</Button>
+        <Upload {...props} listType="picture-card">
+          {images.length >= 5 ? null : uploadButton}
         </Upload>
         <Space style={{ width: '100%', marginTop: '10px' }}>
           <Radio.Group
@@ -540,7 +588,7 @@ const Draw: React.FC = () => {
     } else if (action == 'describe') {
       return <Flex vertical>
         <Upload {...props}>
-          <Button icon={<UploadOutlined />}>上传图片</Button>
+          {images.length >= 1 ? null : uploadButton}
         </Upload>
         <Button style={{ marginTop: '10px' }} type="primary" onClick={submit} loading={submitLoading}>提交任务</Button>
       </Flex>
@@ -600,10 +648,48 @@ const Draw: React.FC = () => {
     customRequest: customRequest,
     beforeUpload: beforeUpload,
     fileList: images,
-    maxCount: action == 'blend' || action == 'imagine' ? 5 : 1,
     onChange(info) {
       setImages(info.fileList);
     },
+    showUploadList: {
+      showRemoveIcon: true,
+      showPreviewIcon: false
+    }
+  };
+
+  const switchArea = () => {
+    let options;
+    let isFace = false;
+    if (botType === 'INSIGHT_FACE') {
+      isFace = true;
+      options = [{ value: 'swap', label: '/swap' }];
+    } else {
+      options = [
+        { value: 'imagine', label: '/imagine' },
+        { value: 'blend', label: '/blend' },
+        { value: 'describe', label: '/describe' },
+        { value: 'shorten', label: '/shorten' },
+        { value: 'show', label: '/show' },
+      ];
+    }
+    return <Space style={{ marginBottom: '10px' }}>
+      <Select
+        value={isFace ? 'swap' : action}
+        style={{ width: 150 }}
+        onChange={handleActionChange}
+        options={options}
+      />
+      <Radio.Group
+        value={botType}
+        onChange={handleBotTypeChange}
+        options={[
+          { value: 'MID_JOURNEY', label: 'Midjourney' },
+          { value: 'NIJI_JOURNEY', label: 'niji・journey' },
+          { value: 'INSIGHT_FACE', label: 'InsightFace' }
+        ]}
+        optionType="button"
+      />
+    </Space>;
   };
 
   return (
@@ -613,29 +699,7 @@ const Draw: React.FC = () => {
         {taskCardList()}
       </Card>
       <Card>
-        <Space style={{ marginBottom: '10px' }}>
-          <Select
-            value={action}
-            style={{ width: 150 }}
-            onChange={handleActionChange}
-            options={[
-              { value: 'imagine', label: '/imagine' },
-              { value: 'blend', label: '/blend' },
-              { value: 'describe', label: '/describe' },
-              { value: 'shorten', label: '/shorten' },
-              { value: 'show', label: '/show' },
-            ]}
-          />
-          <Radio.Group
-            value={botType}
-            onChange={handleBotTypeChange}
-            options={[
-              { value: 'MID_JOURNEY', label: 'Midjourney' },
-              { value: 'NIJI_JOURNEY', label: 'niji・journey' },
-            ]}
-            optionType="button"
-          />
-        </Space>
+        {switchArea()}
         {actionArea()}
       </Card>
       <Modal

@@ -145,6 +145,14 @@ export async function cancelTask(id: string, options?: { [key: string]: any }) {
   });
 }
 
+export async function swapFace(data: object, options?: { [key: string]: any }) {
+  return request<any>('/mj/insight-face/swap', {
+    method: 'POST',
+    data: data,
+    ...(options || {}),
+  });
+}
+
 export async function getMachineCode(options?: { [key: string]: any }) {
   return request<string>('/mj/act/machine', {
     method: 'GET',

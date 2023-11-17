@@ -122,6 +122,8 @@ const AccountList: React.FC = () => {
     {
       title: '账号名',
       dataIndex: 'name',
+      width: 150,
+      ellipsis: true,
     } as ColumnType<Record<string, any>>,
     {
       title: '状态',
@@ -137,6 +139,8 @@ const AccountList: React.FC = () => {
     {
       title: '快速时间剩余',
       dataIndex: 'fastTimeRemaining',
+      ellipsis: true,
+      width: 220,
     } as ColumnType<Record<string, any>>,
     {
       title: '订阅计划',

@@ -15,36 +15,6 @@
 - [ ] 任务查询功能优化
 - [ ] 支持MJ的队列内容查询
 
-# 使用示例
-
-①登录页
-
-<img src="https://raw.githubusercontent.com/litter-coder/midjourney-proxy-admin/main/docs/login.png" alt="登录页"/>
-
-②欢迎页
-
-<img src="https://raw.githubusercontent.com/litter-coder/midjourney-proxy-admin/main/docs/welcome.png" alt="欢迎页"/>
-
-③账号管理
-
-<img src="https://raw.githubusercontent.com/litter-coder/midjourney-proxy-admin/main/docs/account.png" alt="账号管理"/>
-
-④添加账号
-
-<img src="https://raw.githubusercontent.com/litter-coder/midjourney-proxy-admin/main/docs/account_add.png" alt="添加账号"/>
-
-⑤账号详情
-
-<img src="https://raw.githubusercontent.com/litter-coder/midjourney-proxy-admin/main/docs/account_info.png" alt="账号详情"/>
-
-⑥任务列表
-
-<img src="https://raw.githubusercontent.com/litter-coder/midjourney-proxy-admin/main/docs/task.png" alt="任务列表"/>
-
-7 任务详情
-
-<img src="https://raw.githubusercontent.com/litter-coder/midjourney-proxy-admin/main/docs/task_info.png" alt="任务列表"/>
-
 # 部署方式
 
 ## 1.运行环境

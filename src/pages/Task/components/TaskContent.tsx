@@ -56,6 +56,8 @@ const TaskContent = ({ record }: { record: Record<string, any> }) => {
   const getBotTypeTag = (botType: string) => {
     if (botType == 'NIJI_JOURNEY') {
       return <Tag color="green">niji・journey</Tag>;
+    } else if (botType == 'INSIGHT_FACE') {
+      return <Tag color="volcano">InsightFace</Tag>;
     } else {
       return <Tag color="blue">Midjourney</Tag>;
     }
