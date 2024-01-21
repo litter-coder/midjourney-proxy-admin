@@ -116,9 +116,9 @@ export async function queryTask(data: object, options?: { [key: string]: any }) 
 }
 
 export async function queryTaskByIds(ids: string[], options?: { [key: string]: any }) {
-  return request<any>('/mj/task-admin/query', {
+  return request<any>('/mj/task/list-by-ids', {
     method: 'POST',
-    data: { ids: ids, pageSize: 9999 },
+    data: { ids: ids },
     ...(options || {}),
   });
 }

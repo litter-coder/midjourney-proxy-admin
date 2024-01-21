@@ -181,6 +181,7 @@ const AccountList: React.FC = () => {
     {
       title: '操作',
       dataIndex: 'operation',
+      width: 220,
       key: 'operation',
       render: (value: any, record: Record<string, string>) => {
         return (

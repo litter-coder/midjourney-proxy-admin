@@ -63,8 +63,7 @@ const Draw: React.FC = () => {
   const syncRunningTasks = async () => {
     const taskIds = Array.from(waitTaskIds);
     let tmpTaskIds = new Set(taskIds);
-    const res = await queryTaskByIds(taskIds);
-    const array = res.content;
+    const array = await queryTaskByIds(taskIds);
     let hasChange = false;
     const targetTasks = [...cbSaver.current];
     for (const item of array) {
