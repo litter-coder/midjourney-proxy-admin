@@ -1,13 +1,26 @@
-import MoreContent from '@/pages/AccountList/components/contents/MoreContent';
-import ReconnectContent from '@/pages/AccountList/components/contents/ReconnectContent';
-import AddContent from '@/pages/AccountList/components/contents/AddContent';
 import DelButton from '@/pages/AccountList/components/button/DelButton';
 import SyncButton from '@/pages/AccountList/components/button/SyncButton';
+import AddContent from '@/pages/AccountList/components/contents/AddContent';
+import MoreContent from '@/pages/AccountList/components/contents/MoreContent';
+import ReconnectContent from '@/pages/AccountList/components/contents/ReconnectContent';
 import { createAccount, queryAccount, updateAndReconnect } from '@/services/mj/api';
-import { ReloadOutlined, UserAddOutlined, ToolOutlined } from '@ant-design/icons';
-import { ColumnType } from 'antd/lib/table';
+import { ReloadOutlined, ToolOutlined, UserAddOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-components';
-import { Modal, Button, Card, Col, Form, Pagination, Row, Space, Table, Tag, Tooltip, notification } from 'antd';
+import {
+  Button,
+  Card,
+  Col,
+  Form,
+  Modal,
+  notification,
+  Pagination,
+  Row,
+  Space,
+  Table,
+  Tag,
+  Tooltip,
+} from 'antd';
+import { ColumnType } from 'antd/lib/table';
 import React, { useEffect, useState } from 'react';
 import styles from './index.less';
 
@@ -40,14 +53,21 @@ const AccountList: React.FC = () => {
     setModalReadonly(false);
   };
 
-  const modalFooter = <>
-    <Button key="back" onClick={hideModal}>
-      取消
-    </Button>
-    <Button key="submit" type="primary" loading={modalSubmitLoading} onClick={() => form.submit()}>
-      提交
-    </Button>
-  </>;
+  const modalFooter = (
+    <>
+      <Button key="back" onClick={hideModal}>
+        取消
+      </Button>
+      <Button
+        key="submit"
+        type="primary"
+        loading={modalSubmitLoading}
+        onClick={() => form.submit()}
+      >
+        提交
+      </Button>
+    </>
+  );
 
   // 定义一个 triggerRefresh 函数，使其增加 refresh 的值，从而触发重新渲染
   const triggerRefreshAccount = () => {
@@ -72,14 +92,14 @@ const AccountList: React.FC = () => {
     if (res.code == 1) {
       api.success({
         message: 'success',
-        description: res.description
+        description: res.description,
       });
       hideModal();
       triggerRefreshAccount();
     } else {
       api.error({
         message: 'error',
-        description: res.description
+        description: res.description,
       });
     }
     setModalSubmitLoading(false);
@@ -91,12 +111,12 @@ const AccountList: React.FC = () => {
     if (res.code == 1) {
       api.success({
         message: 'success',
-        description: res.description
+        description: res.description,
       });
     } else {
       api.error({
         message: 'error',
-        description: res.description
+        description: res.description,
       });
     }
     hideModal();
@@ -113,8 +133,18 @@ const AccountList: React.FC = () => {
       title: '频道ID',
       dataIndex: 'channelId',
       width: 200,
+      fixed:'left',
       render: (text: string, record: Record<string, any>) => (
-        <a onClick={() => { setModalReadonly(true); openModal('账号信息 - ' + record.name, <MoreContent record={record} onSuccess={triggerRefreshAccount} />, 1100) }}>
+        <a
+          onClick={() => {
+            setModalReadonly(true);
+            openModal(
+              '账号信息 - ' + record.name,
+              <MoreContent record={record} onSuccess={triggerRefreshAccount} />,
+              1100,
+            );
+          }}
+        >
           {text}
         </a>
       ),
@@ -122,7 +152,7 @@ const AccountList: React.FC = () => {
     {
       title: '账号名',
       dataIndex: 'name',
-      width: 150,
+      width: 120,
       ellipsis: true,
     } as ColumnType<Record<string, any>>,
     {
@@ -174,15 +204,17 @@ const AccountList: React.FC = () => {
       title: '备注',
       dataIndex: 'remark',
       ellipsis: true,
+      width: 120,
       render: (text, record) => {
-        return <Tooltip title={text}>{text}</Tooltip>
-      }
+        return <Tooltip title={text}>{text}</Tooltip>;
+      },
     } as ColumnType<Record<string, any>>,
     {
       title: '操作',
       dataIndex: 'operation',
-      width: 220,
+      width: 200,
       key: 'operation',
+      fixed: 'right',
       render: (value: any, record: Record<string, string>) => {
         return (
           <Space>
@@ -212,19 +244,14 @@ const AccountList: React.FC = () => {
     return (
       <Row>
         {contextHolder}
-        <Col xs={24} sm={12}>
-        </Col>
+        <Col xs={24} sm={12}></Col>
         <Col xs={24} sm={12} className={styles.tableToolbar}>
           <Space>
             <Button
               type={'primary'}
               icon={<UserAddOutlined />}
               onClick={() => {
-                openModal(
-                  '新增账号',
-                  <AddContent form={form} onSubmit={handleAdd} />,
-                  1000,
-                );
+                openModal('新增账号', <AddContent form={form} onSubmit={handleAdd} />, 1000);
               }}
             >
               添加
@@ -242,7 +269,12 @@ const AccountList: React.FC = () => {
       <Row>
         <Col xs={24} sm={12}></Col>
         <Col xs={24} sm={12} className={styles.tableToolbar}>
-          <Pagination onChange={pageChange} total={pagination.total} current={pagination.current} size={pagination.size} />
+          <Pagination
+            onChange={pageChange}
+            total={pagination.total}
+            current={pagination.current}
+            size={pagination.size}
+          />
         </Col>
       </Row>
     );
@@ -256,6 +288,7 @@ const AccountList: React.FC = () => {
           rowKey="id"
           dataSource={dataSource}
           columns={columns}
+          scroll={{ x: 1000 }}
           pagination={false}
           loading={dataLoading}
         />
