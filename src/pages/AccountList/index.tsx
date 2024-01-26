@@ -4,8 +4,8 @@ import AddContent from '@/pages/AccountList/components/contents/AddContent';
 import MoreContent from '@/pages/AccountList/components/contents/MoreContent';
 import ReconnectContent from '@/pages/AccountList/components/contents/ReconnectContent';
 import { createAccount, queryAccount, updateAndReconnect } from '@/services/mj/api';
-import { ReloadOutlined, ToolOutlined, UserAddOutlined } from '@ant-design/icons';
-import { PageContainer } from '@ant-design/pro-components';
+import { ToolOutlined, UserAddOutlined } from '@ant-design/icons';
+import { PageContainer, ProTable } from '@ant-design/pro-components';
 import {
   Button,
   Card,
@@ -16,13 +16,13 @@ import {
   Pagination,
   Row,
   Space,
-  Table,
   Tag,
   Tooltip,
 } from 'antd';
 import { ColumnType } from 'antd/lib/table';
 import React, { useEffect, useState } from 'react';
 import styles from './index.less';
+import { render } from '@testing-library/react';
 
 const AccountList: React.FC = () => {
   // 初始化 dataSource 状态为空数组
@@ -133,7 +133,7 @@ const AccountList: React.FC = () => {
       title: '频道ID',
       dataIndex: 'channelId',
       width: 200,
-      fixed:'left',
+      fixed: 'left',
       render: (text: string, record: Record<string, any>) => (
         <a
           onClick={() => {
@@ -160,6 +160,16 @@ const AccountList: React.FC = () => {
       dataIndex: 'enable',
       width: 100,
       align: 'center',
+      request: async () => [
+        {
+          label: '启用',
+          value: 'true',
+        },
+        {
+          label: '未启用',
+          value: 'false',
+        },
+      ],
       render: (enable: boolean) => {
         let color = enable ? 'green' : 'volcano';
         let text = enable ? '启用' : '未启用';
@@ -171,12 +181,14 @@ const AccountList: React.FC = () => {
       dataIndex: 'fastTimeRemaining',
       ellipsis: true,
       width: 220,
+      hideInSearch: true,
     } as ColumnType<Record<string, any>>,
     {
       title: '订阅计划',
       dataIndex: 'subscribePlan',
       width: 120,
       align: 'center',
+      hideInSearch: true,
       render: (text: string, record: Record<string, any>) => record['displays']['subscribePlan'],
     } as ColumnType<Record<string, any>>,
     {
@@ -184,6 +196,7 @@ const AccountList: React.FC = () => {
       dataIndex: 'renewDate',
       align: 'center',
       width: 150,
+      hideInSearch: true,
       render: (text, record) => record['displays']['renewDate'],
     } as ColumnType<Record<string, any>>,
     {
@@ -191,6 +204,7 @@ const AccountList: React.FC = () => {
       dataIndex: 'mode',
       width: 120,
       align: 'center',
+      hideInSearch: true,
       render: (text: string, record: Record<string, any>) => record['displays']['mode'],
     } as ColumnType<Record<string, any>>,
     {
@@ -198,6 +212,7 @@ const AccountList: React.FC = () => {
       dataIndex: 'nijiMode',
       width: 120,
       align: 'center',
+      hideInSearch: true,
       render: (text: string, record: Record<string, any>) => record['displays']['nijiMode'],
     } as ColumnType<Record<string, any>>,
     {
@@ -205,6 +220,7 @@ const AccountList: React.FC = () => {
       dataIndex: 'remark',
       ellipsis: true,
       width: 120,
+      hideInSearch: true,
       render: (text, record) => {
         return <Tooltip title={text}>{text}</Tooltip>;
       },
@@ -215,6 +231,7 @@ const AccountList: React.FC = () => {
       width: 200,
       key: 'operation',
       fixed: 'right',
+      hideInSearch: true,
       render: (value: any, record: Record<string, string>) => {
         return (
           <Space>
@@ -256,9 +273,9 @@ const AccountList: React.FC = () => {
             >
               添加
             </Button>
-            <Button onClick={triggerRefreshAccount} icon={<ReloadOutlined />}>
+            {/* <Button onClick={triggerRefreshAccount} icon={<ReloadOutlined />}>
               刷新
-            </Button>
+            </Button> */}
           </Space>
         </Col>
       </Row>
@@ -283,16 +300,40 @@ const AccountList: React.FC = () => {
   return (
     <PageContainer>
       <Card>
-        {beforeLayout()}
-        <Table
-          rowKey="id"
-          dataSource={dataSource}
-          columns={columns}
+        {/* {beforeLayout()} */}
+        <ProTable
           scroll={{ x: 1000 }}
-          pagination={false}
-          loading={dataLoading}
+          rowKey="id"
+          columns={columns}
+          pagination={{
+            pageSize: 10,
+            showQuickJumper: false,
+            showSizeChanger: false,
+          }}
+          request={async (params) => {
+            const res = await queryAccount({ ...params, pageNumber: params.current - 1 });
+            return {
+              data: res.content,
+              total: res.totalElements,
+              success: true,
+            };
+          }}
+          toolbar={{
+            actions: [
+              <Button
+                key="primary"
+                type={'primary'}
+                icon={<UserAddOutlined />}
+                onClick={() => {
+                  openModal('新增账号', <AddContent form={form} onSubmit={handleAdd} />, 1000);
+                }}
+              >
+                添加
+              </Button>,
+            ]
+          }}
         />
-        {afterLayout()}
+        {/* {afterLayout()} */}
       </Card>
       <Modal
         title={title}

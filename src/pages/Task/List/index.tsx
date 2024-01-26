@@ -238,7 +238,7 @@ const List: React.FC = () => {
     <PageContainer>
       <Card>
         {/* {beforeLayout()} */}
-        <ProTable<TableListItem>
+        <ProTable
           columns={columns}
           pagination={{
             pageSize: 10,
