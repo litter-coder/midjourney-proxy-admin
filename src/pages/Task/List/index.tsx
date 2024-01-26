@@ -62,6 +62,7 @@ const List: React.FC = () => {
       dataIndex: 'id',
       width: 200,
       align: 'center',
+      fixed: 'left',
       hideInSearch: true,
       render: (text, record) => (
         <a onClick={() => openModal('任务信息', <TaskContent record={record}/>, null, 1100)}>
@@ -240,6 +241,7 @@ const List: React.FC = () => {
         {/* {beforeLayout()} */}
         <ProTable
           columns={columns}
+          scroll={{ x: 1000 }}
           pagination={{
             pageSize: 10,
             showQuickJumper: false,
