@@ -90,6 +90,8 @@ const TaskContent = ({ record }: { record: Record<string, any> }) => {
       <Card type="inner" title="扩展信息" style={{ margin: '10px' }}>
         <Descriptions column={2}>
           <Descriptions.Item label="bot类型">{getBotTypeTag(record['properties']['botType'])}</Descriptions.Item>
+          <Descriptions.Item label="nonce">{record['properties']['nonce']}</Descriptions.Item>
+          <Descriptions.Item label="频道ID">{record['properties']['discordChannelId']}</Descriptions.Item>
           <Descriptions.Item label="实例ID">{record['properties']['discordInstanceId']}</Descriptions.Item>
           <Descriptions.Item label="消息ID">{record['properties']['messageId']}</Descriptions.Item>
           <Descriptions.Item label="消息内容">{getTooltip(record['properties']['messageContent'])}</Descriptions.Item>

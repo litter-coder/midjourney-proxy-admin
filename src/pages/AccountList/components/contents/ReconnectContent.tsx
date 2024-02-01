@@ -31,6 +31,12 @@ const ReconnectContent = ({
             <Form.Item label="id" name="id" hidden>
               <Input />
             </Form.Item>
+            <Form.Item label="服务器ID" name="guildId" rules={[{ required: true, message: '请输入服务器ID' }]}>
+              <Input />
+            </Form.Item>
+            <Form.Item label="频道ID" name="channelId" rules={[{ required: true, message: '请输入频道ID' }]}>
+              <Input />
+            </Form.Item>
             <Form.Item label="用户Token" name="userToken" rules={[{ required: true, message: '请输入用户Token' }]}>
               <Input />
             </Form.Item>

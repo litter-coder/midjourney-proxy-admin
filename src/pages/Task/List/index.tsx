@@ -1,45 +1,18 @@
 import { queryTask } from '@/services/mj/api';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
-import { Button, Card, Col, Pagination, Row, Space, Table, Tag, Progress, Form, Tooltip } from 'antd';
-import { ReloadOutlined } from '@ant-design/icons';
-import React, { useEffect, useState } from 'react';
-import styles from './index.less';
+import { Card, Tag, Progress, Form, Tooltip } from 'antd';
+import React, { useState } from 'react';
 import TaskContent from '@/pages/Task/components/TaskContent';
 import MyModal from '@/pages/components/Modal';
 
 const List: React.FC = () => {
   // 初始化 dataSource 状态为空数组
-  const [dataSource, setDataSource] = useState([]);
-  const [dataLoading, setDataLoading] = useState(false);
-  const [pagination, setPagination] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
   const [modalContent, setModalContent] = useState({});
   const [title, setTitle] = useState<string>('');
   const [footer, setFooter] = useState({});
   const [modalWidth, setModalWidth] = useState(1000);
-  const [refresh, setRefresh] = useState(0);
   const [form] = Form.useForm();
-
-
-  useEffect(() => {
-    fetchData({});
-  }, [refresh]);
-
-  const triggerRefresh = () => {
-    setRefresh(refresh + 1);
-  };
-
-  const fetchData = async (params: any) => {
-    setDataLoading(true);
-    const res = await queryTask(params);
-    setPagination({ total: res.totalElements, size: res.size, current: res.number + 1 });
-    setDataSource(res.content);
-    setDataLoading(false);
-  };
-
-  const pageChange = async (page: number, pageSize: number) => {
-    fetchData({ pageNumber: page - 1, pageSize: pageSize });
-  };
 
   const hideModal = () => {
     setModalContent({});
@@ -65,7 +38,7 @@ const List: React.FC = () => {
       fixed: 'left',
       hideInSearch: true,
       render: (text, record) => (
-        <a onClick={() => openModal('任务信息', <TaskContent record={record}/>, null, 1100)}>
+        <a onClick={() => openModal('任务信息', <TaskContent record={record} />, null, 1100)}>
           {text}
         </a>
       ),
@@ -196,7 +169,7 @@ const List: React.FC = () => {
         } else if (record['status'] == 'FAILURE') {
           status = 'exception';
         }
-        return <Progress percent={percent} status={status} size="small"/>;
+        return <Progress percent={percent} status={status} size="small" />;
       },
     },
     {
@@ -209,47 +182,20 @@ const List: React.FC = () => {
     },
   ];
 
-  const beforeLayout = () => {
-    return (
-      <Row>
-        <Col xs={24} sm={12}>
-        </Col>
-        <Col xs={24} sm={12} className={styles.tableToolbar}>
-          <Space>
-            <Button onClick={triggerRefresh} icon={<ReloadOutlined />}>
-              刷新
-            </Button>
-          </Space>
-        </Col>
-      </Row>
-    );
-  };
-  const afterLayout = () => {
-    return (
-      <Row>
-        <Col xs={24} sm={12}></Col>
-        <Col xs={24} sm={12} className={styles.tableToolbar}>
-          <Pagination onChange={pageChange} total={pagination.total} current={pagination.current} size={pagination.size} />
-        </Col>
-      </Row>
-    );
-  };
-
   return (
     <PageContainer>
       <Card>
-        {/* {beforeLayout()} */}
         <ProTable
           columns={columns}
           scroll={{ x: 1000 }}
           pagination={{
             pageSize: 10,
             showQuickJumper: false,
-            showSizeChanger:false
+            showSizeChanger: false
           }}
           rowKey="id"
           request={async (params) => {
-            const res = await queryTask({...params, pageNumber: params.current - 1});
+            const res = await queryTask({ ...params, pageNumber: params.current - 1 });
             return {
               data: res.content,
               total: res.totalElements,
@@ -257,7 +203,6 @@ const List: React.FC = () => {
             };
           }}
         />
-        {/* {afterLayout()} */}
       </Card>
       <MyModal
         title={title}

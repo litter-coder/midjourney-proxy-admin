@@ -5,39 +5,31 @@ import MoreContent from '@/pages/AccountList/components/contents/MoreContent';
 import ReconnectContent from '@/pages/AccountList/components/contents/ReconnectContent';
 import { createAccount, queryAccount, updateAndReconnect } from '@/services/mj/api';
 import { ToolOutlined, UserAddOutlined } from '@ant-design/icons';
-import { PageContainer, ProTable } from '@ant-design/pro-components';
+import { ActionType, PageContainer, ProTable } from '@ant-design/pro-components';
 import {
   Button,
   Card,
-  Col,
   Form,
   Modal,
   notification,
-  Pagination,
-  Row,
   Space,
   Tag,
   Tooltip,
 } from 'antd';
 import { ColumnType } from 'antd/lib/table';
-import React, { useEffect, useState } from 'react';
-import styles from './index.less';
-import { render } from '@testing-library/react';
+import React, { useState, useRef } from 'react';
 
 const AccountList: React.FC = () => {
   // 初始化 dataSource 状态为空数组
-  const [dataSource, setDataSource] = useState([]);
-  const [pagination, setPagination] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
   const [modalReadonly, setModalReadonly] = useState(false);
   const [modalContent, setModalContent] = useState(<></>);
   const [title, setTitle] = useState<string>('');
   const [modalWidth, setModalWidth] = useState(1000);
-  const [refresh, setRefresh] = useState(0);
   const [form] = Form.useForm();
   const [api, contextHolder] = notification.useNotification();
   const [modalSubmitLoading, setModalSubmitLoading] = useState(false);
-  const [dataLoading, setDataLoading] = useState(false);
+  const ref = useRef<ActionType>();
 
   const openModal = (title: string, content: any, modalWidth: number) => {
     form.resetFields();
@@ -71,19 +63,7 @@ const AccountList: React.FC = () => {
 
   // 定义一个 triggerRefresh 函数，使其增加 refresh 的值，从而触发重新渲染
   const triggerRefreshAccount = () => {
-    setRefresh(refresh + 1);
-  };
-
-  const fetchData = async (params: any) => {
-    setDataLoading(true);
-    const res = await queryAccount(params);
-    setPagination({ total: res.totalElements, size: res.size, current: res.number + 1 });
-    setDataSource(res.content);
-    setDataLoading(false);
-  };
-
-  const pageChange = async (page: number, pageSize: number) => {
-    fetchData({ pageNumber: page - 1, pageSize: pageSize });
+    ref.current.reload();
   };
 
   const handleAdd = async (values: Record<string, string>) => {
@@ -124,14 +104,10 @@ const AccountList: React.FC = () => {
     setModalSubmitLoading(false);
   };
 
-  useEffect(() => {
-    fetchData({});
-  }, [refresh]);
-
   const columns = [
     {
-      title: '频道ID',
-      dataIndex: 'channelId',
+      title: 'ID',
+      dataIndex: 'id',
       width: 200,
       fixed: 'left',
       render: (text: string, record: Record<string, any>) => (
@@ -148,6 +124,11 @@ const AccountList: React.FC = () => {
           {text}
         </a>
       ),
+    } as ColumnType<Record<string, any>>,
+    {
+      title: '频道ID',
+      dataIndex: 'channelId',
+      width: 200,
     } as ColumnType<Record<string, any>>,
     {
       title: '账号名',
@@ -188,7 +169,24 @@ const AccountList: React.FC = () => {
       dataIndex: 'subscribePlan',
       width: 120,
       align: 'center',
-      hideInSearch: true,
+      request: async () => [
+        {
+          label: 'Basic',
+          value: 'BASIC',
+        },
+        {
+          label: 'Standard',
+          value: 'STANDARD',
+        },
+        {
+          label: 'Pro',
+          value: 'PRO',
+        },
+        {
+          label: 'Mega',
+          value: 'MEGA',
+        },
+      ],
       render: (text: string, record: Record<string, any>) => record['displays']['subscribePlan'],
     } as ColumnType<Record<string, any>>,
     {
@@ -219,8 +217,7 @@ const AccountList: React.FC = () => {
       title: '备注',
       dataIndex: 'remark',
       ellipsis: true,
-      width: 120,
-      hideInSearch: true,
+      width: 150,
       render: (text, record) => {
         return <Tooltip title={text}>{text}</Tooltip>;
       },
@@ -257,52 +254,14 @@ const AccountList: React.FC = () => {
     } as ColumnType<Record<string, any>>,
   ];
 
-  const beforeLayout = () => {
-    return (
-      <Row>
-        {contextHolder}
-        <Col xs={24} sm={12}></Col>
-        <Col xs={24} sm={12} className={styles.tableToolbar}>
-          <Space>
-            <Button
-              type={'primary'}
-              icon={<UserAddOutlined />}
-              onClick={() => {
-                openModal('新增账号', <AddContent form={form} onSubmit={handleAdd} />, 1000);
-              }}
-            >
-              添加
-            </Button>
-            {/* <Button onClick={triggerRefreshAccount} icon={<ReloadOutlined />}>
-              刷新
-            </Button> */}
-          </Space>
-        </Col>
-      </Row>
-    );
-  };
-  const afterLayout = () => {
-    return (
-      <Row>
-        <Col xs={24} sm={12}></Col>
-        <Col xs={24} sm={12} className={styles.tableToolbar}>
-          <Pagination
-            onChange={pageChange}
-            total={pagination.total}
-            current={pagination.current}
-            size={pagination.size}
-          />
-        </Col>
-      </Row>
-    );
-  };
-
   return (
     <PageContainer>
+      {contextHolder}
       <Card>
-        {/* {beforeLayout()} */}
         <ProTable
           scroll={{ x: 1000 }}
+          actionRef={ref}
+          search={{ defaultCollapsed: false }}
           rowKey="id"
           columns={columns}
           pagination={{
@@ -333,7 +292,6 @@ const AccountList: React.FC = () => {
             ]
           }}
         />
-        {/* {afterLayout()} */}
       </Card>
       <Modal
         title={title}

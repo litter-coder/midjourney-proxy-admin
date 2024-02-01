@@ -276,7 +276,7 @@ const Draw: React.FC = () => {
     const taskId = task.id;
     const label = button.emoji + ' ' + button.label;
     setLoadingButton(taskId + ":" + customId);
-    submitTask('action', { taskId: taskId, customId: customId, state: customState }).then((res) => {
+    submitTask('action', { taskId: taskId, customId: customId, state: customState, chooseSameChannel: true }).then((res) => {
       setLoadingButton('');
       if (res.code == 22) {
         api.warning({
