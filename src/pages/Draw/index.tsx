@@ -586,7 +586,7 @@ const Draw: React.FC = () => {
       </Flex>
     } else if (action == 'describe') {
       return <Flex vertical>
-        <Upload {...props}>
+        <Upload {...props} listType="picture-card">
           {images.length >= 1 ? null : uploadButton}
         </Upload>
         <Button style={{ marginTop: '10px' }} type="primary" onClick={submit} loading={submitLoading}>提交任务</Button>
