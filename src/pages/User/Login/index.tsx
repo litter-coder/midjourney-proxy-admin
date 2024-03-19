@@ -80,6 +80,7 @@ const Login: React.FC = () => {
   const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
   const [type, setType] = useState<string>('account');
   const { initialState, setInitialState } = useModel('@@initialState');
+  const intl = useIntl();
 
   const containerClassName = useEmotionCss(() => {
     return {
@@ -93,14 +94,14 @@ const Login: React.FC = () => {
     };
   });
 
-  const intl = useIntl();
-
   const handleSubmit = async (values: API.LoginParams) => {
     try {
       // 登录
       const msg = await login({ ...values });
       if (msg.code === 1) {
-        message.success('登录成功！');
+        message.success(intl.formatMessage({
+          id: 'pages.login.success'
+        }));
         const userInfo = await initialState?.fetchUserInfo?.();
         if (userInfo) {
           flushSync(() => {
@@ -117,20 +118,12 @@ const Login: React.FC = () => {
         }
         return;
       }
-      const defaultLoginFailureMessage = intl.formatMessage({
-        id: 'pages.login.failure',
-        defaultMessage: '登录失败，请重试！',
-      });
-      console.log(msg);
-      message.error(defaultLoginFailureMessage);
-      // 如果失败去设置用户错误信息
+      message.error(msg.description);
       setUserLoginState(msg);
     } catch (error) {
       const defaultLoginFailureMessage = intl.formatMessage({
-        id: 'pages.login.failure',
-        defaultMessage: '登录失败，请重试！',
+        id: 'pages.login.failure'
       });
-      console.log(error);
       message.error(defaultLoginFailureMessage);
     }
   };
@@ -140,10 +133,7 @@ const Login: React.FC = () => {
     <div className={containerClassName}>
       <Helmet>
         <title>
-          {intl.formatMessage({
-            id: 'menu.login',
-            defaultMessage: '登录页',
-          })}
+          {intl.formatMessage({ id: 'menu.login' })}
           - {Settings.title}
         </title>
       </Helmet>
@@ -176,10 +166,7 @@ const Login: React.FC = () => {
             items={[
               {
                 key: 'account',
-                label: intl.formatMessage({
-                  id: 'pages.login.accountLogin.tab',
-                  defaultMessage: '账户密码登录',
-                }),
+                label: intl.formatMessage({ id: 'pages.login.accountLogin.tab' }),
               },
             ]}
           />

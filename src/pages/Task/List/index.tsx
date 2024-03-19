@@ -4,6 +4,7 @@ import { Card, Tag, Progress, Form, Tooltip } from 'antd';
 import React, { useState } from 'react';
 import TaskContent from '@/pages/Task/components/TaskContent';
 import MyModal from '@/pages/components/Modal';
+import { useIntl } from '@umijs/max';
 
 const List: React.FC = () => {
   // 初始化 dataSource 状态为空数组
@@ -13,6 +14,7 @@ const List: React.FC = () => {
   const [footer, setFooter] = useState({});
   const [modalWidth, setModalWidth] = useState(1000);
   const [form] = Form.useForm();
+  const intl = useIntl();
 
   const hideModal = () => {
     setModalContent({});
@@ -31,19 +33,19 @@ const List: React.FC = () => {
 
   const columns = [
     {
-      title: '任务ID',
+      title: 'ID',
       dataIndex: 'id',
       width: 200,
       align: 'center',
       fixed: 'left',
       render: (text, record) => (
-        <a onClick={() => openModal('任务信息', <TaskContent record={record} />, null, 1100)}>
+        <a onClick={() => openModal(intl.formatMessage({ id: 'pages.task.info' }), <TaskContent record={record} />, null, 1100)}>
           {text}
         </a>
       ),
     },
     {
-      title: '类型',
+      title: intl.formatMessage({ id: 'pages.task.type' }),
       dataIndex: 'action',
       width: 120,
       align: 'center',
@@ -88,7 +90,7 @@ const List: React.FC = () => {
       render: (text, record) => record['displays']['action'],
     },
     {
-      title: '提交时间',
+      title: intl.formatMessage({ id: 'pages.task.submitTime' }),
       dataIndex: 'submitTime',
       width: 180,
       hideInSearch: true,
@@ -96,37 +98,37 @@ const List: React.FC = () => {
       render: (text, record) => record['displays']['submitTime'],
     },
     {
-      title: '状态',
+      title: intl.formatMessage({ id: 'pages.task.status' }),
       dataIndex: 'status',
       width: 120,
       align: 'center',
       request: async () => [
         {
-          label: '未启动',
+          label: intl.formatMessage({ id: 'pages.task.NOT_START' }),
           value: 'NOT_START',
         },
         {
-          label: '已提交',
+          label: intl.formatMessage({ id: 'pages.task.SUBMITTED' }),
           value: 'SUBMITTED',
         },
         {
-          label: '窗口等待',
+          label: intl.formatMessage({ id: 'pages.task.MODAL' }),
           value: 'MODAL',
         },
         {
-          label: '执行中',
+          label: intl.formatMessage({ id: 'pages.task.IN_PROGRESS' }),
           value: 'IN_PROGRESS',
         },
         {
-          label: '失败',
+          label: intl.formatMessage({ id: 'pages.task.FAILURE' }),
           value: 'FAILURE',
         },
         {
-          label: '成功',
+          label: intl.formatMessage({ id: 'pages.task.SUCCESS' }),
           value: 'SUCCESS',
         },
         {
-          label: '已取消',
+          label: intl.formatMessage({ id: 'pages.task.CANCEL' }),
           value: 'CANCEL',
         },
       ],
@@ -151,7 +153,7 @@ const List: React.FC = () => {
       },
     },
     {
-      title: '进度',
+      title: intl.formatMessage({ id: 'pages.task.progress' }),
       dataIndex: 'progress',
       width: 130,
       align: 'center',
@@ -172,7 +174,7 @@ const List: React.FC = () => {
       },
     },
     {
-      title: '任务描述',
+      title: intl.formatMessage({ id: 'pages.task.description' }),
       dataIndex: 'description',
       ellipsis: true,
       render: (text, record) => {

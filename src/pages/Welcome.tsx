@@ -1,5 +1,5 @@
 import { PageContainer } from '@ant-design/pro-components';
-import { useModel } from '@umijs/max';
+import { useModel, useIntl } from '@umijs/max';
 import { Card, theme } from 'antd';
 import React from 'react';
 
@@ -83,6 +83,7 @@ const InfoCard: React.FC<{
 const Welcome: React.FC = () => {
   const { token } = theme.useToken();
   const { initialState } = useModel('@@initialState');
+  const intl = useIntl();
   return (
     <PageContainer>
       <Card
@@ -111,7 +112,7 @@ const Welcome: React.FC = () => {
               color: token.colorTextHeading,
             }}
           >
-            欢迎使用 Midjourney Proxy Admin
+            {intl.formatMessage({ id: 'pages.welcome.link' })} Midjourney Proxy Admin
           </div>
           <p
             style={{
@@ -123,8 +124,7 @@ const Welcome: React.FC = () => {
               width: '65%',
             }}
           >
-            Midjourney Proxy Admin 是一个整合了 umi，Ant Design 和 ProComponents
-            的后台管理界面。致力于提供Midjourney Proxy的各种管理功能。
+             {intl.formatMessage({ id: 'pages.welcome.description' })}
           </p>
           <div
             style={{
@@ -136,20 +136,20 @@ const Welcome: React.FC = () => {
             <InfoCard
               index={1}
               href="#"
-              title="了解 midjourney-proxy"
-              desc="midjourney-proxy 是一个代理 MidJourney 的 discord 频道的开源项目，实现api形式调用AI绘图。"
+              title={intl.formatMessage({id: "pages.welcome.learn"}) + " midjourney-proxy"}
+              desc={intl.formatMessage({id: "pages.welcome.midjourney-proxy"})}
             />
             <InfoCard
               index={2}
-              title="了解 wechat-ai"
+              title={intl.formatMessage({id: "pages.welcome.learn"}) + " wechat-ai"}
               href="#"
-              desc="wechat-ai 是基于 chatgpt-on-wechat 和 midjourney-proxy 实现的一个微信机器人项目。"
+              desc={intl.formatMessage({id: "pages.welcome.wechat-ai"})}
             />
             <InfoCard
               index={3}
-              title="了解 midjourney-proxy-plus"
+              title={intl.formatMessage({id: "pages.welcome.learn"}) + " midjourney-proxy-plus"}
               href="#"
-              desc="midjourney-proxy 的先行版，采用了全新模式。支持mj所有的指令和相关操作，精准匹配所有提交的任务。"
+              desc={intl.formatMessage({id: "pages.welcome.midjourney-proxy-plus"})}
             />
           </div>
         </div>

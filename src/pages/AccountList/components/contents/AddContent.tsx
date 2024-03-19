@@ -1,6 +1,7 @@
 import { Card, Col, Form, FormInstance, Input, InputNumber, Switch, Row } from 'antd';
 import { useEffect } from 'react';
 const { TextArea } = Input;
+import { useIntl } from '@umijs/max';
 
 const AddContent = ({
   form,
@@ -9,6 +10,7 @@ const AddContent = ({
   form: FormInstance;
   onSubmit: (values: any) => void;
 }) => {
+  const intl = useIntl();
   // 使用 useEffect 来在组件挂载时设置表单的初始值
   useEffect(() => {
     form.setFieldsValue({
@@ -31,60 +33,60 @@ const AddContent = ({
     >
       <Row gutter={16}>
         <Col span={12}>
-          <Card type="inner" title="账号信息">
+          <Card type="inner" title={intl.formatMessage({ id: 'pages.account.info' })}>
             <Form.Item
-              label="服务器ID"
+              label={intl.formatMessage({ id: 'pages.account.guildId' })}
               name="guildId"
-              rules={[{ required: true, message: '请输入服务器ID' }]}
+              rules={[{ required: true }]}
             >
               <Input />
             </Form.Item>
             <Form.Item
-              label="频道ID"
+              label={intl.formatMessage({ id: 'pages.account.channelId' })}
               name="channelId"
-              rules={[{ required: true, message: '请输入频道ID' }]}
+              rules={[{ required: true }]}
             >
               <Input />
             </Form.Item>
             <Form.Item
-              label="用户Token"
+              label={intl.formatMessage({ id: 'pages.account.userToken' })}
               name="userToken"
-              rules={[{ required: true, message: '请输入用户Token' }]}
+              rules={[{ required: true }]}
             >
               <Input />
             </Form.Item>
             <Form.Item
-              label="MJ私信ID"
+              label={intl.formatMessage({ id: 'pages.account.mjChannelId' })}
               name="mjBotChannelId"
             >
               <Input />
             </Form.Item>
             <Form.Item
-              label="niji私信ID"
+              label={intl.formatMessage({ id: 'pages.account.nijiChannelId' })}
               name="nijiBotChannelId"
             >
               <Input />
             </Form.Item>
-            <Form.Item label="用户Agent" name="userAgent">
+            <Form.Item label="User Agent" name="userAgent">
               <Input />
             </Form.Item>
-            <Form.Item label="remix自动提交" name="remixAutoSubmit" valuePropName="checked">
+            <Form.Item label={intl.formatMessage({ id: 'pages.account.remixAutoSubmit' })} name="remixAutoSubmit" valuePropName="checked">
               <Switch />
             </Form.Item>
           </Card>
         </Col>
         <Col span={12}>
-          <Card type="inner" title="其他信息">
-            <Form.Item label="并发数" name="coreSize">
+          <Card type="inner" title={intl.formatMessage({ id: 'pages.account.otherInfo' })}>
+            <Form.Item label={intl.formatMessage({ id: 'pages.account.coreSize' })} name="coreSize">
               <InputNumber min={1} max={12} />
             </Form.Item>
-            <Form.Item label="等待队列" name="queueSize">
+            <Form.Item label={intl.formatMessage({ id: 'pages.account.queueSize' })} name="queueSize">
               <InputNumber min={1} />
             </Form.Item>
-            <Form.Item label="任务超时时间" name="timeoutMinutes">
-              <InputNumber min={1} suffix="分钟" />
+            <Form.Item label={intl.formatMessage({ id: 'pages.account.timeoutMinutes' })} name="timeoutMinutes">
+              <InputNumber min={1} suffix={intl.formatMessage({ id: 'pages.minutes' })} />
             </Form.Item>
-            <Form.Item label="备注说明" name="remark">
+            <Form.Item label={intl.formatMessage({ id: 'pages.account.remark' })} name="remark">
               <TextArea rows={3} />
             </Form.Item>
           </Card>

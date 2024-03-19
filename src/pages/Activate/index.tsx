@@ -5,6 +5,7 @@ import {
 import React, { useState, useEffect } from 'react';
 import { FilePdfOutlined, ExperimentOutlined } from '@ant-design/icons';
 import { getMachineCode, activateByCode } from '@/services/mj/api';
+import { useIntl } from '@umijs/max';
 
 const { Paragraph } = Typography;
 
@@ -14,6 +15,7 @@ const Activate: React.FC = () => {
   const [machineCode, setMachineCode] = useState('');
   const [code, setCode] = useState('');
   const [submitLoading, setsubmitLoading] = useState(false);
+  const intl = useIntl();
 
   useEffect(() => {
     if (!active) {
@@ -27,28 +29,28 @@ const Activate: React.FC = () => {
     if (active) {
       return <Result
         status="success"
-        title="服务已激活"
-        subTitle="可以正常维护账号、查看任务列表，提供midjourney api接口供外部调用；本系统的绘图测试页，提供了常用的绘图功能"
+        title={intl.formatMessage({ id: 'pages.activate.actived' })}
+        subTitle={intl.formatMessage({ id: 'pages.activate.activedTip' })}
         extra={[
           <Button type="primary" key="draw" onClick={() => location.hash = '#/draw-test'}
             icon={<ExperimentOutlined />}
-          >绘画测试</Button>,
+          >{intl.formatMessage({ id: 'pages.activate.drawTest' })}</Button>,
           <Button key="api-doc" onClick={() => location.href = '/doc'}
             icon={<FilePdfOutlined />}
-          >API文档</Button>,
+          >{intl.formatMessage({ id: 'pages.activate.apiDoc' })}</Button>,
         ]}
       />
     }
     return <><Result
       status="warning"
-      title="尚未激活！请按照下述步骤，激活服务"
+      title={intl.formatMessage({ id: 'pages.activate.unactiveTip' })}
     /><Steps
         size="small"
         current={step}
         items={[
-          { title: '复制机器码' },
-          { title: '获取激活码' },
-          { title: '激活' },
+          { title: intl.formatMessage({ id: 'pages.activate.copyCode' }) },
+          { title: intl.formatMessage({ id: 'pages.activate.getActivationCode' }) },
+          { title: intl.formatMessage({ id: 'pages.activate.activate' }) },
         ]}
       />
       <Card style={{ marginTop: '20px' }}>
@@ -61,24 +63,24 @@ const Activate: React.FC = () => {
     if (step == 0) {
       return <Flex vertical>
         <Paragraph copyable strong>{machineCode}</Paragraph>
-        <span>复制机器码后，点击 <Button type="primary" onClick={() => setStep(1)}>下一步</Button></span>
+        <span>{intl.formatMessage({ id: 'pages.activate.copyThen' }) } <Button type="primary" onClick={() => setStep(1)}>{intl.formatMessage({ id: 'pages.activate.next' }) }</Button></span>
       </Flex>;
     } else if (step == 1) {
       return <Flex vertical>
-        <span style={{ marginBottom: '20px', fontSize: '15px', fontWeight: '500' }}>机器码发送给管理员，获取激活码</span>
+        <span style={{ marginBottom: '20px', fontSize: '15px', fontWeight: '500' }}>{intl.formatMessage({ id: 'pages.activate.sendCodeAndGet' }) }</span>
         <Space>
-          <Button onClick={() => setStep(0)}>上一步</Button>
-          <Button type="primary" onClick={() => setStep(2)}>下一步</Button>
+          <Button onClick={() => setStep(0)}>{intl.formatMessage({ id: 'pages.activate.previous' }) }</Button>
+          <Button type="primary" onClick={() => setStep(2)}>{intl.formatMessage({ id: 'pages.activate.next' }) }</Button>
         </Space>
       </Flex>;
     } else {
       return <Flex vertical>
         <Space>
-          <Button onClick={() => setStep(1)}>上一步</Button>
+          <Button onClick={() => setStep(1)}>{intl.formatMessage({ id: 'pages.activate.previous' }) }</Button>
         </Space>
         <Space.Compact style={{ width: '100%', marginTop: '20px' }}>
-          <Input placeholder='请输入激活码' value={code} onChange={handleCodeChange} onPressEnter={submit} />
-          <Button type="primary" onClick={submit} loading={submitLoading}>激活服务</Button>
+          <Input placeholder={intl.formatMessage({ id: 'pages.activate.inputCode' }) } value={code} onChange={handleCodeChange} onPressEnter={submit} />
+          <Button type="primary" onClick={submit} loading={submitLoading}>{intl.formatMessage({ id: 'pages.activate.activeService' })}</Button>
         </Space.Compact>
       </Flex>;
     }
@@ -90,13 +92,13 @@ const Activate: React.FC = () => {
 
   const submit = async () => {
     if (!code) {
-      message.error('请输入激活码');
+      message.error(intl.formatMessage({ id: 'pages.activate.inputCode' }));
       return;
     }
     setsubmitLoading(true);
     const res = await activateByCode(code);
     setsubmitLoading(false);
-    if (res.startsWith('激活成功')) {
+    if (res.startsWith('success')) {
       setActive(true);
       setCode('');
       sessionStorage.setItem('mj-active', 'true');

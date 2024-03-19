@@ -6,11 +6,12 @@ import {
 import { Image as AntdImage } from 'antd';
 import type { RadioChangeEvent } from 'antd';
 import React, { useEffect, useState, useRef } from 'react';
-import { UploadOutlined, ClearOutlined, CloseCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { ClearOutlined, CloseCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import type { RcFile, UploadProps, UploadFile } from 'antd/es/upload/interface';
 import Markdown from 'react-markdown';
 import styles from './index.less';
 import { submitTask, cancelTask, swapFace, queryTask, queryTaskByIds } from '@/services/mj/api';
+import { useIntl } from '@umijs/max';
 
 const { TextArea } = Input;
 const { Meta } = Card;
@@ -38,6 +39,7 @@ const Draw: React.FC = () => {
   const [modalImageHeight, setModalImageHeight] = useState<number>(0);
   const [modalRemix, setModalRemix] = useState(false);
   const [loadingModal, setLoadingModal] = useState(false);
+  const intl = useIntl();
 
   const cbSaver = useRef<any[]>([]);
 
@@ -152,7 +154,7 @@ const Draw: React.FC = () => {
   const submit = async () => {
     if (botType === 'INSIGHT_FACE') {
       if (images.length < 2) {
-        message.error('swap至少需要两张图片!');
+        message.error(intl.formatMessage({ id: 'pages.draw.swapTip' }));
         return;
       }
       setsubmitLoading(true);
@@ -161,7 +163,7 @@ const Draw: React.FC = () => {
       swapFace({ sourceBase64: sourceBase64, targetBase64: targetBase64, state: customState }).then((res) => {
         setsubmitLoading(false);
         if (res.code == 1) {
-          message.success('提交任务成功，请稍等...');
+          message.success(intl.formatMessage({ id: 'pages.draw.submitSuccess' }));
           waitTaskIds.add(res.result);
           setImages([]);
         } else {
@@ -173,14 +175,14 @@ const Draw: React.FC = () => {
       });
     } else if (action === 'show') {
       if (!prompt) {
-        message.error('任务ID不能为空!');
+        message.error(intl.formatMessage({ id: 'pages.draw.taskIdNotBlank' }));
         return;
       }
       waitTaskIds.add(prompt);
       setPrompt('');
     } else if (action === 'imagine') {
       if (!prompt) {
-        message.error('prompt不能为空!');
+        message.error(intl.formatMessage({ id: 'pages.draw.promptNotBlank' }));
         return;
       }
       setsubmitLoading(true);
@@ -200,7 +202,7 @@ const Draw: React.FC = () => {
       });
     } else if (action === 'blend') {
       if (images.length < 2) {
-        message.error('blend至少需要两张图片!');
+        message.error(intl.formatMessage({ id: 'pages.draw.blendTip' }));
         return;
       }
       setsubmitLoading(true);
@@ -219,7 +221,7 @@ const Draw: React.FC = () => {
       });
     } else if (action === 'describe') {
       if (images.length < 1) {
-        message.error('图片不能为空!');
+        message.error(intl.formatMessage({ id: 'pages.draw.imageEmptyTip' }));
         return;
       }
       setsubmitLoading(true);
@@ -234,7 +236,7 @@ const Draw: React.FC = () => {
       });
     } else if (action === 'shorten') {
       if (!prompt) {
-        message.error('prompt不能为空!');
+        message.error(intl.formatMessage({ id: 'pages.draw.promptNotBlank' }));
         return;
       }
       setsubmitLoading(true);
@@ -247,7 +249,7 @@ const Draw: React.FC = () => {
         }
       });
     } else {
-      message.error('当前页暂不支持该指令!');
+      message.error(intl.formatMessage({ id: 'pages.draw.unsupportedAction' }));
     }
   };
 
@@ -259,7 +261,7 @@ const Draw: React.FC = () => {
           description: res.description
         });
       } else {
-        message.success('提交任务成功，请稍等...');
+        message.success(intl.formatMessage({ id: 'pages.draw.submitSuccess' }));
       }
       return true;
     } else {
@@ -311,7 +313,7 @@ const Draw: React.FC = () => {
       } else if (res.code == 1) {
         button.style = 3;
         waitTaskIds.add(res.result);
-        message.success('动作执行成功，请稍等...');
+        message.success(intl.formatMessage({ id: 'pages.draw.actionSuccess' }));
       } else {
         api.error({
           message: 'error',
@@ -378,7 +380,7 @@ const Draw: React.FC = () => {
       } else if (res.code == 1) {
         waitTaskIds.add(res.result);
         setModalVisible(false);
-        message.success('提交成功，请稍等...');
+        message.success(intl.formatMessage({ id: 'pages.draw.subSuccess' }));
       } else {
         api.error({
           message: 'error',
@@ -548,12 +550,12 @@ const Draw: React.FC = () => {
         <Upload {...props} listType="picture-card">
           {images.length >= 2 ? null : uploadButton}
         </Upload>
-        <Button style={{ marginTop: '10px' }} type="primary" onClick={submit} loading={submitLoading}>人脸替换（第一张图作为人脸源）</Button>
+        <Button style={{ marginTop: '10px' }} type="primary" onClick={submit} loading={submitLoading}>{intl.formatMessage({ id: 'pages.draw.swapDesc' })}</Button>
       </Flex>
     } else if (action == 'show') {
       return <Space.Compact style={{ width: '100%' }}>
-        <Input placeholder='输入任务ID, 调出未展示的任务' value={prompt} onChange={handlePromptChange} onPressEnter={submit} />
-        <Button type="primary" onClick={submit} loading={submitLoading}>提交任务</Button>
+        <Input placeholder={intl.formatMessage({ id: 'pages.draw.inputIdShow' })} value={prompt} onChange={handlePromptChange} onPressEnter={submit} />
+        <Button type="primary" onClick={submit} loading={submitLoading}>{intl.formatMessage({ id: 'pages.draw.submitTask' })}</Button>
       </Space.Compact>
     } else if (action == 'imagine') {
       return <Flex vertical>
@@ -562,7 +564,7 @@ const Draw: React.FC = () => {
         </Upload>
         <Space.Compact style={{ width: '100%', marginTop: '10px' }}>
           <Input placeholder='Prompt' value={prompt} onChange={handlePromptChange} onPressEnter={submit} />
-          <Button type="primary" onClick={submit} loading={submitLoading}>提交任务</Button>
+          <Button type="primary" onClick={submit} loading={submitLoading}>{intl.formatMessage({ id: 'pages.draw.submitTask' })}</Button>
         </Space.Compact>
       </Flex>
     } else if (action == 'blend') {
@@ -575,13 +577,13 @@ const Draw: React.FC = () => {
             value={dimensions}
             onChange={handleDimensionsChange}
             options={[
-              { value: 'PORTRAIT', label: '肖像(2:3)' },
-              { value: 'SQUARE', label: '正方形(1:1)' },
-              { value: 'LANDSCAPE', label: '景观(3:2)' },
+              { value: 'PORTRAIT', label: intl.formatMessage({ id: 'pages.draw.PORTRAIT' }) },
+              { value: 'SQUARE', label: intl.formatMessage({ id: 'pages.draw.SQUARE' }) },
+              { value: 'LANDSCAPE', label: intl.formatMessage({ id: 'pages.draw.LANDSCAPE' }) },
             ]}
             optionType="button"
           />
-          <Button type="primary" onClick={submit} loading={submitLoading}>提交任务</Button>
+          <Button type="primary" onClick={submit} loading={submitLoading}>{intl.formatMessage({ id: 'pages.draw.submitTask' })}</Button>
         </Space>
       </Flex>
     } else if (action == 'describe') {
@@ -589,12 +591,12 @@ const Draw: React.FC = () => {
         <Upload {...props} listType="picture-card">
           {images.length >= 1 ? null : uploadButton}
         </Upload>
-        <Button style={{ marginTop: '10px' }} type="primary" onClick={submit} loading={submitLoading}>提交任务</Button>
+        <Button style={{ marginTop: '10px' }} type="primary" onClick={submit} loading={submitLoading}>{intl.formatMessage({ id: 'pages.draw.submitTask' })}</Button>
       </Flex>
     } else if (action == 'shorten') {
       return <Space.Compact style={{ width: '100%', marginTop: '10px' }}>
         <Input placeholder='Prompt' value={prompt} onChange={handlePromptChange} onPressEnter={submit} />
-        <Button type="primary" onClick={submit} loading={submitLoading}>提交任务</Button>
+        <Button type="primary" onClick={submit} loading={submitLoading}>{intl.formatMessage({ id: 'pages.draw.submitTask' })}</Button>
       </Space.Compact>
     }
     return <></>;
@@ -614,14 +616,14 @@ const Draw: React.FC = () => {
     }
     if (modalRemix) {
       return <Flex vertical>
-        <Button style={{ marginBottom: '10px' }} icon={<ClearOutlined />} onClick={clearCanvas}>清除选中</Button>
+        <Button style={{ marginBottom: '10px' }} icon={<ClearOutlined />} onClick={clearCanvas}>{intl.formatMessage({ id: 'pages.draw.clear' })}</Button>
         <canvas style={{ backgroundImage: `url('${modalImage}')`, backgroundSize: '100% 100%' }}
           id="canvas" width="550" height={modalImageHeight}></canvas>
         <TextArea style={{ marginTop: '10px' }} rows={2} value={customPrompt} onChange={handleCustomPromptChange} />
       </Flex>
     }
     return <Flex vertical>
-      <Button style={{ marginBottom: '10px' }} icon={<ClearOutlined />} onClick={clearCanvas}>清除选中</Button>
+      <Button style={{ marginBottom: '10px' }} icon={<ClearOutlined />} onClick={clearCanvas}>{intl.formatMessage({ id: 'pages.draw.clear' })}</Button>
       <canvas style={{ backgroundImage: `url('${modalImage}')`, backgroundSize: '100% 100%' }}
         id="canvas" width="550" height={modalImageHeight}></canvas>
     </Flex>
@@ -634,11 +636,11 @@ const Draw: React.FC = () => {
   const beforeUpload = (file: RcFile) => {
     const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
     if (!isJpgOrPng) {
-      message.error('只能上传JPG或PNG文件!');
+      message.error(intl.formatMessage({ id: 'pages.draw.onlyJpgPng' }));
     }
     const isLt10M = file.size / 1024 / 1024 < 10;
     if (!isLt10M) {
-      message.error('图片不能大于10MB!');
+      message.error(intl.formatMessage({ id: 'pages.draw.limit10M' }));
     }
     return (isJpgOrPng && isLt10M) || Upload.LIST_IGNORE;
   };

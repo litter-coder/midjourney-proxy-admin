@@ -1,5 +1,6 @@
 ﻿import type { RequestOptions } from '@@/plugin-request/request';
 import type { RequestConfig } from '@umijs/max';
+import { getLocale } from '@umijs/max';
 import { message, notification } from 'antd';
 
 // 错误处理方案： 错误类型
@@ -89,9 +90,11 @@ export const errorConfig: RequestConfig = {
   requestInterceptors: [
     (config: RequestOptions) => {
       const MJ_API_SECRET = sessionStorage.getItem('mj-api-secret') || ''; // 获取保存的密码
+      const locale = getLocale();
       config.headers = {
         ...config.headers,
         'mj-api-secret': MJ_API_SECRET, // 将密码作为自定义头部
+        'Accept-Language': locale === 'zh-CN' ? 'zh-CN' : 'en-US',
       };
       return { ...config };
     },

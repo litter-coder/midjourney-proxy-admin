@@ -2,6 +2,7 @@ import { Card, Descriptions, Tag, Tooltip, Select, Space, Button, notification }
 import moment from 'moment';
 import React, { useState, useEffect } from 'react';
 import { accountChangeVersion, accountAction } from '@/services/mj/api';
+import { useIntl } from '@umijs/max';
 
 const { Option } = Select;
 
@@ -17,6 +18,8 @@ const MoreContent: React.FC<MoreContentProps> = ({ record, onSuccess }) => {
   const [nijiButtons, setNijiButtons] = useState<Array<any>>([]);
   const [loading, setLoading] = useState(false);
   const [loadingButton, setLoadingButton] = useState('');
+  const intl = useIntl();
+
   useEffect(() => {
     setVersion(record.version);
     setButtons(record.buttons);
@@ -67,7 +70,7 @@ const MoreContent: React.FC<MoreContentProps> = ({ record, onSuccess }) => {
       setLoading(false);
       api.success({
         message: 'success',
-        description: "mj版本切换成功"
+        description: intl.formatMessage({ id: 'pages.account.mjVersionSuccess' })
       });
       onSuccess();
     } else {
@@ -100,58 +103,58 @@ const MoreContent: React.FC<MoreContentProps> = ({ record, onSuccess }) => {
   return (
     <>
       {contextHolder}
-      <Card type="inner" title="账号信息" style={{ margin: '5px' }}>
+      <Card type="inner" title={intl.formatMessage({ id: 'pages.account.info' })} style={{ margin: '5px' }}>
         <Descriptions column={3}>
-          <Descriptions.Item label="服务器ID">{record.guildId}</Descriptions.Item>
-          <Descriptions.Item label="频道ID">{record.channelId}</Descriptions.Item>
-          <Descriptions.Item label="账号名">{record.name}</Descriptions.Item>
-          <Descriptions.Item label="用户Token">
+          <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.guildId' })}>{record.guildId}</Descriptions.Item>
+          <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.channelId' })}>{record.channelId}</Descriptions.Item>
+          <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.username' })}>{record.name}</Descriptions.Item>
+          <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.userToken' })}>
             <Tooltip title={record.userToken}>
-              {(record.userToken && record.userToken.substring(0, 25) + '...') || '未提供'}
+              {(record.userToken && record.userToken.substring(0, 25) + '...') || ''}
             </Tooltip>
           </Descriptions.Item>
-          <Descriptions.Item label="用户UserAgent">
+          <Descriptions.Item label="User Agent">
             <Tooltip title={record.userAgent}>
-              {(record.userAgent && record.userAgent.substring(0, 25) + '...') || '未提供'}
+              {(record.userAgent && record.userAgent.substring(0, 25) + '...') || ''}
             </Tooltip>
           </Descriptions.Item>
-          <Descriptions.Item label="remix自动提交">
-            {getStatusTag(record.remixAutoSubmit, '是', '否')}
+          <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.remixAutoSubmit' })}>
+            {getStatusTag(record.remixAutoSubmit, intl.formatMessage({ id: 'pages.yes' }), intl.formatMessage({ id: 'pages.no' }))}
           </Descriptions.Item>
-          <Descriptions.Item label="MJ私信ID">{record.mjBotChannelId}</Descriptions.Item>
-          <Descriptions.Item label="niji私信ID">{record.nijiBotChannelId}</Descriptions.Item>
+          <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.mjChannelId' })}>{record.mjBotChannelId}</Descriptions.Item>
+          <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.nijiChannelId' })}>{record.nijiBotChannelId}</Descriptions.Item>
         </Descriptions>
       </Card>
 
-      <Card type="inner" title="基本信息" style={{ margin: '5px' }}>
+      <Card type="inner" title={intl.formatMessage({ id: 'pages.account.basicInfo' })} style={{ margin: '5px' }}>
         <Descriptions column={3}>
-          <Descriptions.Item label="状态">
-            {getStatusTag(record.enable, '启用', '未启用')}
+          <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.status' })}>
+            {getStatusTag(record.enable, intl.formatMessage({ id: 'pages.enable' }), intl.formatMessage({ id: 'pages.disable' }))}
           </Descriptions.Item>
-          <Descriptions.Item label="账号模式">{record['displays']['mode']}</Descriptions.Item>
-          <Descriptions.Item label="niji模式">{record['displays']['nijiMode']}</Descriptions.Item>
-          <Descriptions.Item label="订阅计划">
+          <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.mjMode' })}>{record['displays']['mode']}</Descriptions.Item>
+          <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.nijiMode' })}>{record['displays']['nijiMode']}</Descriptions.Item>
+          <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.subscribePlan' })}>
             {record['displays']['subscribePlan']}
           </Descriptions.Item>
-          <Descriptions.Item label="计费方式">{record['displays']['billedWay']}</Descriptions.Item>
-          <Descriptions.Item label="续订时间">{changeDate(record.renewDate)}</Descriptions.Item>
-          <Descriptions.Item label="快速时间剩余">{record.fastTimeRemaining}</Descriptions.Item>
-          <Descriptions.Item label="relax用量">{record.relaxedUsage}</Descriptions.Item>
-          <Descriptions.Item label="总用量">{record.lifetimeUsage}</Descriptions.Item>
+          <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.billedWay' })}>{record['displays']['billedWay']}</Descriptions.Item>
+          <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.renewDate' })}>{changeDate(record.renewDate)}</Descriptions.Item>
+          <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.fastTimeRemaining' })}>{record.fastTimeRemaining}</Descriptions.Item>
+          <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.relaxedUsage' })}>{record.relaxedUsage}</Descriptions.Item>
+          <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.lifetimeUsage' })}>{record.lifetimeUsage}</Descriptions.Item>
         </Descriptions>
       </Card>
 
-      <Card type="inner" title="其他信息" style={{ margin: '5px' }}>
+      <Card type="inner" title={intl.formatMessage({ id: 'pages.account.otherInfo' })} style={{ margin: '5px' }}>
         <Descriptions column={3}>
-          <Descriptions.Item label="并发数">{record.coreSize}</Descriptions.Item>
-          <Descriptions.Item label="等待队列">{record.queueSize}</Descriptions.Item>
-          <Descriptions.Item label="任务超时时间">{record.timeoutMinutes} 分钟</Descriptions.Item>
-          <Descriptions.Item label="创建时间">{changeDate(record.dateCreated)}</Descriptions.Item>
-          <Descriptions.Item label="备注说明">{record.remark}</Descriptions.Item>
+          <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.coreSize' })}>{record.coreSize}</Descriptions.Item>
+          <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.queueSize' })}>{record.queueSize}</Descriptions.Item>
+          <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.timeoutMinutes' })}>{record.timeoutMinutes} {intl.formatMessage({ id: 'pages.minutes' })}</Descriptions.Item>
+          <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.dateCreated' })}>{changeDate(record.dateCreated)}</Descriptions.Item>
+          <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.remark' })}>{record.remark}</Descriptions.Item>
         </Descriptions>
       </Card>
 
-      <Card type="inner" title="mj设置" style={{ margin: '5px' }}>
+      <Card type="inner" title={intl.formatMessage({ id: 'pages.account.mjSettings' })} style={{ margin: '5px' }}>
         <Select
           style={{ width: '35%' }}
           placeholder={record.versionSelector?.placeholder}
@@ -165,7 +168,7 @@ const MoreContent: React.FC<MoreContentProps> = ({ record, onSuccess }) => {
           {accountButtons()}
         </Space>
       </Card>
-      <Card type="inner" title="niji设置" style={{ margin: '5px' }}>
+      <Card type="inner" title={intl.formatMessage({ id: 'pages.account.nijiSettings' })} style={{ margin: '5px' }}>
         <Space wrap style={{ marginTop: '5px' }}>
           {accountNijiButtons()}
         </Space>

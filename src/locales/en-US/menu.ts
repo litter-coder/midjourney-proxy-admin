@@ -23,7 +23,7 @@ export default {
   'menu.form.advanced-form': 'Advanced Form',
   'menu.list': 'List',
   'menu.list.table-list': 'Search Table',
-  'menu.list.account-list': 'Account Manager',
+  'menu.list.account-list': 'Account Manage',
   'menu.api-doc': 'API DOC',
   'menu.task-list': 'Task Search',
   'menu.draw-test': 'Draw Test',

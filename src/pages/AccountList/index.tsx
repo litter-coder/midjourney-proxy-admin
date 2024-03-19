@@ -6,6 +6,7 @@ import ReconnectContent from '@/pages/AccountList/components/contents/ReconnectC
 import { createAccount, queryAccount, updateAndReconnect } from '@/services/mj/api';
 import { ToolOutlined, UserAddOutlined } from '@ant-design/icons';
 import { ActionType, PageContainer, ProTable } from '@ant-design/pro-components';
+import { useIntl } from '@umijs/max';
 import {
   Button,
   Card,
@@ -30,6 +31,7 @@ const AccountList: React.FC = () => {
   const [api, contextHolder] = notification.useNotification();
   const [modalSubmitLoading, setModalSubmitLoading] = useState(false);
   const ref = useRef<ActionType>();
+  const intl = useIntl();
 
   const openModal = (title: string, content: any, modalWidth: number) => {
     form.resetFields();
@@ -48,7 +50,7 @@ const AccountList: React.FC = () => {
   const modalFooter = (
     <>
       <Button key="back" onClick={hideModal}>
-        取消
+        {intl.formatMessage({ id: 'pages.cancel' })}
       </Button>
       <Button
         key="submit"
@@ -56,7 +58,7 @@ const AccountList: React.FC = () => {
         loading={modalSubmitLoading}
         onClick={() => form.submit()}
       >
-        提交
+        {intl.formatMessage({ id: 'pages.submit' })}
       </Button>
     </>
   );
@@ -115,7 +117,7 @@ const AccountList: React.FC = () => {
           onClick={() => {
             setModalReadonly(true);
             openModal(
-              '账号信息 - ' + record.name,
+              intl.formatMessage({ id: 'pages.account.info' }) + ' - ' + record.name,
               <MoreContent record={record} onSuccess={triggerRefreshAccount} />,
               1100,
             );
@@ -126,46 +128,46 @@ const AccountList: React.FC = () => {
       ),
     } as ColumnType<Record<string, any>>,
     {
-      title: '频道ID',
+      title: intl.formatMessage({ id: 'pages.account.channelId' }),
       dataIndex: 'channelId',
       width: 200,
     } as ColumnType<Record<string, any>>,
     {
-      title: '账号名',
+      title: intl.formatMessage({ id: 'pages.account.username' }),
       dataIndex: 'name',
       width: 120,
       ellipsis: true,
     } as ColumnType<Record<string, any>>,
     {
-      title: '状态',
+      title: intl.formatMessage({ id: 'pages.account.status' }),
       dataIndex: 'enable',
       width: 100,
       align: 'center',
       request: async () => [
         {
-          label: '启用',
+          label: intl.formatMessage({ id: 'pages.enable' }),
           value: 'true',
         },
         {
-          label: '未启用',
+          label: intl.formatMessage({ id: 'pages.disable' }),
           value: 'false',
         },
       ],
       render: (enable: boolean) => {
         let color = enable ? 'green' : 'volcano';
-        let text = enable ? '启用' : '未启用';
+        let text = enable ? intl.formatMessage({ id: 'pages.enable' }) : intl.formatMessage({ id: 'pages.disable' });
         return <Tag color={color}>{text}</Tag>;
       },
     } as ColumnType<Record<string, any>>,
     {
-      title: '快速时间剩余',
+      title: intl.formatMessage({ id: 'pages.account.fastTimeRemaining' }),
       dataIndex: 'fastTimeRemaining',
       ellipsis: true,
       width: 220,
       hideInSearch: true,
     } as ColumnType<Record<string, any>>,
     {
-      title: '订阅计划',
+      title: intl.formatMessage({ id: 'pages.account.subscribePlan' }),
       dataIndex: 'subscribePlan',
       width: 120,
       align: 'center',
@@ -190,7 +192,7 @@ const AccountList: React.FC = () => {
       render: (text: string, record: Record<string, any>) => record['displays']['subscribePlan'],
     } as ColumnType<Record<string, any>>,
     {
-      title: '续订时间',
+      title: intl.formatMessage({ id: 'pages.account.renewDate' }),
       dataIndex: 'renewDate',
       align: 'center',
       width: 150,
@@ -198,7 +200,7 @@ const AccountList: React.FC = () => {
       render: (text, record) => record['displays']['renewDate'],
     } as ColumnType<Record<string, any>>,
     {
-      title: 'mj模式',
+      title: intl.formatMessage({ id: 'pages.account.mjMode' }),
       dataIndex: 'mode',
       width: 120,
       align: 'center',
@@ -206,7 +208,7 @@ const AccountList: React.FC = () => {
       render: (text: string, record: Record<string, any>) => record['displays']['mode'],
     } as ColumnType<Record<string, any>>,
     {
-      title: 'niji模式',
+      title: intl.formatMessage({ id: 'pages.account.nijiMode' }),
       dataIndex: 'nijiMode',
       width: 120,
       align: 'center',
@@ -214,7 +216,7 @@ const AccountList: React.FC = () => {
       render: (text: string, record: Record<string, any>) => record['displays']['nijiMode'],
     } as ColumnType<Record<string, any>>,
     {
-      title: '备注',
+      title: intl.formatMessage({ id: 'pages.account.remark' }),
       dataIndex: 'remark',
       ellipsis: true,
       width: 150,
@@ -223,7 +225,7 @@ const AccountList: React.FC = () => {
       },
     } as ColumnType<Record<string, any>>,
     {
-      title: '操作',
+      title: intl.formatMessage({ id: 'pages.operation' }),
       dataIndex: 'operation',
       width: 200,
       key: 'operation',
@@ -233,14 +235,14 @@ const AccountList: React.FC = () => {
         return (
           <Space>
             <SyncButton record={record} onSuccess={triggerRefreshAccount} />
-            <Tooltip title="更新账号并重连">
+            <Tooltip title={intl.formatMessage({ id: 'pages.account.updateAndReconnect' })}>
               <Button
                 key="EditAndReconnect"
                 type={'primary'}
                 icon={<ToolOutlined />}
                 onClick={() =>
                   openModal(
-                    '更新账号并重连',
+                    intl.formatMessage({ id: 'pages.account.updateAndReconnect' }),
                     <ReconnectContent form={form} record={record} onSubmit={handleReconnect} />,
                     1000,
                   )
@@ -284,10 +286,10 @@ const AccountList: React.FC = () => {
                 type={'primary'}
                 icon={<UserAddOutlined />}
                 onClick={() => {
-                  openModal('新增账号', <AddContent form={form} onSubmit={handleAdd} />, 1000);
+                  openModal(intl.formatMessage({ id: 'pages.account.add' }), <AddContent form={form} onSubmit={handleAdd} />, 1000);
                 }}
               >
-                添加
+                {intl.formatMessage({ id: 'pages.add' })}
               </Button>,
             ]
           }}
