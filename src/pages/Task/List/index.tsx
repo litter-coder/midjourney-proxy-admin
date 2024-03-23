@@ -1,6 +1,6 @@
 import { queryTask } from '@/services/mj/api';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
-import { Card, Tag, Progress, Form, Tooltip } from 'antd';
+import { Card, Tag, Progress, Form } from 'antd';
 import React, { useState } from 'react';
 import TaskContent from '@/pages/Task/components/TaskContent';
 import MyModal from '@/pages/components/Modal';
@@ -35,7 +35,7 @@ const List: React.FC = () => {
     {
       title: 'ID',
       dataIndex: 'id',
-      width: 200,
+      width: 160,
       align: 'center',
       fixed: 'left',
       render: (text, record) => (
@@ -47,7 +47,7 @@ const List: React.FC = () => {
     {
       title: intl.formatMessage({ id: 'pages.task.type' }),
       dataIndex: 'action',
-      width: 120,
+      width: 100,
       align: 'center',
       request: async () => [
         {
@@ -90,9 +90,16 @@ const List: React.FC = () => {
       render: (text, record) => record['displays']['action'],
     },
     {
+      title: intl.formatMessage({ id: 'pages.task.instanceId' }),
+      dataIndex: 'instanceId',
+      width: 180,
+      align: 'center',
+      render: (text, record) => record['properties']['discordInstanceId'],
+    },
+    {
       title: intl.formatMessage({ id: 'pages.task.submitTime' }),
       dataIndex: 'submitTime',
-      width: 180,
+      width: 160,
       hideInSearch: true,
       align: 'center',
       render: (text, record) => record['displays']['submitTime'],
@@ -100,7 +107,7 @@ const List: React.FC = () => {
     {
       title: intl.formatMessage({ id: 'pages.task.status' }),
       dataIndex: 'status',
-      width: 120,
+      width: 90,
       align: 'center',
       request: async () => [
         {
@@ -156,7 +163,6 @@ const List: React.FC = () => {
       title: intl.formatMessage({ id: 'pages.task.progress' }),
       dataIndex: 'progress',
       width: 130,
-      align: 'center',
       showInfo: false,
       hideInSearch: true,
       render: (text, record) => {
@@ -176,10 +182,14 @@ const List: React.FC = () => {
     {
       title: intl.formatMessage({ id: 'pages.task.description' }),
       dataIndex: 'description',
+      width: 250,
       ellipsis: true,
-      render: (text, record) => {
-        return <Tooltip title={text}>{text}</Tooltip>;
-      },
+    },
+    {
+      title: intl.formatMessage({ id: 'pages.task.failReason' }),
+      dataIndex: 'failReason',
+      width: 220,
+      ellipsis: true,
     },
   ];
 

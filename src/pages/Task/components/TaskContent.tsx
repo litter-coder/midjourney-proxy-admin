@@ -92,10 +92,10 @@ const TaskContent = ({ record }: { record: Record<string, any> }) => {
       <Card type="inner" title={intl.formatMessage({ id: 'pages.task.extendedInfo' })} style={{ margin: '10px' }}>
         <Descriptions column={2}>
           <Descriptions.Item label={intl.formatMessage({ id: 'pages.task.botType' })}>{getBotTypeTag(record['properties']['botType'])}</Descriptions.Item>
-          <Descriptions.Item label="nonce">{record['properties']['nonce']}</Descriptions.Item>
+          <Descriptions.Item label="Nonce">{record['properties']['nonce']}</Descriptions.Item>
           <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.channelId' })}>{record['properties']['discordChannelId']}</Descriptions.Item>
           <Descriptions.Item label={intl.formatMessage({ id: 'pages.task.instanceId' })}>{record['properties']['discordInstanceId']}</Descriptions.Item>
-          <Descriptions.Item label={intl.formatMessage({ id: 'pages.task.messageId' })}>{record['properties']['messageId']}</Descriptions.Item>
+          <Descriptions.Item label="Hash">{record['properties']['messageHash']}</Descriptions.Item>
           <Descriptions.Item label={intl.formatMessage({ id: 'pages.task.messageContent' })}>{getTooltip(record['properties']['messageContent'])}</Descriptions.Item>
           <Descriptions.Item label={intl.formatMessage({ id: 'pages.task.finalPrompt' })}>{getTooltip(record['properties']['finalPrompt'])}</Descriptions.Item>
           <Descriptions.Item label={intl.formatMessage({ id: 'pages.task.finalPromptZh' })}>{getTooltip(record['properties']['finalZhPrompt'])}</Descriptions.Item>

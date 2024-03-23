@@ -111,7 +111,7 @@ const AccountList: React.FC = () => {
       title: 'ID',
       dataIndex: 'id',
       width: 200,
-      fixed: 'left',
+      align: 'center',
       render: (text: string, record: Record<string, any>) => (
         <a
           onClick={() => {
@@ -130,6 +130,7 @@ const AccountList: React.FC = () => {
     {
       title: intl.formatMessage({ id: 'pages.account.channelId' }),
       dataIndex: 'channelId',
+      align: 'center',
       width: 200,
     } as ColumnType<Record<string, any>>,
     {
@@ -163,7 +164,7 @@ const AccountList: React.FC = () => {
       title: intl.formatMessage({ id: 'pages.account.fastTimeRemaining' }),
       dataIndex: 'fastTimeRemaining',
       ellipsis: true,
-      width: 220,
+      width: 200,
       hideInSearch: true,
     } as ColumnType<Record<string, any>>,
     {
@@ -220,9 +221,6 @@ const AccountList: React.FC = () => {
       dataIndex: 'remark',
       ellipsis: true,
       width: 150,
-      render: (text, record) => {
-        return <Tooltip title={text}>{text}</Tooltip>;
-      },
     } as ColumnType<Record<string, any>>,
     {
       title: intl.formatMessage({ id: 'pages.operation' }),
