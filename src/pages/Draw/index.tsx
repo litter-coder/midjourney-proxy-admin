@@ -421,11 +421,11 @@ const Draw: React.FC = () => {
   };
 
   const taskCardTitle = (task: any) => {
-    let botName = 'Midjourney Bot';
+    let botName = 'Midjourney - ' + task['displays']['discordInstanceId'];
     if (task.properties['botType'] === 'NIJI_JOURNEY') {
-      botName = 'niji・journey Bot';
+      botName = 'niji・journey - ' + task['displays']['discordInstanceId'];
     } else if (task.properties['botType'] == 'INSIGHT_FACE') {
-      botName = 'InsightFaceSwap';
+      botName = 'InsightFaceSwap - ' + task['displays']['discordInstanceId'];
     }
     if (task.status !== 'SUCCESS' && task.status !== 'FAILURE' && task.status !== 'CANCEL' && task.action !== 'SWAP_FACE') {
       return <><span>{botName}</span><span className={styles.cardTitleTime}>{task.displays['submitTime']}</span>
