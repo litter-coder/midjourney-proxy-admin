@@ -91,6 +91,7 @@ export default {
   'pages.account.mjMode':'MJ Mode',
   'pages.account.nijiMode':'Niji Mode',
   'pages.account.remark':'Remark',
+  'pages.account.disabledReason':'Disabled Reason',
   'pages.account.add':'Create Account',
   'pages.account.sync':'Sync',
   'pages.account.updateAndReconnect':'Update And Reconnect',

@@ -89,6 +89,7 @@ export default {
   'pages.account.mjMode':'mj模式',
   'pages.account.nijiMode':'niji模式',
   'pages.account.remark':'备注',
+  'pages.account.disabledReason':'禁用原因',
   'pages.account.sync':'同步',
   'pages.account.add':'新增账号',
   'pages.account.updateAndReconnect':'更新账号并重连',

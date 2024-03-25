@@ -35,6 +35,7 @@ const SyncButton: React.FC<SyncButtonProps> = ({ record, onSuccess }) => {
           message: 'error',
           description: res.description
         });
+        onSuccess();
       }
     } catch (error) {
       console.error(error);

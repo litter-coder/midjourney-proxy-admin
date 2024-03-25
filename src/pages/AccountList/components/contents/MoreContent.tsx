@@ -32,6 +32,11 @@ const MoreContent: React.FC<MoreContentProps> = ({ record, onSuccess }) => {
     return <Tag color={color}>{text}</Tag>;
   };
 
+  const getTooltip = (text: string) => {
+    if (!text || text.length < 25) return text;
+    return <Tooltip title={text}>{(text.substring(0, 25) + "...")}</Tooltip>
+  };
+
   const changeDate = (date: string) => {
     return moment(date).format('YYYY-MM-DD HH:mm');
   };
@@ -108,16 +113,8 @@ const MoreContent: React.FC<MoreContentProps> = ({ record, onSuccess }) => {
           <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.guildId' })}>{record.guildId}</Descriptions.Item>
           <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.channelId' })}>{record.channelId}</Descriptions.Item>
           <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.username' })}>{record.name}</Descriptions.Item>
-          <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.userToken' })}>
-            <Tooltip title={record.userToken}>
-              {(record.userToken && record.userToken.substring(0, 25) + '...') || ''}
-            </Tooltip>
-          </Descriptions.Item>
-          <Descriptions.Item label="User Agent">
-            <Tooltip title={record.userAgent}>
-              {(record.userAgent && record.userAgent.substring(0, 25) + '...') || ''}
-            </Tooltip>
-          </Descriptions.Item>
+          <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.userToken' })}>{getTooltip(record.userToken)}</Descriptions.Item>
+          <Descriptions.Item label="User Agent">{getTooltip(record.userAgent)} </Descriptions.Item>
           <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.remixAutoSubmit' })}>
             {getStatusTag(record.remixAutoSubmit, intl.formatMessage({ id: 'pages.yes' }), intl.formatMessage({ id: 'pages.no' }))}
           </Descriptions.Item>
@@ -150,7 +147,8 @@ const MoreContent: React.FC<MoreContentProps> = ({ record, onSuccess }) => {
           <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.queueSize' })}>{record.queueSize}</Descriptions.Item>
           <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.timeoutMinutes' })}>{record.timeoutMinutes} {intl.formatMessage({ id: 'pages.minutes' })}</Descriptions.Item>
           <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.dateCreated' })}>{changeDate(record.dateCreated)}</Descriptions.Item>
-          <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.remark' })}>{record.remark}</Descriptions.Item>
+          <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.remark' })}>{getTooltip(record.remark)} </Descriptions.Item>
+          <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.disabledReason' })}>{getTooltip(record['properties']['disabledReason'])}</Descriptions.Item>
         </Descriptions>
       </Card>
 

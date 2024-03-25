@@ -83,6 +83,7 @@ const AccountList: React.FC = () => {
         message: 'error',
         description: res.description,
       });
+      triggerRefreshAccount();
     }
     setModalSubmitLoading(false);
   };
@@ -221,6 +222,14 @@ const AccountList: React.FC = () => {
       dataIndex: 'remark',
       ellipsis: true,
       width: 150,
+    } as ColumnType<Record<string, any>>,
+    {
+      title: intl.formatMessage({ id: 'pages.account.disabledReason' }),
+      dataIndex: 'disabledReason',
+      ellipsis: true,
+      width: 150,
+      hideInSearch: true,
+      renderText: (text: string, record: Record<string, any>) => record['properties']['disabledReason'],
     } as ColumnType<Record<string, any>>,
     {
       title: intl.formatMessage({ id: 'pages.operation' }),
