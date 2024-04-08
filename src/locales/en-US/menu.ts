@@ -27,6 +27,7 @@ export default {
   'menu.api-doc': 'API DOC',
   'menu.task-list': 'Task Search',
   'menu.draw-test': 'Draw Test',
+  'menu.probe': 'Log Probe',
   'menu.activate': 'System Activate',
   'menu.list.basic-list': 'Basic List',
   'menu.list.card-list': 'Card List',

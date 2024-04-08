@@ -1,5 +1,5 @@
 export default {
-  'pages.layouts.userLayout.title': 'Midjourney Proxy is the most influential midjourney design specification in github',
+  'pages.layouts.userLayout.title': 'Midjourney Proxy Plus backend management system, designed for the maintenance of accounts, testing of drawings, viewing logs, and more. It should be activated through authorized and legitimate channels, and it is advised not to expose it to the public internet unless necessary.',
   'pages.login.accountLogin.tab': 'Account Login',
   'pages.login.accountLogin.errorMessage': 'Incorrect username/password(admin/ant.design)',
   'pages.login.failure': 'Login failed, please try again!',
@@ -25,6 +25,7 @@ export default {
   'pages.welcome.link': 'Welcome to',
   'pages.welcome.description': 'Midjourney Proxy Admin is an integrated back-end management interface that combines umi, Ant Design, and ProComponents. It is dedicated to providing various management features for Midjourney Proxy.',
   'pages.welcome.learn': 'About',
+  'pages.welcome.learnMore': 'About More',
   'pages.welcome.midjourney-proxy': 'midjourney-proxy is an open-source project that proxies the MidJourney discord channel, implementing AI drawing calls in API form.',
   'pages.welcome.wechat-ai': 'wechat-ai is a WeChat robot project implemented based on chatgpt-on-wechat and midjourney-proxy-plus.',
   'pages.welcome.midjourney-proxy-plus': 'The plus version of midjourney-proxy adopts a brand-new mode. It supports all commands and related operations of mj, accurately matching all submitted tasks.',
@@ -77,6 +78,7 @@ export default {
   'pages.yes':'Yes',
   'pages.no':'No',
   'pages.minutes':'Minutes',
+  'pages.seconds':'Seconds',
   'pages.cancel':'Cancel',
   'pages.submit':'OK',
 
@@ -184,4 +186,8 @@ export default {
   'pages.activate.sendCodeAndGet':'Send the machine code to the administrator to get the activation code',
   'pages.activate.inputCode':'Please enter the activation code',
   'pages.activate.activeService':'Activate service',
+
+  'pages.probe.fullscreen':'Fullscreen',
+  'pages.probe.fullscreenExit':'Exit Fullscreen',
+  'pages.probe.stopRefresh':'Stop Refresh',
 };

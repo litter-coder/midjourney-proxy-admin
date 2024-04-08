@@ -1,5 +1,5 @@
 export default {
-  'pages.layouts.userLayout.title': 'Midjourney Proxy 是GitHub最具影响力的 Midjourney开源项目',
+  'pages.layouts.userLayout.title': 'Midjourney Proxy Plus的后台管理系统，用于维护账号、绘图测试、查看日志等。请通过正规途径授权激活，非必要请勿暴露到公网。',
   'pages.login.accountLogin.tab': '账户密码登录',
   'pages.login.accountLogin.errorMessage': '错误的用户名和密码(admin/ant.design)',
   'pages.login.failure': '登录失败，请重试！',
@@ -29,6 +29,8 @@ export default {
   'pages.welcome.wechat-ai': 'wechat-ai 是基于 chatgpt-on-wechat 和 midjourney-proxy-plus 实现的一个微信机器人项目。',
   'pages.welcome.midjourney-proxy-plus': 'midjourney-proxy 的plus版本，采用了全新模式。支持mj所有的指令和相关操作，精准匹配所有提交的任务。',
   'pages.welcome.alertMessage': '更快更强的重型组件，已经发布。',
+  'pages.welcome.learnMore': '了解更多',
+
   'pages.admin.subPage.title': ' 这个页面只有 admin 权限才能查看',
   'pages.admin.subPage.alertMessage': 'umi ui 现已发布，欢迎使用 npm run ui 启动体验。',
   'pages.searchTable.createForm.newRule': '新建规则',
@@ -75,6 +77,7 @@ export default {
   'pages.yes':'是',
   'pages.no':'否',
   'pages.minutes':'分钟',
+  'pages.seconds':'秒',
   'pages.cancel':'取消',
   'pages.submit':'确定',
 
@@ -182,4 +185,8 @@ export default {
   'pages.activate.sendCodeAndGet':'机器码发送给管理员，获取激活码',
   'pages.activate.inputCode':'请输入激活码',
   'pages.activate.activeService':'激活服务',
+
+  'pages.probe.fullscreen':'全屏',
+  'pages.probe.fullscreenExit':'退出全屏',
+  'pages.probe.stopRefresh':'停止刷新',
 };

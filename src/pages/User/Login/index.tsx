@@ -151,7 +151,7 @@ const Login: React.FC = () => {
           }}
           logo={<img alt="logo" src={'/logo.svg'} />}
           title="Midjourney Proxy Admin"
-          subTitle={" "}
+          subTitle={intl.formatMessage({ id: 'pages.layouts.userLayout.title' })}
           initialValues={{
             autoLogin: true,
           }}

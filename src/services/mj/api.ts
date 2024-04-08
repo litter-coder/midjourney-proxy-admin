@@ -167,3 +167,10 @@ export async function activateByCode(code: string, options?: { [key: string]: an
     ...(options || {}),
   });
 }
+
+export async function probe(tail: number, options?: { [key: string]: any }) {
+  return request<any>('/mj/admin/probe?tail=' + tail, {
+    method: 'GET',
+    ...(options || {}),
+  });
+}

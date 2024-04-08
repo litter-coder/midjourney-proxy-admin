@@ -7,6 +7,7 @@ declare namespace API {
     apiSecret?: string;
     imagePrefix?: string;
     active?: boolean = false;
+    version?: string;
     avatar?: string;
     userid?: string;
     email?: string;

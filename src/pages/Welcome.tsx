@@ -14,6 +14,7 @@ const InfoCard: React.FC<{
   desc: string;
   href: string;
 }> = ({ title, href, index, desc }) => {
+  const intl = useIntl();
   const { useToken } = theme;
 
   const { token } = useToken();
@@ -76,6 +77,9 @@ const InfoCard: React.FC<{
       >
         {desc}
       </div>
+      <a href={href} target="_blank" rel="noreferrer">
+      {intl.formatMessage({ id: 'pages.welcome.learnMore' })} {'>'}
+      </a>
     </div>
   );
 };
@@ -124,7 +128,7 @@ const Welcome: React.FC = () => {
               width: '65%',
             }}
           >
-             {intl.formatMessage({ id: 'pages.welcome.description' })}
+            {intl.formatMessage({ id: 'pages.welcome.description' })}
           </p>
           <div
             style={{
@@ -135,21 +139,21 @@ const Welcome: React.FC = () => {
           >
             <InfoCard
               index={1}
-              href="#"
-              title={intl.formatMessage({id: "pages.welcome.learn"}) + " midjourney-proxy"}
-              desc={intl.formatMessage({id: "pages.welcome.midjourney-proxy"})}
+              href="https://github.com/novicezk/midjourney-proxy"
+              title={intl.formatMessage({ id: "pages.welcome.learn" }) + " midjourney-proxy"}
+              desc={intl.formatMessage({ id: "pages.welcome.midjourney-proxy" })}
             />
             <InfoCard
               index={2}
-              title={intl.formatMessage({id: "pages.welcome.learn"}) + " wechat-ai"}
-              href="#"
-              desc={intl.formatMessage({id: "pages.welcome.wechat-ai"})}
+              title={intl.formatMessage({ id: "pages.welcome.learn" }) + " wechat-ai"}
+              href="https://github.com/litter-coder/wechat-ai"
+              desc={intl.formatMessage({ id: "pages.welcome.wechat-ai" })}
             />
             <InfoCard
               index={3}
-              title={intl.formatMessage({id: "pages.welcome.learn"}) + " midjourney-proxy-plus"}
-              href="#"
-              desc={intl.formatMessage({id: "pages.welcome.midjourney-proxy-plus"})}
+              title={intl.formatMessage({ id: "pages.welcome.learn" }) + " midjourney-proxy-plus"}
+              href="https://github.com/litter-coder/midjourney-proxy-plus"
+              desc={intl.formatMessage({ id: "pages.welcome.midjourney-proxy-plus" })}
             />
           </div>
         </div>

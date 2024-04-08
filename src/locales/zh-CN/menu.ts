@@ -26,6 +26,7 @@ export default {
   'menu.list.account-list': '账号管理',
   'menu.task-list': '任务查询',
   'menu.draw-test': '绘画测试',
+  'menu.probe': '日志查看',
   'menu.activate': '服务激活',
   'menu.api-doc': 'API文档',
   'menu.list.basic-list': '标准列表',

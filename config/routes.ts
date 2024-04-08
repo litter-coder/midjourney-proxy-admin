@@ -51,6 +51,12 @@ export default [
     component: './Draw',
   },
   {
+    name: 'probe',
+    icon: 'profile',
+    path: '/probe',
+    component: './Probe',
+  },
+  {
     name: 'activate',
     icon: 'key',
     path: '/activate',
