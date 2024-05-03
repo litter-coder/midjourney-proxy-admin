@@ -78,7 +78,7 @@ const AddContent = ({
         <Col span={12}>
           <Card type="inner" title={intl.formatMessage({ id: 'pages.account.otherInfo' })}>
             <Form.Item label={intl.formatMessage({ id: 'pages.account.coreSize' })} name="coreSize">
-              <InputNumber min={1} max={12} />
+              <InputNumber min={1} />
             </Form.Item>
             <Form.Item label={intl.formatMessage({ id: 'pages.account.queueSize' })} name="queueSize">
               <InputNumber min={1} />
