@@ -3,8 +3,9 @@ import SyncButton from '@/pages/AccountList/components/button/SyncButton';
 import AddContent from '@/pages/AccountList/components/contents/AddContent';
 import MoreContent from '@/pages/AccountList/components/contents/MoreContent';
 import ReconnectContent from '@/pages/AccountList/components/contents/ReconnectContent';
-import { createAccount, queryAccount, updateAndReconnect } from '@/services/mj/api';
-import { ToolOutlined, UserAddOutlined } from '@ant-design/icons';
+import UpdateContent from '@/pages/AccountList/components/contents/UpdateContent';
+import { createAccount, queryAccount, updateAndReconnect, update } from '@/services/mj/api';
+import { ToolOutlined, UserAddOutlined, EditOutlined } from '@ant-design/icons';
 import { ActionType, PageContainer, ProTable } from '@ant-design/pro-components';
 import { useIntl } from '@umijs/max';
 import {
@@ -91,6 +92,25 @@ const AccountList: React.FC = () => {
   const handleReconnect = async (values: Record<string, string>) => {
     setModalSubmitLoading(true);
     const res = await updateAndReconnect(values.id, values);
+    if (res.code == 1) {
+      api.success({
+        message: 'success',
+        description: res.description,
+      });
+    } else {
+      api.error({
+        message: 'error',
+        description: res.description,
+      });
+    }
+    hideModal();
+    triggerRefreshAccount();
+    setModalSubmitLoading(false);
+  };
+
+  const handleUpdate = async (values: Record<string, string>) => {
+    setModalSubmitLoading(true);
+    const res = await update(values.id, values);
     if (res.code == 1) {
       api.success({
         message: 'success',
@@ -256,6 +276,17 @@ const AccountList: React.FC = () => {
                 }
               />
             </Tooltip>
+            <Button
+                key="Update"
+                icon={<EditOutlined />}
+                onClick={() =>
+                  openModal(
+                    intl.formatMessage({ id: 'pages.account.update' }),
+                    <UpdateContent form={form} record={record} onSubmit={handleUpdate} />,
+                    1000,
+                  )
+                }
+              />
             <DelButton record={record} onSuccess={triggerRefreshAccount} />
           </Space>
         );

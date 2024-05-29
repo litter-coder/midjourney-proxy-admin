@@ -146,6 +146,7 @@ const MoreContent: React.FC<MoreContentProps> = ({ record, onSuccess }) => {
           <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.coreSize' })}>{record.coreSize}</Descriptions.Item>
           <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.queueSize' })}>{record.queueSize}</Descriptions.Item>
           <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.timeoutMinutes' })}>{record.timeoutMinutes} {intl.formatMessage({ id: 'pages.minutes' })}</Descriptions.Item>
+          <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.weight' })}>{record['properties']['weight']}</Descriptions.Item>
           <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.dateCreated' })}>{changeDate(record.dateCreated)}</Descriptions.Item>
           <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.remark' })}>{getTooltip(record.remark)} </Descriptions.Item>
           <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.disabledReason' })}>{getTooltip(record['properties']['disabledReason'])}</Descriptions.Item>

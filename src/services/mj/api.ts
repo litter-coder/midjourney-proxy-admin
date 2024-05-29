@@ -85,6 +85,18 @@ export async function updateAndReconnect(
   });
 }
 
+export async function update(
+  id: string,
+  data: object,
+  options?: { [key: string]: any },
+) {
+  return request<API.ReturnMessage>(`/mj/account/${id}/update`, {
+    method: 'PUT',
+    data: data,
+    ...(options || {}),
+  });
+}
+
 /**  DELETE /mj/account/{id}/delete */
 export async function deleteAccount(id: string, options?: { [key: string]: any }) {
   return request<API.ReturnMessage>(`/mj/account/${id}/delete`, {

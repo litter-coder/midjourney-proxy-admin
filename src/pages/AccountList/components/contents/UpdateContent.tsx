@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 const { TextArea } = Input;
 import { useIntl } from '@umijs/max';
 
-const ReconnectContent = ({
+const UpdateContent = ({
   form,
   onSubmit,
   record,
@@ -34,26 +34,11 @@ const ReconnectContent = ({
             <Form.Item label="id" name="id" hidden>
               <Input />
             </Form.Item>
-            <Form.Item label={intl.formatMessage({ id: 'pages.account.guildId' })} name="guildId" rules={[{ required: true}]}>
-              <Input />
-            </Form.Item>
-            <Form.Item label={intl.formatMessage({ id: 'pages.account.channelId' })} name="channelId" rules={[{ required: true }]}>
-              <Input />
-            </Form.Item>
-            <Form.Item label={intl.formatMessage({ id: 'pages.account.userToken' })} name="userToken" rules={[{ required: true }]}>
-              <Input />
-            </Form.Item>
             <Form.Item label={intl.formatMessage({ id: 'pages.account.mjChannelId' })} name="mjBotChannelId">
               <Input />
             </Form.Item>
             <Form.Item label={intl.formatMessage({ id: 'pages.account.nijiChannelId' })} name="nijiBotChannelId">
               <Input />
-            </Form.Item>
-            <Form.Item label="User Agent" name="userAgent">
-              <Input />
-            </Form.Item>
-            <Form.Item label={intl.formatMessage({ id: 'pages.enable' })} name="enable" valuePropName="checked">
-              <Switch />
             </Form.Item>
             <Form.Item label={intl.formatMessage({ id: 'pages.account.remixAutoSubmit' })} name="remixAutoSubmit" valuePropName="checked">
               <Switch />
@@ -62,12 +47,6 @@ const ReconnectContent = ({
         </Col>
         <Col span={12}>
           <Card type="inner" title={intl.formatMessage({ id: 'pages.account.otherInfo' })}>
-            <Form.Item label={intl.formatMessage({ id: 'pages.account.coreSize' })} name="coreSize">
-              <InputNumber min={1} />
-            </Form.Item>
-            <Form.Item label={intl.formatMessage({ id: 'pages.account.queueSize' })} name="queueSize">
-              <InputNumber min={1} />
-            </Form.Item>
             <Form.Item label={intl.formatMessage({ id: 'pages.account.timeoutMinutes' })} name="timeoutMinutes">
               <InputNumber min={1} suffix={intl.formatMessage({ id: 'pages.minutes' })} />
             </Form.Item>
@@ -80,9 +59,8 @@ const ReconnectContent = ({
           </Card>
         </Col>
       </Row>
-      <Alert message={intl.formatMessage({ id: 'pages.account.updateNotice' })} type="warning" style={{ marginTop: '10px' }} />
     </Form>
   );
 };
 
-export default ReconnectContent;
+export default UpdateContent;
