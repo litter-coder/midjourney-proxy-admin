@@ -28,6 +28,7 @@ export default {
   'menu.draw-test': '绘画测试',
   'menu.probe': '日志查看',
   'menu.activate': '服务激活',
+  'menu.setting': '系统设置',
   'menu.api-doc': 'API文档',
   'menu.list.basic-list': '标准列表',
   'menu.list.card-list': '卡片列表',

@@ -28,6 +28,7 @@ export default {
   'menu.task-list': 'Task Search',
   'menu.draw-test': 'Draw Test',
   'menu.probe': 'Log Probe',
+  'menu.setting': 'System Setting',
   'menu.activate': 'System Activate',
   'menu.list.basic-list': 'Basic List',
   'menu.list.card-list': 'Card List',

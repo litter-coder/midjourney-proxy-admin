@@ -57,6 +57,12 @@ export default [
     component: './Probe',
   },
   {
+    name: 'setting',
+    icon: 'setting',
+    path: '/setting',
+    component: './Setting',
+  },
+  {
     name: 'activate',
     icon: 'key',
     path: '/activate',

@@ -186,3 +186,19 @@ export async function probe(tail: number, options?: { [key: string]: any }) {
     ...(options || {}),
   });
 }
+
+/**  MJ 配置 接口 */
+export async function getConfig(options?: { [key: string]: any }) {
+  return request<any>('/mj/properties-admin/get/config', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
+export async function updateConfig(data: object, options?: { [key: string]: any }) {
+  return request<any>('/mj/properties-admin/update/config', {
+    method: 'POST',
+    data: data,
+    ...(options || {}),
+  });
+}
