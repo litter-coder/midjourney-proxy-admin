@@ -2,9 +2,8 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
-/** 获取当前的用户 GET /mj/admin/current */
 export async function currentUser(options?: { [key: string]: any }) {
-  return request<API.CurrentUser>('/mj/admin/current', {
+  return request<API.CurrentUser>('/mj/user/current', {
     method: 'GET',
     ...(options || {}),
   }).then((response) => {
@@ -21,9 +20,8 @@ export async function currentUser(options?: { [key: string]: any }) {
   });
 }
 
-/** 退出登录接口 POST /mj/admin/logout */
 export async function outLogin(options?: { [key: string]: any }) {
-  return request<API.ReturnMessage>('/mj/admin/logout', {
+  return request<API.ReturnMessage>('/mj/user/logout', {
     method: 'POST',
     ...(options || {}),
   }).then((response) => {
@@ -33,9 +31,8 @@ export async function outLogin(options?: { [key: string]: any }) {
   });
 }
 
-/** 登录接口 POST /mj/admin/login */
 export async function login(body: API.LoginParams, options?: { [key: string]: any }) {
-  return request<API.LoginResult>('/mj/admin/login', {
+  return request<API.LoginResult>('/mj/user/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -189,14 +186,14 @@ export async function probe(tail: number, options?: { [key: string]: any }) {
 
 /**  MJ 配置 接口 */
 export async function getConfig(options?: { [key: string]: any }) {
-  return request<any>('/mj/properties-admin/get/config', {
+  return request<any>('/mj/admin/config', {
     method: 'GET',
     ...(options || {}),
   });
 }
 
 export async function updateConfig(data: object, options?: { [key: string]: any }) {
-  return request<any>('/mj/properties-admin/update/config', {
+  return request<any>('/mj/admin/config-update', {
     method: 'POST',
     data: data,
     ...(options || {}),

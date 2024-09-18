@@ -193,10 +193,11 @@ export default {
   'pages.probe.stopRefresh':'停止刷新',
 
   'pages.setting.tips':'提示：设置核心配置后需要重启服务,其他配置修改实时生效，无需重启服务。',
-  'pages.settings.base':'基础设置',
+  'pages.setting.base':'基础配置',
   'pages.setting.username':'用户名',
   'pages.setting.password':'密码',
   'pages.setting.apiSecret':'API密钥',
+  'pages.setting.apiSecretTooltip':'API密钥变更后，需要重新登录',
   'pages.setting.translate':'开启翻译',
   'pages.setting.translateTooltip':'开启后，会将中文prompt翻译成英文',
   'pages.setting.translateZhWay':'开启中文翻译',
@@ -218,7 +219,7 @@ export default {
   'pages.setting.notifyPoolSize':'回调线程池',
   'pages.setting.notifyPoolSizeTooltip':'回调线程池，任务数量过多时，可以适当调大',
 
-  'pages.settings.core':'核心设置',
+  'pages.setting.core':'核心配置',
   'pages.setting.accountStoreType':'账号存储方式',
   'pages.setting.taskStore':'task存储配置',
   'pages.setting.accountChooseRule':'账号选择策略',
