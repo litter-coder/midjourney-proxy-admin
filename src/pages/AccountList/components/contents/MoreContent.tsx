@@ -32,6 +32,26 @@ const MoreContent: React.FC<MoreContentProps> = ({ record, onSuccess }) => {
     return <Tag color={color}>{text}</Tag>;
   };
 
+  const getAccountStatusTag = (status: string) => {
+    let color;
+    let text;
+    switch (status) {
+      case 'ENABLE':
+        color = 'green';
+        text = intl.formatMessage({ id: 'pages.enable' });
+        break;
+      case 'DISABLED':
+        color = 'volcano';
+        text = intl.formatMessage({ id: 'pages.disable' });
+        break;
+      case 'LISTEN_ONLY':
+        color = 'blue';
+        text = intl.formatMessage({ id: 'pages.listenOnly' });
+        break;
+    }
+    return <Tag color={color}>{text}</Tag>;
+  };
+
   const getTooltip = (text: string) => {
     if (!text || text.length < 25) return text;
     return <Tooltip title={text}>{(text.substring(0, 25) + "...")}</Tooltip>
@@ -126,7 +146,7 @@ const MoreContent: React.FC<MoreContentProps> = ({ record, onSuccess }) => {
       <Card type="inner" title={intl.formatMessage({ id: 'pages.account.basicInfo' })} style={{ margin: '5px' }}>
         <Descriptions column={3}>
           <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.status' })}>
-            {getStatusTag(record.enable, intl.formatMessage({ id: 'pages.enable' }), intl.formatMessage({ id: 'pages.disable' }))}
+            {getAccountStatusTag(record.status)}
           </Descriptions.Item>
           <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.mjMode' })}>{record['displays']['mode']}</Descriptions.Item>
           <Descriptions.Item label={intl.formatMessage({ id: 'pages.account.nijiMode' })}>{record['displays']['nijiMode']}</Descriptions.Item>

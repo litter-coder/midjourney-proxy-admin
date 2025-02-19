@@ -72,6 +72,7 @@ export default {
   'pages.searchTable.batchApproval': 'batch approval',
 
   'pages.enable':'Enable',
+  'pages.listenOnly':'Listen Only',
   'pages.disable':'Disable',
   'pages.operation':'Operation',
   'pages.add':'Add',

@@ -162,22 +162,40 @@ const AccountList: React.FC = () => {
     } as ColumnType<Record<string, any>>,
     {
       title: intl.formatMessage({ id: 'pages.account.status' }),
-      dataIndex: 'enable',
+      dataIndex: 'status',
       width: 100,
       align: 'center',
       request: async () => [
         {
           label: intl.formatMessage({ id: 'pages.enable' }),
-          value: 'true',
+          value: 'ENABLE',
         },
         {
           label: intl.formatMessage({ id: 'pages.disable' }),
-          value: 'false',
+          value: 'DISABLED',
+        },
+        {
+          label: intl.formatMessage({ id: 'pages.listenOnly' }),
+          value: 'LISTEN_ONLY',
         },
       ],
-      render: (enable: boolean) => {
-        let color = enable ? 'green' : 'volcano';
-        let text = enable ? intl.formatMessage({ id: 'pages.enable' }) : intl.formatMessage({ id: 'pages.disable' });
+      render: (status: string) => {
+        let color;
+        let text;
+        switch (status) {
+          case 'ENABLE':
+            color = 'green';
+            text = intl.formatMessage({ id: 'pages.enable' });
+            break;
+          case 'DISABLED':
+            color = 'volcano';
+            text = intl.formatMessage({ id: 'pages.disable' });
+            break;
+          case 'LISTEN_ONLY':
+            color = 'blue';
+            text = intl.formatMessage({ id: 'pages.listenOnly' });
+            break;
+        }
         return <Tag color={color}>{text}</Tag>;
       },
     } as ColumnType<Record<string, any>>,

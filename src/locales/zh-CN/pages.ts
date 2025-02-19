@@ -72,7 +72,8 @@ export default {
 
   'pages.operation':'操作',
   'pages.enable':'启用',
-  'pages.disable':'未启用',
+  'pages.listenOnly':'仅监听',
+  'pages.disable':'禁用',
   'pages.add':'添加',
   'pages.yes':'是',
   'pages.no':'否',

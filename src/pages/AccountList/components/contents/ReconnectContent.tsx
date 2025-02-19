@@ -1,4 +1,4 @@
-import { Card, Alert, Row, Col, Form, FormInstance, Input, Switch, InputNumber } from 'antd';
+import {Card, Alert, Row, Col, Form, FormInstance, Input, Switch, InputNumber, Select} from 'antd';
 import { useEffect } from 'react';
 const { TextArea } = Input;
 import { useIntl } from '@umijs/max';
@@ -52,8 +52,12 @@ const ReconnectContent = ({
             <Form.Item label="User Agent" name="userAgent">
               <Input />
             </Form.Item>
-            <Form.Item label={intl.formatMessage({ id: 'pages.enable' })} name="enable" valuePropName="checked">
-              <Switch />
+            <Form.Item label={intl.formatMessage({ id: 'pages.account.status' })} name="status">
+              <Select>
+                <Select.Option value="ENABLE">{intl.formatMessage({ id: 'pages.enable' })}</Select.Option>
+                <Select.Option value="DISABLED">{intl.formatMessage({ id: 'pages.disable' })}</Select.Option>
+                <Select.Option value="LISTEN_ONLY">{intl.formatMessage({ id: 'pages.listenOnly' })}</Select.Option>
+              </Select>
             </Form.Item>
             <Form.Item label={intl.formatMessage({ id: 'pages.account.remixAutoSubmit' })} name="remixAutoSubmit" valuePropName="checked">
               <Switch />
