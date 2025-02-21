@@ -5,7 +5,7 @@ import MoreContent from '@/pages/AccountList/components/contents/MoreContent';
 import ReconnectContent from '@/pages/AccountList/components/contents/ReconnectContent';
 import UpdateContent from '@/pages/AccountList/components/contents/UpdateContent';
 import { createAccount, queryAccount, updateAndReconnect, update } from '@/services/mj/api';
-import { ToolOutlined, UserAddOutlined, EditOutlined } from '@ant-design/icons';
+import {ToolOutlined, UserAddOutlined, EditOutlined, SyncOutlined, ClockCircleOutlined} from '@ant-design/icons';
 import { ActionType, PageContainer, ProTable } from '@ant-design/pro-components';
 import { useIntl } from '@umijs/max';
 import {
@@ -163,7 +163,7 @@ const AccountList: React.FC = () => {
     {
       title: intl.formatMessage({ id: 'pages.account.status' }),
       dataIndex: 'status',
-      width: 100,
+      width: 150,
       align: 'center',
       request: async () => [
         {
@@ -179,7 +179,7 @@ const AccountList: React.FC = () => {
           value: 'LISTEN_ONLY',
         },
       ],
-      render: (status: string) => {
+      render: (status: string, record: Record<string, any>) => {
         let color;
         let text;
         switch (status) {
@@ -196,6 +196,35 @@ const AccountList: React.FC = () => {
             text = intl.formatMessage({ id: 'pages.listenOnly' });
             break;
         }
+
+        if (status === 'ENABLE') {
+          return (
+            <>
+              <Tag color={color}>{text}</Tag>
+              <Tag icon={<SyncOutlined spin />} color="cyan">
+                <Tooltip
+                  title={
+                    intl.formatMessage({ id: 'pages.account.runningCount' }) +
+                    ' ' +
+                    record.runningCount
+                  }
+                >
+                  {record?.runningCount || 0}
+                </Tooltip>
+              </Tag>
+              <Tag icon={<ClockCircleOutlined />} color="processing">
+                <Tooltip
+                  title={
+                    intl.formatMessage({ id: 'pages.account.queueCount' }) + ' ' + record.queueCount
+                  }
+                >
+                  {record.queueCount || 0}
+                </Tooltip>
+              </Tag>
+            </>
+          );
+        }
+
         return <Tag color={color}>{text}</Tag>;
       },
     } as ColumnType<Record<string, any>>,

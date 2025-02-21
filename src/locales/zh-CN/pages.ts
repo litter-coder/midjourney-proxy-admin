@@ -86,6 +86,8 @@ export default {
   'pages.account.channelId':'频道ID',
   'pages.account.username':'账号名',
   'pages.account.userToken':'用户Token',
+  'pages.account.runningCount': '执行中',
+  'pages.account.queueCount': '队列中',
   'pages.account.status':'状态',
   'pages.account.fastTimeRemaining':'快速时间剩余',
   'pages.account.subscribePlan':'订阅计划',

@@ -86,6 +86,8 @@ export default {
   'pages.account.guildId':'Guild ID',
   'pages.account.channelId':'Channel ID',
   'pages.account.username':'Username',
+  'pages.account.runningCount': 'Running',
+  'pages.account.queueCount': 'Queue',
   'pages.account.userToken':'User Token',
   'pages.account.status':'Status',
   'pages.account.fastTimeRemaining':'FastTime Remaining',
