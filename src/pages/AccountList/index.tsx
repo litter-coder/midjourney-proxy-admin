@@ -163,7 +163,7 @@ const AccountList: React.FC = () => {
     {
       title: intl.formatMessage({ id: 'pages.account.status' }),
       dataIndex: 'status',
-      width: 150,
+      width: 180,
       align: 'center',
       request: async () => [
         {
