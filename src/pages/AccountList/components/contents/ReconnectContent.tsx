@@ -43,6 +43,9 @@ const ReconnectContent = ({
             <Form.Item label={intl.formatMessage({ id: 'pages.account.userToken' })} name="userToken" rules={[{ required: true }]}>
               <Input />
             </Form.Item>
+            <Form.Item label={intl.formatMessage({ id: 'pages.account.cookie' })} name="cookie">
+              <Input.TextArea rows={3} />
+            </Form.Item>
             <Form.Item label={intl.formatMessage({ id: 'pages.account.mjChannelId' })} name="mjBotChannelId">
               <Input />
             </Form.Item>

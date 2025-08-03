@@ -83,6 +83,10 @@ const List: React.FC = () => {
           value: 'SHORTEN',
         },
         {
+          label: 'Video',
+          value: 'VIDEO',
+        },
+        {
           label: 'SwapFace',
           value: 'SWAP_FACE',
         },

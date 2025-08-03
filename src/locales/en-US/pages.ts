@@ -89,6 +89,7 @@ export default {
   'pages.account.runningCount': 'Running',
   'pages.account.queueCount': 'Queue',
   'pages.account.userToken':'User Token',
+  'pages.account.cookie':'User Cookie',
   'pages.account.status':'Status',
   'pages.account.fastTimeRemaining':'FastTime Remaining',
   'pages.account.subscribePlan':'Subscribe',

@@ -44,15 +44,28 @@ const TaskContent = ({ record }: { record: Record<string, any> }) => {
     return <Tooltip title={text}>{(text.substring(0, 30) + "...")}</Tooltip>
   };
 
-  const getImage = (url: string) => {
-    if (!url) return url;
-    return <Image
-      width={200}
-      src={imagePrefix + url}
-      placeholder={
-        <Spin tip="Loading" size="large"></Spin>
-      }
-    />
+  const getMedia = (url: string) => {
+    if (!url) return null;
+    const fullUrl = imagePrefix + url;
+
+    const cleanUrl = url.split('?')[0];
+    const isVideo = /\.(mp4|webm|ogg)$/i.test(cleanUrl);
+
+    return isVideo ? (
+      <video
+        width={200}
+        controls
+        preload="metadata"
+      >
+        <source src={fullUrl} type="video/mp4" />
+      </video>
+    ) : (
+      <Image
+        width={200}
+        src={fullUrl}
+        placeholder={<Spin tip="Loading" size="large" />}
+      />
+    );
   };
 
   const getBotTypeTag = (botType: string) => {
@@ -86,7 +99,7 @@ const TaskContent = ({ record }: { record: Record<string, any> }) => {
           <Descriptions.Item label={intl.formatMessage({ id: 'pages.task.finishTime' })}>{record['displays']['finishTime']}</Descriptions.Item>
           <Descriptions.Item label={intl.formatMessage({ id: 'pages.task.failReason' })}>{getTooltip(record.failReason)}</Descriptions.Item>
           <Descriptions.Item label={intl.formatMessage({ id: 'pages.task.state' })}>{getTooltip(record.state)}</Descriptions.Item>
-          <Descriptions.Item label={intl.formatMessage({ id: 'pages.task.image' })}>{getImage(record.imageUrl)}</Descriptions.Item>
+          <Descriptions.Item label={intl.formatMessage({ id: 'pages.task.image' })}>{getMedia(record.imageUrl)}</Descriptions.Item>
         </Descriptions>
       </Card>
       <Card type="inner" title={intl.formatMessage({ id: 'pages.task.extendedInfo' })} style={{ margin: '10px' }}>

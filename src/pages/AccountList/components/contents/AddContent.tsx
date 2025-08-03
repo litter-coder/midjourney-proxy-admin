@@ -15,7 +15,7 @@ const AddContent = ({
   useEffect(() => {
     form.setFieldsValue({
       userAgent:
-        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36',
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/114.0.0.0 Safari/537.36',
       coreSize: 3,
       queueSize: 10,
       timeoutMinutes: 5,
@@ -56,16 +56,10 @@ const AddContent = ({
               <Input />
             </Form.Item>
             <Form.Item
-              label={intl.formatMessage({ id: 'pages.account.mjChannelId' })}
-              name="mjBotChannelId"
+              label={intl.formatMessage({ id: 'pages.account.cookie' })}
+              name="cookie"
             >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              label={intl.formatMessage({ id: 'pages.account.nijiChannelId' })}
-              name="nijiBotChannelId"
-            >
-              <Input />
+              <Input.TextArea rows={3} />
             </Form.Item>
             <Form.Item label="User Agent" name="userAgent">
               <Input />
